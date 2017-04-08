@@ -168,5 +168,8 @@
   <ItemGroup>
     <None Include="Help.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Gold_Help.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

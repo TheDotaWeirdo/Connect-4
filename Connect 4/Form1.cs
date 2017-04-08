@@ -25,8 +25,9 @@ namespace Connect_4
         public Bitmap[] TRB = { Properties.Resources.T_Red_Circle, Properties.Resources.T_Blue_Circle };
         public Bitmap[] Case = { Properties.Resources.White_Circle, Properties.Resources.Red_Circle, Properties.Resources.Blue_Circle, Properties.Resources.Gold_Red_Circle, Properties.Resources.Gold_Blue_Circle };
         delegate void ShowArrowDelegate();
-        int tempInt;
-
+        int tempInt, tempInt2, LossHelps = 0;
+        int[] Helps = { 0, 0 };
+        System.Timers.Timer HelpT = new System.Timers.Timer();
 
         public Form1()
         {
@@ -35,11 +36,38 @@ namespace Connect_4
 
         private void Col_Click(int index, bool AImove = false)
         {
-            if(LearnMCheckBox.Checked)
-            { Col_LearnClick(index); return; }
             int i = 1, cap = MG.GetLow(index);
             if (cap > 0 && MG.Winner == 0 && (!MG.vsAI || MG.Turn == MG.P[0] || AImove))
             {
+                if (LearnMCheckBox.Checked && MG.vsAI)
+                {
+                    if (Helps[0] != 0 && Helps[0] != index)
+                    {
+                        Cursor.Position = new Point(C[2][Helps[0]].Location.X + ActiveForm.Location.X + 25, 10 + C[2][Helps[0]].Location.Y + ActiveForm.Location.Y);
+                        LossHelps++;
+                        tempInt = Helps[0];
+                        label_Help.Invoke(new Action(HelpWinText));
+                        label_Help.Invoke(new Action(label_Help.Show));
+                        HelpT.Stop();
+                        HelpT.Interval = 7500;
+                        HelpT.Start();
+                        HelpPrompt(true);
+                        return;
+                    }
+                    else if (Helps[1] != 0 && Helps[1] != index && LossHelps < 5 - MG.Diff && !AImove)
+                    {
+                        Cursor.Position = new Point(C[2][Helps[1]].Location.X + ActiveForm.Location.X + 25, 10 + C[2][Helps[1]].Location.Y + ActiveForm.Location.Y);
+                        LossHelps++;
+                        tempInt = index; tempInt2 = Helps[1];
+                        label_Help.Invoke(new Action(HelpLossText));
+                        label_Help.Invoke(new Action(label_Help.Show));
+                        HelpT.Stop();
+                        HelpT.Interval = 7500;
+                        HelpT.Start();
+                        HelpPrompt(true);
+                        return;
+                    }
+                }
                 System.Timers.Timer T = new System.Timers.Timer(30), T2 = new System.Timers.Timer(30);
                 if (FGameCheckBox.Checked)
                     T.Interval = 10;
@@ -53,9 +81,9 @@ namespace Connect_4
                 T.Elapsed += (s, e) =>
                 {
                     if (i > 1)
-                        C[i - 1][index].Image = W;
+                    { Pt: try { C[i - 1][index].Image = W; } catch (Exception) { Thread.Sleep(20); goto Pt; } }
                     if (i != cap)
-                        C[i][index].Image = TRB[MG.Turn];
+                    { Pt: try { C[i][index].Image = TRB[MG.Turn]; } catch (Exception) { Thread.Sleep(20); goto Pt; } }
                     else
                     {
                         MG.Case[cap][index] = MG.Turn + 1;
@@ -66,50 +94,12 @@ namespace Connect_4
                     }
                     i++;
                 };
-                /*for (int k = 0; k < cap; k++)
+                if (MG.vsAI && MG.Turn == MG.P[0])
                 {
-                    Thread.Sleep(30);
-                }*/
-                //PlayEnd(index);
-            }
-        }
-
-        private void Col_LearnClick(int index)
-        {
-            int i = 1, cap = MG.GetLow(index);
-            if (cap > 0 && MG.Winner == 0 && (!MG.vsAI || MG.Turn == MG.P[0]))
-            {
-                System.Timers.Timer T = new System.Timers.Timer(30), T2 = new System.Timers.Timer(30);
-                if (FGameCheckBox.Checked)
-                    T.Interval = 10;
-                T.Start(); T2.Start();
-                MG.Winner = -1;
-                T2.Elapsed += (S, E) =>
-                {
-                    T2.Dispose();
-                    Col_Leave(index);
-                };
-                T.Elapsed += (s, e) =>
-                {
-                    if (i > 1)
-                        C[i - 1][index].Image = W;
-                    if (i != cap)
-                        C[i][index].Image = TRB[MG.Turn];
-                    else
-                    {
-                        MG.Case[cap][index] = MG.Turn + 1;
-                        C[cap][index].Image = RB[MG.Turn];
-                        MG.Winner = 0;
-                        T.Dispose();
-                        PlayEnd(index);
-                    }
-                    i++;
-                };
-                /*for (int k = 0; k < cap; k++)
-                {
-                    Thread.Sleep(30);
-                }*/
-                //PlayEnd(index);
+                    Thread workingThread = new Thread(new ThreadStart(PlayAI))
+                    { IsBackground = true };
+                    workingThread.Start();
+                }
             }
         }
 
@@ -157,12 +147,17 @@ namespace Connect_4
             }
         }
 
+        private void PlayAI()
+        {
+            Col_Click(MG.PlayAI(), true);
+        }
+
         private void PlayEnd(int index)
         {
             MG.Turn = (MG.Turn == 0) ? 1 : 0;
             try { C[0][index].Hide(); }
             catch (InvalidOperationException) { }
-            if (MG.CheckWin() != 0)
+            if (MG.CheckWin() > 0)
             {
                 UpdateVisuals();
                 if (MG.Winner == 1)
@@ -231,8 +226,11 @@ namespace Connect_4
                         Turn_Left.Image = Properties.Resources.Large_Gold_Blue_Circle;
                     }
                 }
-                if (MG.vsAI && MG.Turn == MG.P[1])
-                    Col_Click(MG.PlayAI(), true);
+                if (MG.vsAI && LearnMCheckBox.Checked && MG.Turn == MG.P[0])
+                {
+                    Helps[0] = MG.CheckPossibleWin();
+                    Helps[1] = MG.CheckPossibleLoss();
+                }
             }
         }
 
@@ -309,6 +307,14 @@ namespace Connect_4
             }
         }
 
+        private void HelpPrompt(bool NotGold)
+        {
+            if(NotGold)
+            { Help_PictureBox.Image = Properties.Resources.Help; }
+            else
+            { Help_PictureBox.Image = Properties.Resources.Gold_Help; }
+        }
+
         private void TopImgScaleSmall()
         {
             TopPicture.Height = 100;
@@ -318,6 +324,15 @@ namespace Connect_4
         {
             TopPicture.Height = 155;
         }
+
+        private void HelpResetText()
+        { label_Help.Text = "Click on a column to place a token that will drop to the lowest empty space. Win the Game by matching 4 tokens"; }
+
+        private void HelpWinText()
+        { label_Help.Text = $"Try playing the Column #{tempInt}, it will create a 4-Token chain and Win you the Game!"; }
+
+        private void HelpLossText()
+        { label_Help.Text = $"Playing the Column #{tempInt} will let the AI Win, try playing on this Column #{tempInt2} instead"; }
 
         //Events
 
@@ -386,8 +401,12 @@ namespace Connect_4
                         Turn_Left.Image = Properties.Resources.Large_Gold_Blue_Circle;
                     }
                 }
-                
+                if (LearnMCheckBox.Checked && MG.vsAI)
+                    Help_PictureBox.Invoke(new Action(Help_PictureBox.Show));
+                else
+                    Help_PictureBox.Invoke(new Action(Help_PictureBox.Hide));
                 GameOptions.Hide();
+                LossHelps = 0;
                 System.Timers.Timer T = new System.Timers.Timer(500);
                 T.Start();
                 T.Elapsed += (s, E) =>
@@ -405,8 +424,115 @@ namespace Connect_4
             }
         }
 
+        private void vsAI_Check(object sender, EventArgs e)
+        {
+            if(AIcheckBox.Checked)
+            {
+                MG.vsAI = true;
+                Label_Diff.Enabled = true;
+                RButtonEasy.Enabled = true;
+                RButtonMed.Enabled = true;
+                RButtonHard.Enabled = true;
+                RButtonImpossible.Enabled = true;
+                PredicitveCheckBox.Enabled = true;
+                if(!RButtonImpossible.Checked && !RButtonHard.Checked)
+                    LearnMCheckBox.Enabled = true;
+            }
+            else
+            {
+                MG.vsAI = false;
+                Label_Diff.Enabled = false;
+                RButtonEasy.Enabled = false;
+                RButtonMed.Enabled = false;
+                RButtonHard.Enabled = false;
+                RButtonImpossible.Enabled = false;
+                PredicitveCheckBox.Enabled = false;
+                LearnMCheckBox.Enabled = false;
+            }
+        }
+
+        private void Diff_ChkChanged(object sender, EventArgs e)
+        {
+            if (RButtonEasy.Checked)
+            { MG.Diff = 0; LearnMCheckBox.Enabled = true; LearnMCheckBox.Checked = true; }
+            if (RButtonMed.Checked)
+            { MG.Diff = 1; LearnMCheckBox.Enabled = true; }
+            if (RButtonHard.Checked)
+            { MG.Diff = 2; LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; }
+            if (RButtonImpossible.Checked)
+            { MG.Diff = 3; LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; }
+        }
+
+        private void FGameChkChanged(object sender, EventArgs e)
+        {
+            if (FGameCheckBox.Checked)
+                MG.Delay = new int[] { 300, 200, 100, 0 };
+            else
+                MG.Delay = new int[] { 1000, 500, 100, 0 };
+        }
+
+        private void PredicitveChkChanged(object sender, EventArgs e)
+        {
+            MG.PredicitveAI = PredicitveCheckBox.Checked;
+        }
+
+        private void button_Restart_Click(object sender, EventArgs e)
+        {
+            int[] temp = MG.P;
+            MG = new MainGame();
+            MG.P = temp;
+            Diff_ChkChanged(null, null);
+            vsAI_Check(null, null);
+            UpdateVisuals();
+            button_Exit.Hide(); button_Restart.Hide();
+            GameOptions.Show();
+            TopPicture.Image = Properties.Resources.Connect4;
+            TopPicture.Invoke(new Action(TopImgScaleSmall));
+            for (int i = 1; i < 8; i++)
+            {
+                for (int j = 1; j < 7; j++)
+                {
+                    C[j][i].Hide();
+                }
+            }
+        }
+
+        private void button_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void Help_Show(object sender, EventArgs e)
+        {
+            label_Help.Show();
+            HelpPrompt(true);
+        }
+
+        private void Help_Hide(object sender, EventArgs e)
+        {
+            label_Help.Hide();
+            HelpPrompt(false);
+        }
+
+        private void HelpT_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            HelpT.Stop();
+            label_Help.Invoke(new Action(HelpResetText));
+            label_Help.Invoke(new Action(label_Help.Hide));
+            HelpPrompt(false);
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            toolTip.SetToolTip(FGameCheckBox, "Fastens animations and lowers delay of AI moves");
+            toolTip.SetToolTip(LearnMCheckBox, "Adds Tips to the match with insights on what to play");
+            toolTip.SetToolTip(PredicitveCheckBox, "Enables predicitve moves by the AI");
+            toolTip.SetToolTip(RButtonEasy, "Low chances for the AI to predict and block your moves with high delay");
+            toolTip.SetToolTip(RButtonMed, "Average chances for the AI to predict and block your moves with medium delay");
+            toolTip.SetToolTip(RButtonHard, "High chances for the AI to predict and block your moves with short delay");
+            toolTip.SetToolTip(RButtonImpossible, "100% chance for the AI to predict and block your moves with 0 delay");
+            toolTip.SetToolTip(TopPicture, "Connect 4, click to restart");
+            HelpT.Elapsed += HelpT_Elapsed;
             C.Add(new List<PictureBox> { null, C_1_0, C_2_0, C_3_0, C_4_0, C_5_0, C_6_0, C_7_0 });
             C.Add(new List<PictureBox> { null, C_1_1, C_2_1, C_3_1, C_4_1, C_5_1, C_6_1, C_7_1 });
             C.Add(new List<PictureBox> { null, C_1_2, C_2_2, C_3_2, C_4_2, C_5_2, C_6_2, C_7_2 });
@@ -561,94 +687,6 @@ namespace Connect_4
             C_7_4.MouseLeave += Col7_Leave;
             C_7_5.MouseLeave += Col7_Leave;
             C_7_6.MouseLeave += Col7_Leave;
-        }
-
-        private void vsAI_Check(object sender, EventArgs e)
-        {
-            if(AIcheckBox.Checked)
-            {
-                MG.vsAI = true;
-                Label_Diff.Enabled = true;
-                RButtonEasy.Enabled = true;
-                RButtonMed.Enabled = true;
-                RButtonHard.Enabled = true;
-                RButtonImpossible.Enabled = true;
-                PredicitveCheckBox.Enabled = true;
-                if(!RButtonImpossible.Checked)
-                    LearnMCheckBox.Enabled = true;
-            }
-            else
-            {
-                MG.vsAI = false;
-                Label_Diff.Enabled = false;
-                RButtonEasy.Enabled = false;
-                RButtonMed.Enabled = false;
-                RButtonHard.Enabled = false;
-                RButtonImpossible.Enabled = false;
-                PredicitveCheckBox.Enabled = false;
-                LearnMCheckBox.Enabled = false;
-            }
-        }
-
-        private void Diff_ChkChanged(object sender, EventArgs e)
-        {
-            if (RButtonEasy.Checked)
-            { MG.Diff = 0; LearnMCheckBox.Enabled = true; LearnMCheckBox.Checked = true; }
-            if (RButtonMed.Checked)
-            { MG.Diff = 1; LearnMCheckBox.Enabled = true; }
-            if (RButtonHard.Checked)
-            { MG.Diff = 2; LearnMCheckBox.Enabled = true; }
-            if (RButtonImpossible.Checked)
-            { MG.Diff = 3; LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; }
-        }
-
-        private void FGameChkChanged(object sender, EventArgs e)
-        {
-            if (FGameCheckBox.Checked)
-                MG.Delay = new int[] { 300, 200, 100, 0 };
-            else
-                MG.Delay = new int[] { 1000, 500, 100, 0 };
-        }
-
-        private void PredicitveChkChanged(object sender, EventArgs e)
-        {
-            MG.PredicitveAI = PredicitveCheckBox.Checked;
-        }
-
-        private void button_Restart_Click(object sender, EventArgs e)
-        {
-            int[] temp = MG.P;
-            MG = new MainGame();
-            MG.P = temp;
-            Diff_ChkChanged(null, null);
-            vsAI_Check(null, null);
-            UpdateVisuals();
-            button_Exit.Hide(); button_Restart.Hide();
-            GameOptions.Show();
-            TopPicture.Image = Properties.Resources.Connect4;
-            TopPicture.Invoke(new Action(TopImgScaleSmall));
-            for (int i = 1; i < 8; i++)
-            {
-                for (int j = 1; j < 7; j++)
-                {
-                    C[j][i].Hide();
-                }
-            }
-        }
-
-        private void button_Exit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void Help_Show(object sender, EventArgs e)
-        {
-            label_Help.Show();
-        }
-
-        private void Help_Hide(object sender, EventArgs e)
-        {
-            label_Help.Hide();
         }
 
         //Click, Hover, Leave Events
