@@ -18,6 +18,7 @@ namespace Connect_4
         public int Diff = 1;
         public List<List<int>> Case = new List<List<int>>();
         public int[] Delay = { 1000, 500, 100, 0 };
+        public int[] State = { -1, -1, -1, -1, -1, -1, -1, -1};
         double[] BlockChance = { 80, 90, 95, 100 };
         double[] FutureBlockChance = { 60, 75, 90, 100 };
         double[] PredictChance = { 70, 80, 90, 100 };
@@ -142,13 +143,47 @@ namespace Connect_4
                         FBlock[i] = 0;
                     }
                 if (output > 0 && GetLow(output) > 0)
-                    return output;
+                { while (Winner == -1) { } if (Winner == 0) return output; return 0; }
                 output = new Random().Next(1, 8); goto P;
             }
             P2:
             if (output > 0 && GetLow(output) > 0)
-                return output;
+            { while (Winner == -1) { } if(Winner == 0) return output; return 0; }
             output = new Random().Next(1, 8); goto P2;
+        }
+
+        public int CheckPossibleWin()
+        {
+            for (int y = 1; y < 7; y++)
+                for (int x = 1; x < 8; x++)
+                {
+                    CheckData[] CD = { CheckDiagDown(x, y), CheckDiagUp(x, y), CheckHorizontal(x, y), CheckVertical(x, y) };
+                    for (int i = 0; i < 4; i++)
+                        if (CD[i].Check && CD[i].Color == (P[0] + 1) )
+                        {
+                            if (GetLow(x) > 0)
+                                return x;
+                        }
+                }
+            return 0;
+        }
+
+        public int CheckPossibleLoss()
+        {
+            for (int y = 1; y < 7; y++)
+            {
+                for (int x = 1; x < 8; x++)
+                {
+                    CheckData[] CD = { CheckDiagDown(x, y), CheckDiagUp(x, y), CheckHorizontal(x, y), CheckVertical(x, y) };
+                    for (int i = 0; i < 4; i++)
+                        if (CD[i].Check && CD[i].Color != (P[0] + 1))
+                        {
+                            if (GetLow(x) > 0)
+                                return x;
+                        }
+                }
+            }
+            return 0;
         }
 
         public int CheckWin(bool VChange = true)
@@ -158,24 +193,41 @@ namespace Connect_4
             {
                 for (int x = 1; x < 8; x++)
                 {
-                    CheckData
-                    CD = CheckDiagDown(x, y, true);
-                    if (CD.Check)
-                        AssessWin(CD, ref LP);
-                    CD = CheckDiagUp(x, y, true);
-                    if (CD.Check)
-                        AssessWin(CD, ref LP);
-                    CD = CheckHorizontal(x, y, true);
-                    if (CD.Check)
-                        AssessWin(CD, ref LP);
-                    CD = CheckVertical(x, y, true);
-                    if (CD.Check)
-                        AssessWin(CD, ref LP);
+                    CheckData CD;
+                    if (y < 4 && x < 5)
+                    {
+                        CD = CheckDiagDown(x, y, true);
+                        if (CD.Check)
+                            AssessWin(CD, ref LP);
+                    }
+                    if (y > 3 && x < 5)
+                    {
+                        CD = CheckDiagUp(x, y, true);
+                        if (CD.Check)
+                            AssessWin(CD, ref LP);
+                    }
+                    if (x < 5)
+                    {
+                        CD = CheckHorizontal(x, y, true);
+                        if (CD.Check)
+                            AssessWin(CD, ref LP);
+                    }
+                    if (y < 4)
+                    {
+                        CD = CheckVertical(x, y, true);
+                        if (CD.Check)
+                            AssessWin(CD, ref LP);
+                    }
                 }
             }
             if (Winner > 0 && VChange)
+            {
+                for (int y = 1; y < 7; y++)
+                    for (int x = 1; x < 8; x++)
+                        Case[y][x] = -Case[y][x];
                 foreach (Point P in LP)
                     Case[P.Y][P.X] = Winner + 2;
+            }
             if (VChange)
                 return Winner;
             int i = Winner;

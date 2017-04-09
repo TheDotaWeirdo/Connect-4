@@ -103,6 +103,16 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Gold_Help {
+            get {
+                object obj = ResourceManager.GetObject("Gold_Help", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Gold_Red_Circle {
             get {
                 object obj = ResourceManager.GetObject("Gold_Red_Circle", resourceCulture);

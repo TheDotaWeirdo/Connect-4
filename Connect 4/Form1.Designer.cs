@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.GameOptions = new System.Windows.Forms.GroupBox();
+            this.LearnMCheckBox = new System.Windows.Forms.CheckBox();
             this.PredicitveCheckBox = new System.Windows.Forms.CheckBox();
             this.FGameCheckBox = new System.Windows.Forms.CheckBox();
             this.RButtonImpossible = new System.Windows.Forms.RadioButton();
@@ -46,6 +48,7 @@
             this.button_Restart = new System.Windows.Forms.Button();
             this.button_Exit = new System.Windows.Forms.Button();
             this.label_Help = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.LoadingBox = new System.Windows.Forms.PictureBox();
             this.TopPicture = new System.Windows.Forms.PictureBox();
             this.Turn_Right = new System.Windows.Forms.PictureBox();
@@ -99,8 +102,7 @@
             this.C_3_0 = new System.Windows.Forms.PictureBox();
             this.C_2_0 = new System.Windows.Forms.PictureBox();
             this.C_1_0 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.LearnMCheckBox = new System.Windows.Forms.CheckBox();
+            this.Help_PictureBox = new System.Windows.Forms.PictureBox();
             this.GameOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
@@ -157,7 +159,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Help_PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // GameOptions
@@ -185,6 +187,18 @@
             this.GameOptions.TabIndex = 7;
             this.GameOptions.TabStop = false;
             this.GameOptions.Text = "Game Options";
+            // 
+            // LearnMCheckBox
+            // 
+            this.LearnMCheckBox.AutoSize = true;
+            this.LearnMCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LearnMCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.LearnMCheckBox.Location = new System.Drawing.Point(50, 127);
+            this.LearnMCheckBox.Name = "LearnMCheckBox";
+            this.LearnMCheckBox.Size = new System.Drawing.Size(131, 24);
+            this.LearnMCheckBox.TabIndex = 13;
+            this.LearnMCheckBox.Text = "Learing Mode";
+            this.LearnMCheckBox.UseVisualStyleBackColor = true;
             // 
             // PredicitveCheckBox
             // 
@@ -391,14 +405,20 @@
             // label_Help
             // 
             this.label_Help.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Help.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.label_Help.Location = new System.Drawing.Point(53, 497);
+            this.label_Help.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
+            this.label_Help.Location = new System.Drawing.Point(53, 500);
             this.label_Help.Name = "label_Help";
             this.label_Help.Size = new System.Drawing.Size(334, 35);
             this.label_Help.TabIndex = 60;
             this.label_Help.Text = "Click on a column to place a token that will drop to the lowest empty space. Win " +
     "the Game by matching 4 tokens";
             this.label_Help.Visible = false;
+            // 
+            // toolTip
+            // 
+            this.toolTip.AutomaticDelay = 400;
+            this.toolTip.BackColor = System.Drawing.Color.White;
+            this.toolTip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             // 
             // LoadingBox
             // 
@@ -1037,30 +1057,18 @@
             this.C_1_0.TabStop = false;
             this.C_1_0.Visible = false;
             // 
-            // pictureBox1
+            // Help_PictureBox
             // 
-            this.pictureBox1.Image = global::Connect_4.Properties.Resources.Help;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 497);
-            this.pictureBox1.MaximumSize = new System.Drawing.Size(35, 35);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(35, 35);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 59;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseEnter += new System.EventHandler(this.Help_Show);
-            this.pictureBox1.MouseLeave += new System.EventHandler(this.Help_Hide);
-            // 
-            // LearnMCheckBox
-            // 
-            this.LearnMCheckBox.AutoSize = true;
-            this.LearnMCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LearnMCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.LearnMCheckBox.Location = new System.Drawing.Point(50, 127);
-            this.LearnMCheckBox.Name = "LearnMCheckBox";
-            this.LearnMCheckBox.Size = new System.Drawing.Size(131, 24);
-            this.LearnMCheckBox.TabIndex = 13;
-            this.LearnMCheckBox.Text = "Learing Mode";
-            this.LearnMCheckBox.UseVisualStyleBackColor = true;
+            this.Help_PictureBox.Image = global::Connect_4.Properties.Resources.Gold_Help;
+            this.Help_PictureBox.Location = new System.Drawing.Point(12, 502);
+            this.Help_PictureBox.MaximumSize = new System.Drawing.Size(30, 30);
+            this.Help_PictureBox.Name = "Help_PictureBox";
+            this.Help_PictureBox.Size = new System.Drawing.Size(30, 30);
+            this.Help_PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Help_PictureBox.TabIndex = 59;
+            this.Help_PictureBox.TabStop = false;
+            this.Help_PictureBox.MouseEnter += new System.EventHandler(this.Help_Show);
+            this.Help_PictureBox.MouseLeave += new System.EventHandler(this.Help_Hide);
             // 
             // Form1
             // 
@@ -1069,8 +1077,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(411, 544);
             this.Controls.Add(this.GameOptions);
-            this.Controls.Add(this.LoadingBox);
             this.Controls.Add(this.button_Exit);
+            this.Controls.Add(this.LoadingBox);
             this.Controls.Add(this.button_Restart);
             this.Controls.Add(this.TopPicture);
             this.Controls.Add(this.Turn_Right);
@@ -1124,7 +1132,7 @@
             this.Controls.Add(this.C_3_0);
             this.Controls.Add(this.C_2_0);
             this.Controls.Add(this.C_1_0);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.Help_PictureBox);
             this.Controls.Add(this.label_Help);
             this.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1190,9 +1198,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Help_PictureBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1266,9 +1273,10 @@
         private System.Windows.Forms.RadioButton RButtonImpossible;
         private System.Windows.Forms.CheckBox PredicitveCheckBox;
         private System.Windows.Forms.CheckBox FGameCheckBox;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox Help_PictureBox;
         private System.Windows.Forms.Label label_Help;
         private System.Windows.Forms.CheckBox LearnMCheckBox;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
