@@ -10,15 +10,18 @@ namespace Connect_4
 {
     public class MainGame
     {
+        public bool Finished = false;
+        public bool Busy = true;
         public bool vsAI = true;
         public bool PredicitveAI = true;
         public int[] P = { -1, -1 };
         public int Turn = 0;
-        public int Winner = -1;
+        public int Winner = 0;
         public int Diff = 1;
         public List<List<int>> Case = new List<List<int>>();
-        public int[] Delay = { 1000, 500, 100, 0 };
+        public int[] Delay = { 1000, 500, 100, 1 };
         public int[] State = { -1, -1, -1, -1, -1, -1, -1, -1};
+        double[] WinChance = { 90, 95, 99, 100 };
         double[] BlockChance = { 80, 90, 95, 100 };
         double[] FutureBlockChance = { 60, 75, 90, 100 };
         double[] PredictChance = { 70, 80, 90, 100 };
@@ -46,55 +49,119 @@ namespace Connect_4
 
         public int PlayAI()
         {
+            Random RND = new Random(Guid.NewGuid().GetHashCode());
             int output = 0;
-            List<int> FBlock = new List<int>();
-            if(Diff < 3)
-                Thread.Sleep(Delay[Diff]);
             //In Case of Possible Win 
-            Start: for (int y = 1; y < 7; y++)
-            {
-                for (int x = 1; x < 8; x++)
-                {
-                    CheckData[] CD = { CheckDiagDown(x, y), CheckDiagUp(x, y), CheckHorizontal(x, y), CheckVertical(x, y) };
-                    for (int i = 0; i < 4; i++) 
-                        if (CD[i].Check && CD[i].Color == (P[1]+1) && !FBlock.Contains(x))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                                goto P2;
-                        }
-                }
-            }
-            //In Case of Possible Loss
-            if (new Random().NextDouble() * 100 <= BlockChance[Diff])
+            if (RND.NextDouble() * 100 <= WinChance[Diff])
             {
                 for (int y = 1; y < 7; y++)
                 {
                     for (int x = 1; x < 8; x++)
                     {
-                        CheckData[] CD = { CheckDiagDown(x, y), CheckDiagUp(x, y), CheckHorizontal(x, y), CheckVertical(x, y) };
-                        for (int i = 0; i < 4; i++)
-                            if (CD[i].Check && CD[i].Color != (P[1] + 1) && !FBlock.Contains(x))
-                            {
-                                output = x;
-                                if (GetLow(output) > 0)
-                                    goto P2;
-                            }
+                        CheckData CD;
+                        CD = CheckDiagDown(x, y);
+                        if (CD.Check && CD.Color == (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                        CD = CheckDiagUp(x, y);
+                        if (CD.Check && CD.Color == (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                        CD = CheckHorizontal(x, y);
+                        if (CD.Check && CD.Color == (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                        CD = CheckVertical(x, y);
+                        if (CD.Check && CD.Color == (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
                     }
                 }
             }
+            //In Case of Possible Loss
+            if (RND.NextDouble() * 100 <= BlockChance[Diff])
+            {
+                for (int y = 1; y < 7; y++)
+                {
+                    for (int x = 1; x < 8; x++)
+                    {
+                        CheckData CD;
+                        CD = CheckDiagDown(x, y);
+                        if (CD.Check && CD.Color != (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                        CD = CheckDiagUp(x, y);
+                        if (CD.Check && CD.Color != (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                        CD = CheckHorizontal(x, y);
+                        if (CD.Check && CD.Color != (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                        CD = CheckVertical(x, y);
+                        if (CD.Check && CD.Color != (P[1] + 1))
+                        {
+                            output = x;
+                            if (GetLow(output) > 0)
+                            { while (Busy) { } if (Finished) return 0; return output; }
+                        }
+                    }
+                }
+            }
+            P:
             if (PredicitveAI)
             {
+                for (int x = 1; x < 8; x++)
+                {
+                    if (State[x] <= 0)
+                    {
+                        int y = GetLow(x);
+                        if (y > 1)
+                        {
+                            Case[y][x] = P[1] + 1; Case[y - 1][x] = P[0] + 1;
+                            if (CheckWin(false) - 1 == P[0])
+                                State[x] = 1;
+                            else
+                                State[x] = 0;
+                            Case[y][x] = Case[y - 1][x] = 0;
+                        }
+                        else if (y == 1)
+                            State[x] = 2;
+                        else
+                            State[x] = 3;
+                    }
+                }
                 //Predictive Moves
                 List<int>[] Moves = { new List<int>(), new List<int>() };
-                if (new Random().NextDouble() * 100 <= PredictChance[Diff])
+                if (RND.NextDouble() * 100 <= PredictChance[Diff])
                 {
                     for (int y = 1; y < 7; y++)
                     {
                         for (int x = 1; x < 8; x++)
                         {
                             CheckData CD = PredictiveCheck(x, y);
-                            if (CD.Check && !FBlock.Contains(CD.Color))
+                            if (CD.Check && (CheckElligibility(CD.Color) || RND.NextDouble() * 100 <= FutureBlockChance[Diff])) 
                             {
                                 Moves[Case[y][x] - 1].Add(CD.Color);
                             }
@@ -103,53 +170,30 @@ namespace Connect_4
                 }
                 if (Moves[0].Count > 0 || Moves[1].Count > 0)
                 {
-                    if (new Random().NextDouble() > .65)
+                    if (RND.NextDouble() > .65)
                     {
                         if (Moves[P[1]].Count > 0)
-                            output = Moves[P[1]][new Random().Next(Moves[P[1]].Count)];
+                            output = Moves[P[1]][RND.Next(Moves[P[1]].Count)];
                         else if (Moves[P[0]].Count > 0)
-                            output = Moves[P[0]][new Random().Next(Moves[P[0]].Count)];
+                            output = Moves[P[0]][RND.Next(Moves[P[0]].Count)];
                     }
                     else if (Moves[P[0]].Count > 0)
-                        output = Moves[P[0]][new Random().Next(Moves[P[0]].Count)];
+                        output = Moves[P[0]][RND.Next(Moves[P[0]].Count)];
                     else if (Moves[P[1]].Count > 0)
-                        output = Moves[P[1]][new Random().Next(Moves[P[1]].Count)];
+                        output = Moves[P[1]][RND.Next(Moves[P[1]].Count)];
                 }
-                P:
                 //Future Block Prediction
-                if (new Random().NextDouble() * 100 <= FutureBlockChance[Diff] && FBlock.Count < 7)
-                {
-                    int y = GetLow(output);
-                    if (y > 1)
-                    {
-                        Case[y][output] = P[1] + 1; Case[y - 1][output] = P[0] + 1;
-                        if (CheckWin(false) - 1 == P[0])
-                        {
-                            FBlock.Add(output);
-                            Case[y][output] = Case[y - 1][output] = 0;
-                            goto Start;
-                        }
-                        Case[y][output] = Case[y - 1][output] = 0;
-                    }
-                    else
-                    {
-                        FBlock.Add(output);
-                        goto Start;
-                    }
+                if (RND.NextDouble() * 100 <= FutureBlockChance[Diff])
+                {                    
+                    if (State[output] == 1 && (State.Contains(0) || State.Contains(2)))
+                    { output = GetUnblocked(); goto P; }
+                    else if (State[output] == 2 && State.Contains(0))
+                    { output = GetUnblocked(); goto P; }
                 }
-                else if (FBlock.Count > 6)
-                    for (int i = 0; i < FBlock.Count; i++)
-                    {
-                        FBlock[i] = 0;
-                    }
-                if (output > 0 && GetLow(output) > 0)
-                { while (Winner == -1) { } if (Winner == 0) return output; return 0; }
-                output = new Random().Next(1, 8); goto P;
             }
-            P2:
             if (output > 0 && GetLow(output) > 0)
-            { while (Winner == -1) { } if(Winner == 0) return output; return 0; }
-            output = new Random().Next(1, 8); goto P2;
+            { while (Busy) { } if(Finished) return 0; return output; }
+            output = RND.Next(1, 8); goto P;
         }
 
         public int CheckPossibleWin()
@@ -188,6 +232,7 @@ namespace Connect_4
 
         public int CheckWin(bool VChange = true)
         {
+            int i = 0;
             List<Point> LP = new List<Point>();
             for (int y = 1; y < 7; y++)
             {
@@ -198,40 +243,38 @@ namespace Connect_4
                     {
                         CD = CheckDiagDown(x, y, true);
                         if (CD.Check)
-                            AssessWin(CD, ref LP);
+                            i = AssessWin(CD, ref LP);
                     }
                     if (y > 3 && x < 5)
                     {
                         CD = CheckDiagUp(x, y, true);
                         if (CD.Check)
-                            AssessWin(CD, ref LP);
+                            i = AssessWin(CD, ref LP);
                     }
                     if (x < 5)
                     {
                         CD = CheckHorizontal(x, y, true);
                         if (CD.Check)
-                            AssessWin(CD, ref LP);
+                            i = AssessWin(CD, ref LP);
                     }
                     if (y < 4)
                     {
                         CD = CheckVertical(x, y, true);
                         if (CD.Check)
-                            AssessWin(CD, ref LP);
+                            i = AssessWin(CD, ref LP);
                     }
                 }
             }
-            if (Winner > 0 && VChange)
+            if (i > 0 && VChange)
             {
+                Finished = true;
+                Winner = i;
                 for (int y = 1; y < 7; y++)
                     for (int x = 1; x < 8; x++)
                         Case[y][x] = -Case[y][x];
                 foreach (Point P in LP)
-                    Case[P.Y][P.X] = Winner + 2;
+                    Case[P.Y][P.X] = i + 2;
             }
-            if (VChange)
-                return Winner;
-            int i = Winner;
-            Winner = 0;
             return i;
         }
 
@@ -251,7 +294,7 @@ namespace Connect_4
         {
             for (int i = 0; i < CD.Points.Count; i++)
                 LP.Add(CD.Points[i]);  
-            return Winner = CD.Color;
+            return CD.Color;
         }
 
         public int GetLow(int col)
@@ -262,6 +305,23 @@ namespace Connect_4
                     return i;
             }
             return 0;
+        }
+
+        private int GetUnblocked()
+        {
+            int i = 0;
+            if (State.Contains(0))
+                while (State[i] != 0)
+                    i = new Random().Next(1, 8);
+            else if (State.Contains(2))
+                while (State[i] != 2)
+                    i = new Random().Next(1, 8);
+            return i;
+        }
+
+        private bool CheckElligibility(int output)
+        {
+            return !((State[output] == 1 && (State.Contains(0) || State.Contains(2))) || (State[output] == 2 && State.Contains(0)));
         }
 
         CheckData CheckHorizontal(int x, int y, bool win = false)

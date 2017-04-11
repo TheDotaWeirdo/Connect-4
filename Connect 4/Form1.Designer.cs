@@ -103,6 +103,7 @@
             this.C_2_0 = new System.Windows.Forms.PictureBox();
             this.C_1_0 = new System.Windows.Forms.PictureBox();
             this.Help_PictureBox = new System.Windows.Forms.PictureBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.GameOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
@@ -1070,12 +1071,24 @@
             this.Help_PictureBox.MouseEnter += new System.EventHandler(this.Help_Show);
             this.Help_PictureBox.MouseLeave += new System.EventHandler(this.Help_Hide);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(12, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 61;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(411, 544);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.GameOptions);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.LoadingBox);
@@ -1200,6 +1213,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Help_PictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1277,6 +1291,7 @@
         private System.Windows.Forms.Label label_Help;
         private System.Windows.Forms.CheckBox LearnMCheckBox;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
