@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Connect4.ico</ApplicationIcon>
+    <ApplicationIcon>Connect-4.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -176,7 +176,16 @@
     <None Include="Gold_Help.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Arrow.gif" />
+    <None Include="Arrow_Blue.gif" />
+    <None Include="Arrow_Red.gif" />
+    <None Include="Connect-4.png" />
+    <Content Include="Connect-4.ico" />
     <Content Include="Connect4.ico" />
+    <None Include="Resources\Arrow.bmp" />
+    <None Include="Large_White_Circle.png" />
+    <None Include="Large_Select_Red_Circle.png" />
+    <None Include="Large_Select_Blue_Circle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

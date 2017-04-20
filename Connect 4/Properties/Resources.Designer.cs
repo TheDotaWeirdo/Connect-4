@@ -63,9 +63,19 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Arrow {
+        internal static System.Drawing.Bitmap Arrow_Blue {
             get {
-                object obj = ResourceManager.GetObject("Arrow", resourceCulture);
+                object obj = ResourceManager.GetObject("Arrow_Blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Arrow_Red {
+            get {
+                object obj = ResourceManager.GetObject("Arrow_Red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -76,6 +86,16 @@ namespace Connect_4.Properties {
         internal static System.Drawing.Bitmap Blue_Circle {
             get {
                 object obj = ResourceManager.GetObject("Blue_Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Connect_4 {
+            get {
+                object obj = ResourceManager.GetObject("Connect_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +186,36 @@ namespace Connect_4.Properties {
         internal static System.Drawing.Bitmap Large_Red_Circle {
             get {
                 object obj = ResourceManager.GetObject("Large_Red_Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Large_Select_Blue_Circle {
+            get {
+                object obj = ResourceManager.GetObject("Large_Select_Blue_Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Large_Select_Red_Circle {
+            get {
+                object obj = ResourceManager.GetObject("Large_Select_Red_Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Large_White_Circle {
+            get {
+                object obj = ResourceManager.GetObject("Large_White_Circle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

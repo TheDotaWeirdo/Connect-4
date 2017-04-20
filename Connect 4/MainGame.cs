@@ -14,17 +14,20 @@ namespace Connect_4
         public bool Busy = true;
         public bool vsAI = true;
         public bool PredicitveAI = true;
+        public bool StrategicAI = false;
         public int[] P = { -1, -1 };
         public int Turn = 0;
         public int Winner = 0;
         public int Diff = 1;
         public List<List<int>> Case = new List<List<int>>();
-        public int[] Delay = { 1000, 500, 100, 1 };
-        public int[] State = { -1, -1, -1, -1, -1, -1, -1, -1};
-        double[] WinChance = { 90, 95, 99, 100 };
-        double[] BlockChance = { 80, 90, 95, 100 };
-        double[] FutureBlockChance = { 60, 75, 90, 100 };
-        double[] PredictChance = { 70, 80, 90, 100 };
+        public int[] Delay = { 1200, 800, 400, 200, 0 };
+        public int[] State = { -1, -1, -1, -1, -1, -1, -1, -1}; // -3: StrategicBlock| -2: FutureStrategicBlock | -1: unknown | 0: Free | 1: FutureBlocked | 2: NearlyFull | 3: Full | 4: FutureMistake | 5: FutureBlocked&Mistake 
+        double[] WinChance = { 90, 92.5, 95, 97.5, 100 };
+        double[] BlockChance = { 80, 85, 90, 95, 100 };
+        double[] FutureBlockChance = { 40, 55, 70, 85, 100 };
+        double[] FutureMistakeChance = { 20, 40, 60, 80, 100 };
+        double[] PredictChance = { 60, 70, 80, 90, 100 };
+        double[] StrategicMovesChance = { 0, 25, 50, 75, 100 };
 
         class CheckData
         {
@@ -50,89 +53,28 @@ namespace Connect_4
         public int PlayAI()
         {
             Random RND = new Random(Guid.NewGuid().GetHashCode());
+            CheckData[] CD;
             int output = 0;
-            //In Case of Possible Win 
-            if (RND.NextDouble() * 100 <= WinChance[Diff])
+            List<int> PossWins = new List<int>(), PossLoss = new List<int>();
+            //In Case of Possible Win or Loss
+            for (int x = 1; x < 8; x++)
             {
-                for (int y = 1; y < 7; y++)
-                {
-                    for (int x = 1; x < 8; x++)
+                if(GetLow(x) > 0)
+                    for (int y = 1; y < 7; y++)
                     {
-                        CheckData CD;
-                        CD = CheckDiagDown(x, y);
-                        if (CD.Check && CD.Color == (P[1] + 1))
+                        CD = new CheckData[] { CheckDiagDown(x, y), CheckDiagUp(x, y), CheckHorizontal(x, y), CheckVertical(x, y) };
+                        for (int i = 0; i < 4; i++)
                         {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                        CD = CheckDiagUp(x, y);
-                        if (CD.Check && CD.Color == (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                        CD = CheckHorizontal(x, y);
-                        if (CD.Check && CD.Color == (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                        CD = CheckVertical(x, y);
-                        if (CD.Check && CD.Color == (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
+                            if (CD[i].Check)
+                            {
+                                if (CD[i].Color == (P[1] + 1) && GetLow(x) > 0)
+                                    PossWins.Add(x);
+                                else if (CD[i].Color != (P[1] + 1) && GetLow(x) > 0)
+                                    PossLoss.Add(x);
+                            }
                         }
                     }
-                }
-            }
-            //In Case of Possible Loss
-            if (RND.NextDouble() * 100 <= BlockChance[Diff])
-            {
-                for (int y = 1; y < 7; y++)
-                {
-                    for (int x = 1; x < 8; x++)
-                    {
-                        CheckData CD;
-                        CD = CheckDiagDown(x, y);
-                        if (CD.Check && CD.Color != (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                        CD = CheckDiagUp(x, y);
-                        if (CD.Check && CD.Color != (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                        CD = CheckHorizontal(x, y);
-                        if (CD.Check && CD.Color != (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                        CD = CheckVertical(x, y);
-                        if (CD.Check && CD.Color != (P[1] + 1))
-                        {
-                            output = x;
-                            if (GetLow(output) > 0)
-                            { while (Busy) { } if (Finished) return 0; return output; }
-                        }
-                    }
-                }
-            }
-            P:
-            if (PredicitveAI)
-            {
-                for (int x = 1; x < 8; x++)
+                if(PredicitveAI)
                 {
                     if (State[x] <= 0)
                     {
@@ -144,6 +86,9 @@ namespace Connect_4
                                 State[x] = 1;
                             else
                                 State[x] = 0;
+                            Case[y][x] = P[0] + 1; Case[y - 1][x] = P[1] + 1;
+                            if (CheckWin(false) - 1 == P[1])
+                                State[x] += 4;
                             Case[y][x] = Case[y - 1][x] = 0;
                         }
                         else if (y == 1)
@@ -152,25 +97,52 @@ namespace Connect_4
                             State[x] = 3;
                     }
                 }
+            }
+            if (PossWins.Count > 0 && RND.NextDouble() * 100 <= WinChance[Diff]) 
+            { output = PossWins[RND.Next(0, PossWins.Count)]; goto EndPoint; }
+            else if(PossLoss.Count > 0 && RND.NextDouble() * 100 <= BlockChance[Diff])
+            { output = PossLoss[RND.Next(0, PossLoss.Count)]; goto EndPoint; }
+            if(StrategicAI)
+                for (int x = 1; x < 8; x++)
+                {
+                    if (State[x] == 0)
+                        if (StrategicHorizontalCheck(x))
+                            State[x] = -5;
+                    if (State[x] == 0)
+                        if (StrategicCheck(x, 1))
+                            State[x] = -4;
+                    if (State[x] == 0)
+                        if (StrategicCheck(x, 0))
+                            State[x] = -3;
+                    if (State[x] == 0)
+                        if (FutureStrategicCheck(x))
+                            State[x] = -2;
+                }
+            PredictivePoint:
+            if (PredicitveAI)
+            {                
+                if(StrategicAI && (State.Contains(-2) || State.Contains(-3) || State.Contains(-4) || State.Contains(-5)))
+                { output = GetUnblocked(0); goto EndPoint; }
                 //Predictive Moves
                 List<int>[] Moves = { new List<int>(), new List<int>() };
                 if (RND.NextDouble() * 100 <= PredictChance[Diff])
                 {
-                    for (int y = 1; y < 7; y++)
+                    for (int x = 1; x < 8; x++)
                     {
-                        for (int x = 1; x < 8; x++)
-                        {
-                            CheckData CD = PredictiveCheck(x, y);
-                            if (CD.Check && (CheckElligibility(CD.Color) || RND.NextDouble() * 100 <= FutureBlockChance[Diff])) 
+                        if(GetLow(x) > 0)
+                            for (int y = 1; y < 7; y++)
                             {
-                                Moves[Case[y][x] - 1].Add(CD.Color);
+                                CheckData cd = PredictiveCheck(x, y);
+                                if (RND.NextDouble() * 100 <= FutureBlockChance[Diff] && cd.Check && CheckElligibility(cd.Color)) 
+                                {
+                                    Moves[Case[y][x] - 1].Add(cd.Color);
+                                }
                             }
-                        }
                     }
                 }
                 if (Moves[0].Count > 0 || Moves[1].Count > 0)
                 {
-                    if (RND.NextDouble() > .65)
+                    if (RND.NextDouble() > .75)
                     {
                         if (Moves[P[1]].Count > 0)
                             output = Moves[P[1]][RND.Next(Moves[P[1]].Count)];
@@ -182,18 +154,22 @@ namespace Connect_4
                     else if (Moves[P[1]].Count > 0)
                         output = Moves[P[1]][RND.Next(Moves[P[1]].Count)];
                 }
-                //Future Block Prediction
-                if (RND.NextDouble() * 100 <= FutureBlockChance[Diff])
-                {                    
-                    if (State[output] == 1 && (State.Contains(0) || State.Contains(2)))
-                    { output = GetUnblocked(); goto P; }
-                    else if (State[output] == 2 && State.Contains(0))
-                    { output = GetUnblocked(); goto P; }
-                }
+                //Strategic Moves
+                //if(StrategicAI && RND.NextDouble()*100 <= StrategicMovesChance[Diff])
+                //{
+                //    if (FutureStrategicCheck(output))
+                //        State[output] = (State[output] <= 0 || State[output] == 2) ? 6 : State[output];
+                //}
+                //Future Predictions
+                if (!CheckElligibility(output) && State[output]==1&& RND.NextDouble() * 100 <= FutureBlockChance[Diff])// State[output] == 1 && (State.Contains(0) || State.Contains(2)))
+                { output = GetUnblocked(output); goto PredictivePoint; }
+                else if (!CheckElligibility(output) && (State[output] == 4 || State[output]==5) && RND.NextDouble() * 100 <= FutureMistakeChance[Diff])//State[output] == 2 && State.Contains(0))
+                { output = GetUnblocked(output); goto PredictivePoint; }
             }
+            EndPoint:
             if (output > 0 && GetLow(output) > 0)
-            { while (Busy) { } if(Finished) return 0; return output; }
-            output = RND.Next(1, 8); goto P;
+            { while (Busy) { Thread.Sleep(1); } if(Finished) return 0; return output; }            
+            output = RND.Next(1, 8); goto PredictivePoint;
         }
 
         public int CheckPossibleWin()
@@ -307,21 +283,142 @@ namespace Connect_4
             return 0;
         }
 
-        private int GetUnblocked()
+        private int GetUnblocked(int output)
         {
-            int i = 0;
-            if (State.Contains(0))
-                while (State[i] != 0)
-                    i = new Random().Next(1, 8);
-            else if (State.Contains(2))
-                while (State[i] != 2)
-                    i = new Random().Next(1, 8);
+            int i = output;
+            while(!CheckElligibility(i))
+            { i = new Random().Next(1, 8); }
             return i;
         }
 
         private bool CheckElligibility(int output)
         {
-            return !((State[output] == 1 && (State.Contains(0) || State.Contains(2))) || (State[output] == 2 && State.Contains(0)));
+            if (State[output] == -5)
+                return true;
+            if (State.Contains(-5) && (new Random().NextDouble() <= Convert.ToDouble(Diff / 4)))
+                return false;
+            if (State[output] == -4)
+                return true;
+            if (State.Contains(-4) && (new Random().NextDouble() <= Convert.ToDouble(Diff / 4.5)))
+                return false;
+            if (State[output] == -3)
+                return true;
+            if (State.Contains(-3) && (new Random().NextDouble() <= Convert.ToDouble(Diff / 4.5)))
+                return false;
+            if (State[output] == 0)
+                return true;
+            if (State.Contains(0) || State[output] == 3) 
+                return false;
+            if (State[output] == 2)
+                return true;
+            if (State.Contains(2))
+                return false;
+            if (State[output] == -2)
+                return true;
+            if (State.Contains(-2))
+                return false;
+            if (State[output] == 4)
+                return true;
+            if (State.Contains(4))
+                return false;
+            return true;
+        }
+
+        private bool FutureStrategicCheck(int x)
+        {
+            int FutureBlocksCount = CountBlocks(State);
+            int[] SaveState = new int[8]; State.CopyTo(SaveState, 0);
+            int Y = GetLow(x); if (Y < 2) return false;
+            Case[Y][x] = P[1] + 1;
+            Case[Y - 1][x] = P[0] + 1;
+            for (int i = 1; i < 8; i++)
+            {
+                int y = GetLow(i);
+                if (y > 1)
+                {
+                    Case[y][i] = P[1] + 1; Case[y - 1][i] = P[0] + 1;
+                    if (CheckWin(false) - 1 == P[0])
+                        SaveState[i] = 1;
+                    else
+                        SaveState[i] = 0;
+                    Case[y][i] = P[0] + 1; Case[y - 1][i] = P[1] + 1;
+                    if (CheckWin(false) - 1 == P[1])
+                        SaveState[i] += 4;
+                    Case[y][i] = Case[y - 1][i] = 0;
+                }
+                else if (y == 1)
+                    SaveState[i] = 2;
+                else
+                    SaveState[i] = 3;
+            }
+            int FBC = CountBlocks(SaveState);
+            Case[Y][x] = 0;
+            Case[Y - 1][x] = 0;
+            if (FutureBlocksCount < FBC)
+                return true;
+            return false;
+        }
+
+        private bool StrategicCheck(int x, int ID)
+        {
+            int FutureBlocksCount = CountBlocks(State);
+            int[] SaveState = new int[8]; State.CopyTo(SaveState, 0);
+            int Y = GetLow(x); if (Y < 1) return false;
+            Case[Y][x] = P[ID] + 1;
+            for (int i = 1; i < 8; i++)
+            {
+                int y = GetLow(i);
+                if (y > 1)
+                {
+                    Case[y][i] = P[1] + 1; Case[y - 1][i] = P[0] + 1;
+                    if (CheckWin(false) - 1 == P[0])
+                        SaveState[i] = 1;
+                    else
+                        SaveState[i] = 0;
+                    Case[y][i] = P[0] + 1; Case[y - 1][i] = P[1] + 1;
+                    if (CheckWin(false) - 1 == P[1])
+                        SaveState[i] += 4;
+                    Case[y][i] = Case[y - 1][i] = 0;
+                }
+                else if (y == 1)
+                    SaveState[i] = 2;
+                else
+                    SaveState[i] = 3;
+            }
+            int FBC = CountBlocks(SaveState);
+            Case[Y][x] = 0;
+            if (FutureBlocksCount < FBC)
+                return true;
+            return false;
+        }
+
+        private bool StrategicHorizontalCheck(int x)
+        {
+            int Y = GetLow(x); if (Y < 1) return false;
+            Case[Y][x] = P[0] + 1;
+            for (int i = 1; i < 8; i++)
+            {
+                if (i - 3 > 0)
+                    if (Case[Y][i] == 0 && Case[Y][i - 3] == P[0] + 1 && Case[Y][i - 3] == Case[Y][i - 2] && Case[Y][i - 2] == Case[Y][i - 1])
+                        if(GetLow(i) == GetLow(i - 1) && GetLow(i) == GetLow(i - 2)&& GetLow(i) == GetLow(i - 3))
+                            { Case[Y][x] = 0; return true; }
+                if (i + 3 < 8)
+                    if (Case[Y][i] == 0 && Case[Y][i + 3] == P[0] + 1 && Case[Y][i + 3] == Case[Y][i + 2] && Case[Y][i + 2] == Case[Y][i + 1])
+                        if (GetLow(i) == GetLow(i + 1) && GetLow(i) == GetLow(i + 2) && GetLow(i) == GetLow(i + 3))
+                            { Case[Y][x] = 0; return true; }
+            }
+            Case[Y][x] = 0;
+            return false;
+        }
+
+
+        private int CountBlocks(int[] st)
+        {
+            int o = 0;
+            foreach (int i in st)
+                if (i == 1 || i == 4 || i == 5)
+                    o++;
+            return o;
         }
 
         CheckData CheckHorizontal(int x, int y, bool win = false)
@@ -506,8 +603,13 @@ namespace Connect_4
                         {
                             if (!(i == 0 && j == 0) && Case[y][x] == Case[y + i][x + j])
                             {
-                                if ((Case[y + i + i][x + j + j] == 0 && GetLow(x + j + j) == y + i + i) && (Case[y - i][x - j] == 0 && GetLow(x - j) == y - i))
+                                if (Case[y + i + i][x + j + j] == 0 && GetLow(x + j + j) == (y + i + i) && x + j + j != 0) 
                                     return new CheckData(true, x + j + j);
+                            }
+                            if (!(i == 0 && j == 0) && Case[y][x] == Case[y + i + i][x + j + i])
+                            {
+                                if (Case[y + i][x + j] == 0 && GetLow(x + j) == (y + i) && x + j != 0)
+                                    return new CheckData(true, x + j);
                             }
                         }
                         catch(Exception) { }

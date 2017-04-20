@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Connect_4.Properties.Resources;
 
 namespace Connect_4
 {
@@ -16,15 +17,11 @@ namespace Connect_4
         int CurrentMouseIndex = 0;
         public MainGame MG = new MainGame();
         public List<List<PictureBox>> C = new List<List<PictureBox>>();
-        public Bitmap W = Properties.Resources.White_Circle;
-        public Bitmap A = Properties.Resources.Arrow;
-        public Bitmap[] LG = { Properties.Resources.Large_Gold_Red_Circle, Properties.Resources.Large_Gold_Blue_Circle };
-        public Bitmap[] L = { Properties.Resources.Large_Red_Circle, Properties.Resources.Large_Blue_Circle };
-        public Bitmap[] G = { Properties.Resources.Gold_Red_Circle, Properties.Resources.Gold_Blue_Circle };
-        public Bitmap[] RB = { Properties.Resources.Red_Circle, Properties.Resources.Blue_Circle };
-        public Bitmap[] TRB = { Properties.Resources.T_Red_Circle, Properties.Resources.T_Blue_Circle };
-        public Bitmap[] Case = { Properties.Resources.White_Circle, Properties.Resources.Red_Circle, Properties.Resources.Blue_Circle, Properties.Resources.Gold_Red_Circle, Properties.Resources.Gold_Blue_Circle };
-        delegate void ShowArrowDelegate();
+        public Bitmap W = White_Circle;
+        public Bitmap[] ArrowRB = { Arrow_Red, Arrow_Blue };
+        public Bitmap[] RB = { Red_Circle, Blue_Circle };
+        public Bitmap[] TRB = { T_Red_Circle, T_Blue_Circle };
+        public Bitmap[] Case = { White_Circle, Red_Circle, Blue_Circle, Gold_Red_Circle, Gold_Blue_Circle };
         PictureBox tempPBox;
         Bitmap tempBitmap;
         int tempInt, tempInt2, LossHelps = 0;
@@ -43,19 +40,19 @@ namespace Connect_4
             {
                 if (LearnMCheckBox.Checked && MG.vsAI)
                 {
-                    if (Helps[0] != 0 && Helps[0] != index)
+                    if (Helps[0] != 0 && Helps[0] != index && !AImove)
                     {
                         Cursor.Position = new Point(C[2][Helps[0]].Location.X + ActiveForm.Location.X + 25, 10 + C[2][Helps[0]].Location.Y + ActiveForm.Location.Y);
                         tempInt = Helps[0];
                         label_Help.Invoke(new Action(HelpWinText));
                         label_Help.Invoke(new Action(label_Help.Show));
                         HelpT.Stop();
-                        HelpT.Interval = 7500;
+                        HelpT.Interval = 10000;
                         HelpT.Start();
                         HelpPrompt(true);
                         return;
                     }
-                    else if (Helps[1] != 0 && Helps[1] != index && LossHelps < 5 - MG.Diff && !AImove)
+                    else if (Helps[0] == 0 && Helps[1] != 0 && Helps[1] != index && LossHelps < 5 - MG.Diff && !AImove)
                     {
                         Cursor.Position = new Point(C[2][Helps[1]].Location.X + ActiveForm.Location.X + 25, 10 + C[2][Helps[1]].Location.Y + ActiveForm.Location.Y);
                         LossHelps++;
@@ -63,25 +60,50 @@ namespace Connect_4
                         label_Help.Invoke(new Action(HelpLossText));
                         label_Help.Invoke(new Action(label_Help.Show));
                         HelpT.Stop();
-                        HelpT.Interval = 7500;
+                        HelpT.Interval = 10000;
                         HelpT.Start();
                         HelpPrompt(true);
                         return;
                     }
                 }
                 System.Timers.Timer T = new System.Timers.Timer(27.5);
-                if (FGameCheckBox.Checked)
-                    T.Interval = 15;
                 MG.Case[Cap][index] = MG.Turn + 1;
                 MG.State[index] = -1;
                 MG.Busy = true;
+                if (FGameCheckBox.Checked)
+                {
+                    C[0][index].Invoke(new Action(C[0][index].Hide));
+                    if (!MG.vsAI)
+                        for (int I = 1; I < 8; I++)
+                            C[0][I].Image = ArrowRB[(MG.Turn == 0) ? 1 : 0];// MG.P[(MG.Turn == 0) ? 1 : 0]];
+                    try { C[Cap][index].Image = RB[MG.Turn]; }
+                    catch (InvalidOperationException)
+                    {
+                        tempPBox = C[Cap][index];
+                        tempBitmap = RB[MG.Turn];
+                        C[Cap][index].Invoke(new Action(UpdateControl));
+                    }
+                    if (MG.vsAI && MG.Turn == MG.P[0])
+                    {
+                        Thread workingThread = new Thread(new ThreadStart(PlayAI))
+                        { IsBackground = true, Priority = ThreadPriority.BelowNormal };
+                        workingThread.Start();
+                    }
+                    PlayEnd(index);
+                    return;
+                }
                 //Point P = Cursor.Position;
                 //Cursor.Position = new Point(0, 0);
                 //Cursor.Position = P;
-                lock (C[Cap][index])
-                    C[Cap][index].Image = W;
-                lock (C[0][index])
+                tempBitmap = W;
+                tempPBox = C[Cap][index];
+                //lock (C[Cap][index])
+                    C[Cap][index].Invoke(new Action(UpdateControl));
+                //lock (C[0][index])
                     C[0][index].Invoke(new Action(C[0][index].Hide));
+                if (!MG.vsAI)
+                    for (int I = 1; I < 8; I++)
+                        C[0][I].Image = ArrowRB[(MG.Turn == 0) ? 1 : 0];//[MG.P[(MG.Turn == 0) ? 1 : 0]];
                 T.Start();
                 T.Elapsed += (s,e) => 
                 {
@@ -107,7 +129,8 @@ namespace Connect_4
                             {
                                 tempPBox = C[i][index];
                                 tempBitmap = TRB[MG.Turn];
-                                C[i][index].Invoke(new Action(UpdateControl));
+                                if(i>0)
+                                    C[i][index].Invoke(new Action(UpdateControl));
                             }
                         }
                     }
@@ -125,11 +148,10 @@ namespace Connect_4
                     }
                     i++;
                 };
-
                 if (MG.vsAI && MG.Turn == MG.P[0])
                 {
                     Thread workingThread = new Thread(new ThreadStart(PlayAI))
-                    { IsBackground = true };
+                    { IsBackground = true, Priority = ThreadPriority.BelowNormal };
                     workingThread.Start();
                 }
             }
@@ -142,7 +164,7 @@ namespace Connect_4
                 C[0][index].Invoke(new Action(C[0][index].Show));
                 int i = MG.GetLow(index);
                 lock (C[i][index])
-                { C[i][index].Image = TRB[MG.P[MG.Turn]]; }
+                { if(i>0) C[i][index].Image = TRB[MG.Turn]; }
                 /*tempPBox = C[i][index];
                 tempBitmap = TRB[MG.P[MG.Turn]];
                 C[i][index].Invoke(new Action(UpdateControl));*/
@@ -158,7 +180,7 @@ namespace Connect_4
                 C[0][index].Invoke(new Action(C[0][index].Hide));
                 int i = MG.GetLow(index);
                 lock (C[i][index])
-                { C[i][index].Image = W; }
+                { if (i > 0) C[i][index].Image = W; }
                 /*tempPBox = C[i][index];
                 tempBitmap = W;
                 C[i][index].Invoke(new Action(UpdateControl));*/
@@ -167,26 +189,30 @@ namespace Connect_4
 
         private void PlayAI()
         {
-            if(MG.Diff == 3)
+            try
             {
-                int i = MG.PlayAI();
-                if (i > 0)
-                    Col_Click(i, true);
-            }
-            else
-            {
-                System.Timers.Timer T = new System.Timers.Timer(MG.Delay[MG.Diff]);
-                T.Start();
-                int i = -1;
-                T.Elapsed += (s, e) =>
+                if (MG.Diff == 4)
                 {
-                    T.Dispose();
-                    while (i == -1) { }
+                    int i = MG.PlayAI();
                     if (i > 0)
                         Col_Click(i, true);
-                };
-                i = MG.PlayAI();
+                }
+                else
+                {
+                    System.Timers.Timer T = new System.Timers.Timer(MG.Delay[MG.Diff]);
+                    T.Start();
+                    int i = -1;
+                    T.Elapsed += (s, e) =>
+                    {
+                        T.Dispose();
+                        while (i == -1) { }
+                        if (i > 0)
+                            Col_Click(i, true);
+                    };
+                    i = MG.PlayAI();
+                }
             }
+            catch (IndexOutOfRangeException) { }
         }
 
         private void PlayEnd(int index)
@@ -195,9 +221,9 @@ namespace Connect_4
             {
                 UpdateVisuals();
                 if (MG.Winner == 1)
-                    TopPicture.Image = Properties.Resources.Win_Red;
+                    TopPicture.Image = Win_Red;
                 else
-                    TopPicture.Image = Properties.Resources.Win_Blue;
+                    TopPicture.Image = Win_Blue;
                 TopPicture.Invoke(new Action(TopImgScaleBig));
                 button_Exit.Invoke(new Action(button_Exit.Show));
                 button_Restart.Invoke(new Action(button_Restart.Show));
@@ -207,7 +233,7 @@ namespace Connect_4
             else if (MG.CheckTie())
             {
                 UpdateVisuals();
-                TopPicture.Image = Properties.Resources.Win_Tie;
+                TopPicture.Image = Win_Tie;
                 TopPicture.Invoke(new Action(TopImgScaleBig));
                 button_Exit.Invoke(new Action(button_Exit.Show));
                 button_Restart.Invoke(new Action(button_Restart.Show));
@@ -216,10 +242,10 @@ namespace Connect_4
             }
             else
             {
-                Point P = Cursor.Position;
-                if (P.X != 0 && P.Y != 0) 
-                Cursor.Position = new Point(0, 0);
-                Cursor.Position = P;
+                //Point P = Cursor.Position;
+                //if (P.X != 0 && P.Y != 0) 
+                //Cursor.Position = new Point(0, 0);
+                //Cursor.Position = P;
                 MG.Turn = (MG.Turn == 0) ? 1 : 0;
                 //if (CurrentMouseIndex > 0 && (MG.Turn == MG.P[0] || !MG.vsAI))
                 //    Col_Enter(CurrentMouseIndex, true);
@@ -232,6 +258,10 @@ namespace Connect_4
                 }
                 //UpdateVisuals();
                 MG.Busy = false;
+                Thread.Sleep(35);
+                UpdateVisuals();
+                if (CurrentMouseIndex > 0 && MG.GetLow(CurrentMouseIndex) > 0 && (MG.Turn == MG.P[0] || !MG.vsAI))
+                    Col_Enter(CurrentMouseIndex, true);
             }
         }
 
@@ -245,10 +275,10 @@ namespace Connect_4
                     {
                         if (MG.Case[x][y] >= 0)
                         {
-                            if ((Bitmap)C[x][y].Image != Case[MG.Case[x][y]])
+                            if ((Bitmap)C[x][y].Image != Case[MG.Case[x][y]] && x>0)
                                 C[x][y].Image = Case[MG.Case[x][y]];
                         }
-                        else if ((Bitmap)C[x][y].Image != TRB[-1 - MG.Case[x][y]])
+                        else if ((Bitmap)C[x][y].Image != TRB[-1 - MG.Case[x][y]] && x>0)
                             C[x][y].Image = TRB[-1 - MG.Case[x][y]];
                     }
                     catch (Exception) { }
@@ -292,16 +322,6 @@ namespace Connect_4
                     else
                     {
                         Timer.Dispose();
-                        Turn_Right.Invoke(new Action(Turn_Right.Show));
-                        Turn_Left.Invoke(new Action(Turn_Left.Show));
-                        MG.Busy = false;
-                        Point P = Cursor.Position;
-                        Cursor.Position = new Point(0, 0);
-                        Cursor.Position = P;
-                        if (MG.Turn == MG.P[1] && MG.vsAI)
-                        {
-                            PlayAI();
-                        }
                     }
                 };
             }
@@ -310,7 +330,7 @@ namespace Connect_4
         private void SlideEffect(int index)
         {
             int ind = 7;
-            System.Timers.Timer Timer = new System.Timers.Timer(30);
+            System.Timers.Timer Timer = new System.Timers.Timer(27.5);
             Timer.Start();
             Timer.Elapsed += (S, E) =>
               {
@@ -319,7 +339,24 @@ namespace Connect_4
                       C[ind][index].Invoke(new Action(C[ind][index].Show));
                   }
                   else
+                  {
                       Timer.Dispose();
+                      if (index == 1)
+                      {
+                          Thread.Sleep(85);
+                          Turn_Right.Invoke(new Action(Turn_Right.Show));
+                          Turn_Left.Invoke(new Action(Turn_Left.Show));
+                          MG.Busy = false;
+                          Point P = Cursor.Position;
+                          Cursor.Position = new Point(0, 0);
+                          Cursor.Position = P;
+                          if (MG.Turn == MG.P[1] && MG.vsAI)
+                          {
+                              Thread.Sleep(400);
+                              Col_Click(4, true);
+                          }
+                      }
+                  }
               };
         }
 
@@ -328,7 +365,7 @@ namespace Connect_4
             if(NotGold)
             { Help_PictureBox.Image = Properties.Resources.Help; }
             else
-            { Help_PictureBox.Image = Properties.Resources.Gold_Help; }
+            { Help_PictureBox.Image = Gold_Help; }
         }
 
         private void TopImgScaleSmall()
@@ -355,16 +392,16 @@ namespace Connect_4
             if (MG.P[0] == 0)
             {
                 if (MG.Turn == 0)
-                    Turn_Left.Image = Properties.Resources.Large_Gold_Red_Circle;
+                    Turn_Left.Image = Large_Gold_Red_Circle;
                 else
-                    Turn_Left.Image = Properties.Resources.T_Large_Red_Circle;
+                    Turn_Left.Image = T_Large_Red_Circle;
             }
             else
             {
                 if (MG.Turn == 0)
-                    Turn_Left.Image = Properties.Resources.T_Large_Blue_Circle;
+                    Turn_Left.Image = T_Large_Blue_Circle;
                 else
-                    Turn_Left.Image = Properties.Resources.Large_Gold_Blue_Circle;
+                    Turn_Left.Image = Large_Gold_Blue_Circle;
             }
         }
 
@@ -373,22 +410,22 @@ namespace Connect_4
             if (MG.P[0] == 0)
             {
                 if (MG.Turn == 0)
-                    Turn_Right.Image = Properties.Resources.T_Large_Blue_Circle;
+                    Turn_Right.Image = T_Large_Blue_Circle;
                 else
-                    Turn_Right.Image = Properties.Resources.Large_Gold_Blue_Circle;
+                    Turn_Right.Image = Large_Gold_Blue_Circle;
             }
             else
             {
                 if (MG.Turn == 0)
-                    Turn_Right.Image = Properties.Resources.Large_Gold_Red_Circle;
+                    Turn_Right.Image = Large_Gold_Red_Circle;
                 else
-                    Turn_Right.Image = Properties.Resources.T_Large_Red_Circle;
+                    Turn_Right.Image = T_Large_Red_Circle;
             }
         }
 
         private void UpdateControl()
         {
-            lock (tempPBox)
+            //lock (tempPBox)
             {
                 tempPBox.Image = tempBitmap;
             }
@@ -400,15 +437,16 @@ namespace Connect_4
         {
             if (MG.P[0] != 0)
             {
-                Color_Select_Blue.Image = Properties.Resources.Large_Blue_Circle;
-                Color_Select_Red.Image = Properties.Resources.Large_Gold_Red_Circle;
+                Color_Select_Blue.Image = T_Large_Blue_Circle;
+                Color_Select_Red.Image = Large_Select_Red_Circle;
                 button_Start.ForeColor = Color.FromArgb(221, 46, 68);
                 button_Start.FlatAppearance.BorderColor = Color.FromArgb(221, 46, 68);
                 button_Start.FlatAppearance.MouseOverBackColor = Color.FromArgb(247, 224, 227);
                 button_Start.FlatAppearance.MouseDownBackColor = Color.FromArgb(248, 194, 65);
                 button_Start.Font = new Font(button_Start.Font.Name, button_Start.Font.Size, FontStyle.Bold);
                 button_Start.BackColor = Color.White;
-                try { Label_Err_Color.Hide(); } catch (Exception) { }
+                if (Label_Err_Color.Visible)
+                    Label_Err_Color.Hide();
                 MG.P[0] = 0; MG.P[1] = 1;
             }
         }
@@ -417,15 +455,16 @@ namespace Connect_4
         {
             if (MG.P[0] != 1)
             {
-                Color_Select_Red.Image = Properties.Resources.Large_Red_Circle;
-                Color_Select_Blue.Image = Properties.Resources.Large_Gold_Blue_Circle;
+                Color_Select_Red.Image = T_Large_Red_Circle;
+                Color_Select_Blue.Image = Large_Select_Blue_Circle;
                 button_Start.ForeColor = Color.FromArgb(86, 172, 238);
                 button_Start.FlatAppearance.BorderColor = Color.FromArgb(86, 172, 238);
                 button_Start.FlatAppearance.MouseOverBackColor = Color.FromArgb(211, 234, 246);
                 button_Start.FlatAppearance.MouseDownBackColor = Color.FromArgb(248, 194, 65);
                 button_Start.Font = new Font(button_Start.Font.Name, button_Start.Font.Size, FontStyle.Bold);
                 button_Start.BackColor = Color.White;
-                try { Label_Err_Color.Hide(); } catch (Exception) { }
+                if(Label_Err_Color.Visible)
+                    Label_Err_Color.Hide();
                 MG.P[0] = 1; MG.P[1] = 0;
             }
         }
@@ -435,14 +474,6 @@ namespace Connect_4
             if (MG.P[0] != -1)
             {
                 LoadingBox.Show();
-                Turn_Left.Invoke(new Action(TLUpdate));
-                Turn_Right.Invoke(new Action(TRUpdate));
-                if (LearnMCheckBox.Checked && MG.vsAI)
-                    Help_PictureBox.Invoke(new Action(Help_PictureBox.Show));
-                else
-                    Help_PictureBox.Invoke(new Action(Help_PictureBox.Hide));
-                GameOptions.Hide();
-                LossHelps = 0;
                 System.Timers.Timer T = new System.Timers.Timer(500);
                 T.Start();
                 T.Elapsed += (s, E) =>
@@ -451,6 +482,20 @@ namespace Connect_4
                     LoadingBox.Invoke(new Action(LoadingBox.Hide));
                     SlideEffect();
                 };
+                Turn_Left.Invoke(new Action(TLUpdate));
+                Turn_Right.Invoke(new Action(TRUpdate));
+                if (LearnMCheckBox.Checked && MG.vsAI)
+                { Help_PictureBox.Invoke(new Action(Help_PictureBox.Show)); }
+                else
+                { Help_PictureBox.Invoke(new Action(Help_PictureBox.Hide)); }
+                GameOptions.Hide();
+                LossHelps = 0;
+                if(!MG.vsAI)
+                    for (int i = 1; i < 8; i++)
+                        C[0][i].Image = ArrowRB[MG.Turn];
+                else
+                    for (int i = 1; i < 8; i++)
+                        C[0][i].Image = ArrowRB[MG.P[0]];
             }
             else
             {
@@ -467,11 +512,13 @@ namespace Connect_4
                 Label_Diff.Enabled = true;
                 RButtonEasy.Enabled = true;
                 RButtonMed.Enabled = true;
+                RButtonIntermediate.Enabled = true;
                 RButtonHard.Enabled = true;
                 RButtonImpossible.Enabled = true;
                 PredicitveCheckBox.Enabled = true;
-                if(!RButtonImpossible.Checked && !RButtonHard.Checked)
-                    LearnMCheckBox.Enabled = true;
+                LearnMCheckBox.Enabled = true;
+                StrategicCheckBox.Enabled = true;
+                Diff_ChkChanged(null, null);
             }
             else
             {
@@ -479,31 +526,60 @@ namespace Connect_4
                 Label_Diff.Enabled = false;
                 RButtonEasy.Enabled = false;
                 RButtonMed.Enabled = false;
+                RButtonIntermediate.Enabled = false;
                 RButtonHard.Enabled = false;
                 RButtonImpossible.Enabled = false;
                 PredicitveCheckBox.Enabled = false;
                 LearnMCheckBox.Enabled = false;
+                StrategicCheckBox.Enabled = false;
             }
         }
 
         private void Diff_ChkChanged(object sender, EventArgs e)
         {
             if (RButtonEasy.Checked)
-            { MG.Diff = 0; LearnMCheckBox.Enabled = true; LearnMCheckBox.Checked = true; }
+            {
+                MG.Diff = 0;
+                LearnMCheckBox.Enabled = true; LearnMCheckBox.Checked = true;
+                PredicitveCheckBox.Enabled = true; PredicitveCheckBox.Checked = false;
+                StrategicCheckBox.Enabled = false; StrategicCheckBox.Checked = false;
+            }
             if (RButtonMed.Checked)
-            { MG.Diff = 1; LearnMCheckBox.Enabled = true; }
+            {
+                MG.Diff = 1;
+                LearnMCheckBox.Enabled = true; 
+                PredicitveCheckBox.Enabled = true;
+                StrategicCheckBox.Enabled = true; StrategicCheckBox.Checked = false;
+            }
+            if (RButtonIntermediate.Checked)
+            {
+                MG.Diff = 2;
+                LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; 
+                PredicitveCheckBox.Enabled = true; PredicitveCheckBox.Checked = true;
+                StrategicCheckBox.Enabled = true; 
+            }
             if (RButtonHard.Checked)
-            { MG.Diff = 2; LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; }
+            {
+                MG.Diff = 3;
+                LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false;
+                PredicitveCheckBox.Enabled = false; PredicitveCheckBox.Checked = true;
+                StrategicCheckBox.Enabled = true; StrategicCheckBox.Checked = true;
+            }
             if (RButtonImpossible.Checked)
-            { MG.Diff = 3; LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; }
+            {
+                MG.Diff = 4;
+                LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false;
+                PredicitveCheckBox.Enabled = false; PredicitveCheckBox.Checked = true;
+                StrategicCheckBox.Enabled = false; StrategicCheckBox.Checked = true;
+            }
         }
 
         private void FGameChkChanged(object sender, EventArgs e)
         {
             if (FGameCheckBox.Checked)
-                MG.Delay = new int[] { 300, 200, 100, 1 };
+                MG.Delay = new int[] { 400, 300, 200, 100, 0 };
             else
-                MG.Delay = new int[] { 1000, 500, 100, 1 };
+                MG.Delay = new int[] { 1200, 800, 400, 200, 0 };
         }
 
         private void PredicitveChkChanged(object sender, EventArgs e)
@@ -511,17 +587,34 @@ namespace Connect_4
             MG.PredicitveAI = PredicitveCheckBox.Checked;
         }
 
+        private void StrategicChkChanged(object sender, EventArgs e)
+        {
+            MG.StrategicAI = StrategicCheckBox.Checked;
+            if (MG.StrategicAI)
+            { PredicitveCheckBox.Enabled = false; PredicitveCheckBox.Checked = true; }
+            else if (MG.Diff < 3)
+                PredicitveCheckBox.Enabled = true;
+        }
+
         private void button_Restart_Click(object sender, EventArgs e)
         {
-            int[] temp = MG.P;
-            MG = new MainGame();
-            MG.P = temp;
-            Diff_ChkChanged(null, null);
-            vsAI_Check(null, null);
+            int[] _P = MG.P;
+            int _Diff = MG.Diff;
+            bool _vsAI = MG.vsAI;
+            MG = new MainGame()
+            { P = _P, Diff = _Diff, vsAI = _vsAI };
+            if (FGameCheckBox.Checked)
+                MG.Delay = new int[] { 400, 300, 200, 100, 0 };
+            Helps = new int[] { 0, 0 };
+            LossHelps = 0;
+            //Diff_ChkChanged(null, null);
+            //vsAI_Check(null, null);
             UpdateVisuals();
             button_Exit.Hide(); button_Restart.Hide();
             GameOptions.Show();
-            TopPicture.Image = Properties.Resources.Connect4;
+            Turn_Right.Hide();
+            Turn_Left.Hide();
+            TopPicture.Image = Properties.Resources.Connect_4;
             TopPicture.Invoke(new Action(TopImgScaleSmall));
             for (int i = 1; i < 8; i++)
             {
@@ -559,14 +652,19 @@ namespace Connect_4
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            #if DEBUG
+                DebugAI_CheckBox.Visible = true;
+            #endif
             toolTip.SetToolTip(FGameCheckBox, "Fastens animations and lowers delay of AI moves");
             toolTip.SetToolTip(LearnMCheckBox, "Adds Tips to the match with insights on what to play");
-            toolTip.SetToolTip(PredicitveCheckBox, "Enables predicitve moves by the AI");
-            toolTip.SetToolTip(RButtonEasy, "Low chances for the AI to predict and block your moves with high delay");
-            toolTip.SetToolTip(RButtonMed, "Average chances for the AI to predict and block your moves with medium delay");
-            toolTip.SetToolTip(RButtonHard, "High chances for the AI to predict and block your moves with short delay");
-            toolTip.SetToolTip(RButtonImpossible, "100% chance for the AI to predict and block your moves with 0 delay");
-            toolTip.SetToolTip(TopPicture, "Connect 4, click to restart");
+            toolTip.SetToolTip(PredicitveCheckBox, "Enables Predicitve moves by the AI");
+            toolTip.SetToolTip(StrategicCheckBox, "Enables Strategic moves by the AI, Predictive AI is Obligatory");
+            toolTip.SetToolTip(RButtonEasy, "Low chances for the AI to predict and block your moves with high delay, Strategic AI is Disabled");
+            toolTip.SetToolTip(RButtonMed, "Small chances for the AI to predict and block your moves with medium delay");
+            toolTip.SetToolTip(RButtonIntermediate, "Average chances for the AI to predict and block your moves with small delay, Learning is Disabled");
+            toolTip.SetToolTip(RButtonHard, "High chances for the AI to predict and block your moves with short delay, Predictive AI is Obligatory, Learning is Disabled");
+            toolTip.SetToolTip(RButtonImpossible, "No chances for the AI to miss a prediction or a block with no delay, Predictive & Strategic AI are Obligatory, Learning is Disabled");
+            toolTip.SetToolTip(TopPicture, "Restart");
             HelpT.Elapsed += HelpT_Elapsed;
             C.Add(new List<PictureBox> { null, C_1_0, C_2_0, C_3_0, C_4_0, C_5_0, C_6_0, C_7_0 });
             C.Add(new List<PictureBox> { null, C_1_1, C_2_1, C_3_1, C_4_1, C_5_1, C_6_1, C_7_1 });
@@ -766,15 +864,20 @@ namespace Connect_4
         { Col_Leave(4); CurrentMouseIndex = 0; }
         private void Col5_Leave(object sender, EventArgs e)
         { Col_Leave(5); CurrentMouseIndex = 0; }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            MG.vsAI = checkBox1.Checked;
-        }
-
         private void Col6_Leave(object sender, EventArgs e)
         { Col_Leave(6); CurrentMouseIndex = 0; }
         private void Col7_Leave(object sender, EventArgs e)
         { Col_Leave(7); CurrentMouseIndex = 0; }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            MG.vsAI = DebugAI_CheckBox.Checked;
+        }
+
+        private void FormKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'c')
+                Application.Exit();
+        }
     }
 }
