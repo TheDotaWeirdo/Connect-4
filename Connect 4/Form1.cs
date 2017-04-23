@@ -15,6 +15,7 @@ namespace Connect_4
     public partial class Form1 : Form
     {
         int CurrentMouseIndex = 0;
+        bool InfiniteLoop = false;
         public MainGame MG = new MainGame();
         public List<List<PictureBox>> C = new List<List<PictureBox>>();
         public Bitmap W = White_Circle;
@@ -24,6 +25,9 @@ namespace Connect_4
         public Bitmap[] Case = { White_Circle, Red_Circle, Blue_Circle, Gold_Red_Circle, Gold_Blue_Circle };
         PictureBox tempPBox;
         Bitmap tempBitmap;
+#if DEBUG
+        Label tempLabel;
+#endif
         int tempInt, tempInt2, LossHelps = 0;
         int[] Helps = { 0, 0 };
         System.Timers.Timer HelpT = new System.Timers.Timer();
@@ -35,6 +39,15 @@ namespace Connect_4
 
         private void Col_Click(int index, bool AImove = false)
         {
+#if DEBUG
+            tempLabel = label1; tempInt = 1; tempLabel.Invoke(new Action(UpdateDebugState));
+            tempLabel = label3; tempInt = 2; tempLabel.Invoke(new Action(UpdateDebugState));
+            tempLabel = label4; tempInt = 3; tempLabel.Invoke(new Action(UpdateDebugState));
+            tempLabel = label5; tempInt = 4; tempLabel.Invoke(new Action(UpdateDebugState));
+            tempLabel = label6; tempInt = 5; tempLabel.Invoke(new Action(UpdateDebugState));
+            tempLabel = label7; tempInt = 6; tempLabel.Invoke(new Action(UpdateDebugState));
+            tempLabel = label8; tempInt = 7; tempLabel.Invoke(new Action(UpdateDebugState));
+#endif
             int i = 1, Cap = MG.GetLow(index);
             if (Cap > 0 && !MG.Finished && !MG.Busy && (!MG.vsAI || MG.Turn == MG.P[0] || AImove))
             {
@@ -66,44 +79,19 @@ namespace Connect_4
                         return;
                     }
                 }
-                System.Timers.Timer T = new System.Timers.Timer(27.5);
+                System.Timers.Timer T = new System.Timers.Timer((FGameCheckBox.Checked) ? 17.5 : 27.5);
                 MG.Case[Cap][index] = MG.Turn + 1;
                 MG.State[index] = -1;
                 MG.Busy = true;
-                if (FGameCheckBox.Checked)
-                {
-                    C[0][index].Invoke(new Action(C[0][index].Hide));
-                    if (!MG.vsAI)
-                        for (int I = 1; I < 8; I++)
-                            C[0][I].Image = ArrowRB[(MG.Turn == 0) ? 1 : 0];// MG.P[(MG.Turn == 0) ? 1 : 0]];
-                    try { C[Cap][index].Image = RB[MG.Turn]; }
-                    catch (InvalidOperationException)
-                    {
-                        tempPBox = C[Cap][index];
-                        tempBitmap = RB[MG.Turn];
-                        C[Cap][index].Invoke(new Action(UpdateControl));
-                    }
-                    if (MG.vsAI && MG.Turn == MG.P[0])
-                    {
-                        Thread workingThread = new Thread(new ThreadStart(PlayAI))
-                        { IsBackground = true, Priority = ThreadPriority.BelowNormal };
-                        workingThread.Start();
-                    }
-                    PlayEnd(index);
-                    return;
-                }
-                //Point P = Cursor.Position;
-                //Cursor.Position = new Point(0, 0);
-                //Cursor.Position = P;
                 tempBitmap = W;
                 tempPBox = C[Cap][index];
-                //lock (C[Cap][index])
-                    C[Cap][index].Invoke(new Action(UpdateControl));
-                //lock (C[0][index])
+                C[Cap][index].Invoke(new Action(UpdateControl));
+                lock (C[0][index])
                     C[0][index].Invoke(new Action(C[0][index].Hide));
                 if (!MG.vsAI)
                     for (int I = 1; I < 8; I++)
-                        C[0][I].Image = ArrowRB[(MG.Turn == 0) ? 1 : 0];//[MG.P[(MG.Turn == 0) ? 1 : 0]];
+                        lock(C[0][I])
+                            C[0][I].Image = ArrowRB[(MG.Turn == 0) ? 1 : 0];
                 T.Start();
                 T.Elapsed += (s,e) => 
                 {
@@ -165,12 +153,7 @@ namespace Connect_4
                 int i = MG.GetLow(index);
                 lock (C[i][index])
                 { if(i>0) C[i][index].Image = TRB[MG.Turn]; }
-                /*tempPBox = C[i][index];
-                tempBitmap = TRB[MG.P[MG.Turn]];
-                C[i][index].Invoke(new Action(UpdateControl));*/
             }
-           /* else
-                Col_Leave(index);*/
         }
 
         private void Col_Leave(int index, bool Forced = false)
@@ -181,9 +164,6 @@ namespace Connect_4
                 int i = MG.GetLow(index);
                 lock (C[i][index])
                 { if (i > 0) C[i][index].Image = W; }
-                /*tempPBox = C[i][index];
-                tempBitmap = W;
-                C[i][index].Invoke(new Action(UpdateControl));*/
             }
         }
 
@@ -191,7 +171,7 @@ namespace Connect_4
         {
             try
             {
-                if (MG.Diff == 4)
+                if (MG.Delay == 0)
                 {
                     int i = MG.PlayAI();
                     if (i > 0)
@@ -199,7 +179,7 @@ namespace Connect_4
                 }
                 else
                 {
-                    System.Timers.Timer T = new System.Timers.Timer(MG.Delay[MG.Diff]);
+                    System.Timers.Timer T = new System.Timers.Timer(MG.Delay);
                     T.Start();
                     int i = -1;
                     T.Elapsed += (s, e) =>
@@ -242,13 +222,7 @@ namespace Connect_4
             }
             else
             {
-                //Point P = Cursor.Position;
-                //if (P.X != 0 && P.Y != 0) 
-                //Cursor.Position = new Point(0, 0);
-                //Cursor.Position = P;
                 MG.Turn = (MG.Turn == 0) ? 1 : 0;
-                //if (CurrentMouseIndex > 0 && (MG.Turn == MG.P[0] || !MG.vsAI))
-                //    Col_Enter(CurrentMouseIndex, true);
                 Turn_Left.Invoke(new Action(TLUpdate));
                 Turn_Right.Invoke(new Action(TRUpdate));
                 if (MG.vsAI && LearnMCheckBox.Checked && MG.Turn == MG.P[0])
@@ -256,10 +230,8 @@ namespace Connect_4
                     Helps[0] = MG.CheckPossibleWin();
                     Helps[1] = MG.CheckPossibleLoss();
                 }
-                //UpdateVisuals();
                 MG.Busy = false;
                 Thread.Sleep(35);
-                UpdateVisuals();
                 if (CurrentMouseIndex > 0 && MG.GetLow(CurrentMouseIndex) > 0 && (MG.Turn == MG.P[0] || !MG.vsAI))
                     Col_Enter(CurrentMouseIndex, true);
             }
@@ -273,13 +245,16 @@ namespace Connect_4
                 {
                     try
                     {
-                        if (MG.Case[x][y] >= 0)
+                        lock (C[x][y])
                         {
-                            if ((Bitmap)C[x][y].Image != Case[MG.Case[x][y]] && x>0)
-                                C[x][y].Image = Case[MG.Case[x][y]];
+                            if (MG.Case[x][y] >= 0)
+                            {
+                                if ((Bitmap)C[x][y].Image != Case[MG.Case[x][y]] && x > 0)
+                                    C[x][y].Image = Case[MG.Case[x][y]];
+                            }
+                            else if ((Bitmap)C[x][y].Image != TRB[-1 - MG.Case[x][y]] && x > 0)
+                                C[x][y].Image = TRB[-1 - MG.Case[x][y]];
                         }
-                        else if ((Bitmap)C[x][y].Image != TRB[-1 - MG.Case[x][y]] && x>0)
-                            C[x][y].Image = TRB[-1 - MG.Case[x][y]];
                     }
                     catch (Exception) { }
                 }
@@ -425,12 +400,19 @@ namespace Connect_4
 
         private void UpdateControl()
         {
-            //lock (tempPBox)
+            lock (tempPBox)
             {
                 tempPBox.Image = tempBitmap;
             }
         }
 
+#if DEBUG
+        private void UpdateDebugState()
+        {
+            lock (tempLabel)
+                tempLabel.Text = MG.State[tempInt].ToString();
+        }
+#endif
         //Events
 
         private void Color_Select_Red_Click(object sender, EventArgs e)
@@ -504,111 +486,104 @@ namespace Connect_4
             }
         }
 
-        private void vsAI_Check(object sender, EventArgs e)
+        private void VsAI_Check(object sender, EventArgs e)
         {
             if(AIcheckBox.Checked)
             {
-                MG.vsAI = true;
-                Label_Diff.Enabled = true;
-                RButtonEasy.Enabled = true;
-                RButtonMed.Enabled = true;
-                RButtonIntermediate.Enabled = true;
-                RButtonHard.Enabled = true;
-                RButtonImpossible.Enabled = true;
-                PredicitveCheckBox.Enabled = true;
-                LearnMCheckBox.Enabled = true;
+                MG.vsAI =
+                AIDiff_Label.Enabled = 
+                Label_Easy.Enabled =
+                Label_Medium.Enabled =
+                Label_Intermediate.Enabled =
+                Label_Hard.Enabled =
+                Label_Impossible.Enabled =
+                PredicitveCheckBox.Enabled = 
+                LearnMCheckBox.Enabled = 
                 StrategicCheckBox.Enabled = true;
-                Diff_ChkChanged(null, null);
+                DiffBar_Scroll(null, null);
             }
             else
             {
-                MG.vsAI = false;
-                Label_Diff.Enabled = false;
-                RButtonEasy.Enabled = false;
-                RButtonMed.Enabled = false;
-                RButtonIntermediate.Enabled = false;
-                RButtonHard.Enabled = false;
-                RButtonImpossible.Enabled = false;
-                PredicitveCheckBox.Enabled = false;
-                LearnMCheckBox.Enabled = false;
+                MG.vsAI =
+                AIDiff_Label.Enabled =
+                Label_Easy.Enabled =
+                Label_Medium.Enabled =
+                Label_Intermediate.Enabled =
+                Label_Hard.Enabled =
+                Label_Impossible.Enabled =
+                PredicitveCheckBox.Enabled =
+                LearnMCheckBox.Enabled =
                 StrategicCheckBox.Enabled = false;
             }
-        }
-
-        private void Diff_ChkChanged(object sender, EventArgs e)
-        {
-            if (RButtonEasy.Checked)
-            {
-                MG.Diff = 0;
-                LearnMCheckBox.Enabled = true; LearnMCheckBox.Checked = true;
-                PredicitveCheckBox.Enabled = true; PredicitveCheckBox.Checked = false;
-                StrategicCheckBox.Enabled = false; StrategicCheckBox.Checked = false;
-            }
-            if (RButtonMed.Checked)
-            {
-                MG.Diff = 1;
-                LearnMCheckBox.Enabled = true; 
-                PredicitveCheckBox.Enabled = true;
-                StrategicCheckBox.Enabled = true; StrategicCheckBox.Checked = false;
-            }
-            if (RButtonIntermediate.Checked)
-            {
-                MG.Diff = 2;
-                LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false; 
-                PredicitveCheckBox.Enabled = true; PredicitveCheckBox.Checked = true;
-                StrategicCheckBox.Enabled = true; 
-            }
-            if (RButtonHard.Checked)
-            {
-                MG.Diff = 3;
-                LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false;
-                PredicitveCheckBox.Enabled = false; PredicitveCheckBox.Checked = true;
-                StrategicCheckBox.Enabled = true; StrategicCheckBox.Checked = true;
-            }
-            if (RButtonImpossible.Checked)
-            {
-                MG.Diff = 4;
-                LearnMCheckBox.Enabled = false; LearnMCheckBox.Checked = false;
-                PredicitveCheckBox.Enabled = false; PredicitveCheckBox.Checked = true;
-                StrategicCheckBox.Enabled = false; StrategicCheckBox.Checked = true;
-            }
-        }
+        }        
 
         private void FGameChkChanged(object sender, EventArgs e)
         {
-            if (FGameCheckBox.Checked)
-                MG.Delay = new int[] { 400, 300, 200, 100, 0 };
-            else
-                MG.Delay = new int[] { 1200, 800, 400, 200, 0 };
+            MG.FastGame = FGameCheckBox.Checked;
         }
 
         private void PredicitveChkChanged(object sender, EventArgs e)
         {
+            if (InfiniteLoop) return;
             MG.PredicitveAI = PredicitveCheckBox.Checked;
+            if (PredicitveCheckBox.Checked)
+            {
+                InfiniteLoop = true;
+                DiffBar.Value = Math.Max(25, DiffBar.Value);
+                if (DiffBar.Value == 25)
+                    DiffBar_Scroll(null, null);
+                PredicitveCheckBox.Checked = true;
+                InfiniteLoop = false;
+            }
+            else
+            {
+                StrategicCheckBox.Checked = false;
+                DiffBar.Value = Math.Min(50, DiffBar.Value);
+                if (DiffBar.Value == 50)
+                    DiffBar_Scroll(null, null);
+            }
         }
 
         private void StrategicChkChanged(object sender, EventArgs e)
         {
             MG.StrategicAI = StrategicCheckBox.Checked;
-            if (MG.StrategicAI)
-            { PredicitveCheckBox.Enabled = false; PredicitveCheckBox.Checked = true; }
-            else if (MG.Diff < 3)
-                PredicitveCheckBox.Enabled = true;
+            if (StrategicCheckBox.Checked)
+            {
+                PredicitveCheckBox.Checked = true;
+                DiffBar.Value = Math.Max(75, DiffBar.Value);
+                if (DiffBar.Value == 75)
+                    DiffBar_Scroll(null, null);
+            }
+            else
+            {
+                DiffBar.Value = Math.Min(75, DiffBar.Value);
+                if (DiffBar.Value == 75)
+                    DiffBar_Scroll(null, null);
+            }
         }
 
-        private void button_Restart_Click(object sender, EventArgs e)
+        private void LearnMCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (LearnMCheckBox.Checked)
+            {
+                DiffBar.Value = Math.Min(25, DiffBar.Value);
+                if (DiffBar.Value == 25)
+                    DiffBar_Scroll(null, null);
+            }
+        }
+
+        private void Button_Restart_Click(object sender, EventArgs e)
         {
             int[] _P = MG.P;
             int _Diff = MG.Diff;
             bool _vsAI = MG.vsAI;
+            bool _FG = MG.FastGame;
             MG = new MainGame()
-            { P = _P, Diff = _Diff, vsAI = _vsAI };
-            if (FGameCheckBox.Checked)
-                MG.Delay = new int[] { 400, 300, 200, 100, 0 };
+            { P = _P, Diff = _Diff, vsAI = _vsAI, FastGame = _FG };
             Helps = new int[] { 0, 0 };
             LossHelps = 0;
-            //Diff_ChkChanged(null, null);
-            //vsAI_Check(null, null);
+            MG.StrategicAI = StrategicCheckBox.Checked;
+            MG.PredicitveAI = PredicitveCheckBox.Checked;
             UpdateVisuals();
             button_Exit.Hide(); button_Restart.Hide();
             GameOptions.Show();
@@ -625,7 +600,41 @@ namespace Connect_4
             }
         }
 
-        private void button_Exit_Click(object sender, EventArgs e)
+        private void DiffBar_Scroll(object sender, EventArgs e)
+        {
+            MG.Diff = DiffBar.Value;
+            if (MG.Diff < 13)
+            {
+                LearnMCheckBox.Checked = true;
+                PredicitveCheckBox.Checked = false;
+                StrategicCheckBox.Checked = false;
+                return;
+            }
+            if (MG.Diff < 38)
+            {
+                if (MG.Diff < 25)
+                    PredicitveCheckBox.Checked = false;
+                StrategicCheckBox.Checked = false;
+                return;
+            }
+            if (MG.Diff < 63)
+            {
+                LearnMCheckBox.Checked = false;
+                StrategicCheckBox.Checked = false;
+                return;
+            }
+            if (MG.Diff < 88)
+            {
+                LearnMCheckBox.Checked = false;
+                PredicitveCheckBox.Checked = true;
+                return;
+            }
+            LearnMCheckBox.Checked = false;
+            PredicitveCheckBox.Checked = true;
+            StrategicCheckBox.Checked = true;
+        }
+
+        private void Button_Exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
@@ -654,16 +663,23 @@ namespace Connect_4
         {
             #if DEBUG
                 DebugAI_CheckBox.Visible = true;
+                label1.Visible = true;
+                label3.Visible = true;
+                label4.Visible = true;
+                label5.Visible = true;
+                label6.Visible = true;
+                label7.Visible = true;
+                label8.Visible = true;
             #endif
             toolTip.SetToolTip(FGameCheckBox, "Fastens animations and lowers delay of AI moves");
             toolTip.SetToolTip(LearnMCheckBox, "Adds Tips to the match with insights on what to play");
             toolTip.SetToolTip(PredicitveCheckBox, "Enables Predicitve moves by the AI");
             toolTip.SetToolTip(StrategicCheckBox, "Enables Strategic moves by the AI, Predictive AI is Obligatory");
-            toolTip.SetToolTip(RButtonEasy, "Low chances for the AI to predict and block your moves with high delay, Strategic AI is Disabled");
-            toolTip.SetToolTip(RButtonMed, "Small chances for the AI to predict and block your moves with medium delay");
-            toolTip.SetToolTip(RButtonIntermediate, "Average chances for the AI to predict and block your moves with small delay, Learning is Disabled");
-            toolTip.SetToolTip(RButtonHard, "High chances for the AI to predict and block your moves with short delay, Predictive AI is Obligatory, Learning is Disabled");
-            toolTip.SetToolTip(RButtonImpossible, "No chances for the AI to miss a prediction or a block with no delay, Predictive & Strategic AI are Obligatory, Learning is Disabled");
+            toolTip.SetToolTip(Label_Easy, "Easy");
+            toolTip.SetToolTip(Label_Medium, "Medium");
+            toolTip.SetToolTip(Label_Intermediate, "Intermediate");
+            toolTip.SetToolTip(Label_Hard, "Hard");
+            toolTip.SetToolTip(Label_Impossible, "Impossible");
             toolTip.SetToolTip(TopPicture, "Restart");
             HelpT.Elapsed += HelpT_Elapsed;
             C.Add(new List<PictureBox> { null, C_1_0, C_2_0, C_3_0, C_4_0, C_5_0, C_6_0, C_7_0 });
@@ -866,18 +882,15 @@ namespace Connect_4
         { Col_Leave(5); CurrentMouseIndex = 0; }
         private void Col6_Leave(object sender, EventArgs e)
         { Col_Leave(6); CurrentMouseIndex = 0; }
+
         private void Col7_Leave(object sender, EventArgs e)
         { Col_Leave(7); CurrentMouseIndex = 0; }
 
+#if DEBUG
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             MG.vsAI = DebugAI_CheckBox.Checked;
         }
-
-        private void FormKeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 'c')
-                Application.Exit();
-        }
+#endif
     }
 }

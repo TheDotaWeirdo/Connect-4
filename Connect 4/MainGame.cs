@@ -15,19 +15,44 @@ namespace Connect_4
         public bool vsAI = true;
         public bool PredicitveAI = true;
         public bool StrategicAI = false;
+        public bool FastGame = false;
         public int[] P = { -1, -1 };
         public int Turn = 0;
         public int Winner = 0;
-        public int Diff = 1;
+        private int diff;
         public List<List<int>> Case = new List<List<int>>();
-        public int[] Delay = { 1200, 800, 400, 200, 0 };
-        public int[] State = { -1, -1, -1, -1, -1, -1, -1, -1}; // -3: StrategicBlock| -2: FutureStrategicBlock | -1: unknown | 0: Free | 1: FutureBlocked | 2: NearlyFull | 3: Full | 4: FutureMistake | 5: FutureBlocked&Mistake 
-        double[] WinChance = { 90, 92.5, 95, 97.5, 100 };
-        double[] BlockChance = { 80, 85, 90, 95, 100 };
-        double[] FutureBlockChance = { 40, 55, 70, 85, 100 };
-        double[] FutureMistakeChance = { 20, 40, 60, 80, 100 };
-        double[] PredictChance = { 60, 70, 80, 90, 100 };
-        double[] StrategicMovesChance = { 0, 25, 50, 75, 100 };
+        public int Delay;// = { 1200, 800, 400, 200, 0 };
+        double WinChance;// = { 90, 92.5, 95, 97.5, 100 };
+        double BlockChance;// = { 80, 85, 90, 95, 100 };
+        double FutureBlockChance;// = { 40, 55, 70, 85, 100 };
+        double FutureMistakeChance;// = { 20, 40, 60, 80, 100 };
+        double PredictChance;// = { 60, 70, 80, 90, 100 };
+        double StrategicMovesChance;// = { 0, 25, 50, 75, 100 };
+        public int[] State = { -1, -1, -1, -1, -1, -1, -1, -1 }; // State of each Column
+        // -5: StrategicHorizontalCheck | horizontal 3-token link that can be won by each side
+        // -4: StrategicCheck | checks if a play by the bot will create a future mistake state
+        // -3: StrategicBlock | checks if a play by the player will create a future block state
+        // -2: FutureStrategicBlock | checks if a play by the bot then player will create a block state
+        // -1: unknown | either a starting state or a recent play
+        // 0: Free | no certain states for the column
+        // 1: FutureBlocked | case where playing in the column will result in a possible loss
+        // 2: NearlyFull | case where the column is 1 token away from being full
+        // 3: Full | case where the whole column is full
+        // 4: FutureMistake | case where playing in the column will result in a loss of a possible win
+        // 5: FutureBlocked&Mistake | mix of state 4 and state 1
+
+        public int Diff {
+            get { return diff; }
+            set { diff = value;
+                Delay = (100 - value) * ((FastGame) ? 4 : 12);
+                WinChance = (value * .1) + 90;
+                BlockChance = (value * .2) + 80;
+                FutureBlockChance = (value * .6) + 40;
+                FutureMistakeChance = (value * .8) + 20;
+                PredictChance = (value * .4) + 60;
+                StrategicMovesChance = value;
+            }
+        }
 
         class CheckData
         {
@@ -48,6 +73,7 @@ namespace Connect_4
                 Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
             }
             Turn = (new Random().NextDouble() < .5) ? 0 : 1;
+            Diff = 50;
         }
 
         public int PlayAI()
@@ -98,11 +124,11 @@ namespace Connect_4
                     }
                 }
             }
-            if (PossWins.Count > 0 && RND.NextDouble() * 100 <= WinChance[Diff]) 
+            if (PossWins.Count > 0 && RND.NextDouble() * 100 <= WinChance) 
             { output = PossWins[RND.Next(0, PossWins.Count)]; goto EndPoint; }
-            else if(PossLoss.Count > 0 && RND.NextDouble() * 100 <= BlockChance[Diff])
+            else if(PossLoss.Count > 0 && RND.NextDouble() * 100 <= BlockChance)
             { output = PossLoss[RND.Next(0, PossLoss.Count)]; goto EndPoint; }
-            if(StrategicAI)
+            if(StrategicAI && RND.NextDouble() * 100 <= StrategicMovesChance)
                 for (int x = 1; x < 8; x++)
                 {
                     if (State[x] == 0)
@@ -125,7 +151,7 @@ namespace Connect_4
                 { output = GetUnblocked(0); goto EndPoint; }
                 //Predictive Moves
                 List<int>[] Moves = { new List<int>(), new List<int>() };
-                if (RND.NextDouble() * 100 <= PredictChance[Diff])
+                if (RND.NextDouble() * 100 <= PredictChance)
                 {
                     for (int x = 1; x < 8; x++)
                     {
@@ -133,7 +159,7 @@ namespace Connect_4
                             for (int y = 1; y < 7; y++)
                             {
                                 CheckData cd = PredictiveCheck(x, y);
-                                if (RND.NextDouble() * 100 <= FutureBlockChance[Diff] && cd.Check && CheckElligibility(cd.Color)) 
+                                if (RND.NextDouble() * 100 <= FutureBlockChance && cd.Check && CheckElligibility(cd.Color)) 
                                 {
                                     Moves[Case[y][x] - 1].Add(cd.Color);
                                 }
@@ -154,16 +180,9 @@ namespace Connect_4
                     else if (Moves[P[1]].Count > 0)
                         output = Moves[P[1]][RND.Next(Moves[P[1]].Count)];
                 }
-                //Strategic Moves
-                //if(StrategicAI && RND.NextDouble()*100 <= StrategicMovesChance[Diff])
-                //{
-                //    if (FutureStrategicCheck(output))
-                //        State[output] = (State[output] <= 0 || State[output] == 2) ? 6 : State[output];
-                //}
-                //Future Predictions
-                if (!CheckElligibility(output) && State[output]==1&& RND.NextDouble() * 100 <= FutureBlockChance[Diff])// State[output] == 1 && (State.Contains(0) || State.Contains(2)))
+                if (!CheckElligibility(output) && State[output]==1&& RND.NextDouble() * 100 <= FutureBlockChance)
                 { output = GetUnblocked(output); goto PredictivePoint; }
-                else if (!CheckElligibility(output) && (State[output] == 4 || State[output]==5) && RND.NextDouble() * 100 <= FutureMistakeChance[Diff])//State[output] == 2 && State.Contains(0))
+                else if (!CheckElligibility(output) && (State[output] == 4 || State[output]==5) && RND.NextDouble() * 100 <= FutureMistakeChance)
                 { output = GetUnblocked(output); goto PredictivePoint; }
             }
             EndPoint:
@@ -293,17 +312,18 @@ namespace Connect_4
 
         private bool CheckElligibility(int output)
         {
+            var RND = new Random();
             if (State[output] == -5)
                 return true;
-            if (State.Contains(-5) && (new Random().NextDouble() <= Convert.ToDouble(Diff / 4)))
+            if (State.Contains(-5) && (RND.NextDouble() <= Convert.ToDouble(Diff / 4)))
                 return false;
             if (State[output] == -4)
                 return true;
-            if (State.Contains(-4) && (new Random().NextDouble() <= Convert.ToDouble(Diff / 4.5)))
+            if (State.Contains(-4) && (RND.NextDouble() <= Convert.ToDouble(Diff / 4.25)))
                 return false;
             if (State[output] == -3)
                 return true;
-            if (State.Contains(-3) && (new Random().NextDouble() <= Convert.ToDouble(Diff / 4.5)))
+            if (State.Contains(-3) && (RND.NextDouble() <= Convert.ToDouble(Diff / 4.25)))
                 return false;
             if (State[output] == 0)
                 return true;
@@ -398,13 +418,13 @@ namespace Connect_4
             Case[Y][x] = P[0] + 1;
             for (int i = 1; i < 8; i++)
             {
-                if (i - 3 > 0)
-                    if (Case[Y][i] == 0 && Case[Y][i - 3] == P[0] + 1 && Case[Y][i - 3] == Case[Y][i - 2] && Case[Y][i - 2] == Case[Y][i - 1])
-                        if(GetLow(i) == GetLow(i - 1) && GetLow(i) == GetLow(i - 2)&& GetLow(i) == GetLow(i - 3))
-                            { Case[Y][x] = 0; return true; }
-                if (i + 3 < 8)
-                    if (Case[Y][i] == 0 && Case[Y][i + 3] == P[0] + 1 && Case[Y][i + 3] == Case[Y][i + 2] && Case[Y][i + 2] == Case[Y][i + 1])
-                        if (GetLow(i) == GetLow(i + 1) && GetLow(i) == GetLow(i + 2) && GetLow(i) == GetLow(i + 3))
+                if (i - 4 > 0)
+                    if (Case[Y][i] == 0 && Case[Y][i - 4] == 0 && Case[Y][i - 1] == P[0] + 1 && Case[Y][i - 2] == P[0] + 1 && Case[Y][i - 3] == P[0] + 1)
+                        if ((x == i || Y == GetLow(i)) && (x == i - 4 || Y == GetLow(i - 4))) 
+                        { Case[Y][x] = 0; return true; }
+                if (i + 4 < 8)
+                    if (Case[Y][i] == 0 && Case[Y][i + 4] == 0 && Case[Y][i + 1] == P[0] + 1 && Case[Y][i + 2] == P[0] + 1 && Case[Y][i + 3] == P[0] + 1)
+                        if ((x == i || Y == GetLow(i)) &&  (x == i + 4 || Y == GetLow(i + 4))) 
                             { Case[Y][x] = 0; return true; }
             }
             Case[Y][x] = 0;

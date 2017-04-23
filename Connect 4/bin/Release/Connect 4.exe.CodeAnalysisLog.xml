@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="d:\programs\visual studio 2017\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="15.0">
+ <Targets>
+  <Target Name="D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe">
+   <Modules>
+    <Module Name="connect 4.exe">
+     <Namespaces>
+      <Namespace Name="Connect_4">
+       <Types>
+        <Type Name="Form1" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Col_Click(System.Int32,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-23 07:08:41Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="90">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="94">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="108">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="122">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Col_Enter(System.Int32,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-23 07:08:41Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="155">'Form1.Col_Enter(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Col_Leave(System.Int32,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-23 07:08:41Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="166">'Form1.Col_Leave(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UpdateControl()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-23 07:08:41Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="406">'Form1.UpdateControl()' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UpdateVisuals()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-23 07:08:41Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="257">'Form1.UpdateVisuals()' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002">
+   <Name>Do not lock on objects with weak identity</Name>
+   <Description>Don't take locks on objects that may bleed across AppDomains or that don't have a strong identity.</Description>
+   <Resolution Name="Default">{0} locks on a reference of type {1}. Replace this with a lock against an object with strong-identity.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182290.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalError</MessageLevel>
+   <File Name="reliabilityrules.dll" Version="15.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

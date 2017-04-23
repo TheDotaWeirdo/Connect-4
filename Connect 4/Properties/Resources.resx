@@ -178,9 +178,6 @@
   <data name="Large_Gold_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Gold_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Connect4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Connect4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Large_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

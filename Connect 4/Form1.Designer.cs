@@ -31,27 +31,28 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.GameOptions = new System.Windows.Forms.GroupBox();
+            this.Label_Impossible = new System.Windows.Forms.Label();
+            this.Label_Hard = new System.Windows.Forms.Label();
+            this.Label_Intermediate = new System.Windows.Forms.Label();
+            this.Label_Medium = new System.Windows.Forms.Label();
+            this.Label_Easy = new System.Windows.Forms.Label();
+            this.AIDiff_Label = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.StrategicCheckBox = new System.Windows.Forms.CheckBox();
-            this.RButtonImpossible = new System.Windows.Forms.RadioButton();
             this.LearnMCheckBox = new System.Windows.Forms.CheckBox();
             this.PredicitveCheckBox = new System.Windows.Forms.CheckBox();
             this.FGameCheckBox = new System.Windows.Forms.CheckBox();
-            this.RButtonHard = new System.Windows.Forms.RadioButton();
             this.Label_Err_Color = new System.Windows.Forms.Label();
             this.button_Start = new System.Windows.Forms.Button();
             this.AIcheckBox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Label_Diff = new System.Windows.Forms.Label();
-            this.RButtonIntermediate = new System.Windows.Forms.RadioButton();
-            this.RButtonMed = new System.Windows.Forms.RadioButton();
-            this.RButtonEasy = new System.Windows.Forms.RadioButton();
+            this.Color_Select_Blue = new System.Windows.Forms.PictureBox();
+            this.Color_Select_Red = new System.Windows.Forms.PictureBox();
+            this.DiffBar = new System.Windows.Forms.TrackBar();
             this.button_Restart = new System.Windows.Forms.Button();
             this.button_Exit = new System.Windows.Forms.Button();
             this.label_Help = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.DebugAI_CheckBox = new System.Windows.Forms.CheckBox();
-            this.Color_Select_Blue = new System.Windows.Forms.PictureBox();
-            this.Color_Select_Red = new System.Windows.Forms.PictureBox();
             this.LoadingBox = new System.Windows.Forms.PictureBox();
             this.TopPicture = new System.Windows.Forms.PictureBox();
             this.Turn_Right = new System.Windows.Forms.PictureBox();
@@ -106,9 +107,17 @@
             this.C_3_0 = new System.Windows.Forms.PictureBox();
             this.C_2_0 = new System.Windows.Forms.PictureBox();
             this.C_1_0 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.GameOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).BeginInit();
@@ -167,24 +176,25 @@
             // 
             // GameOptions
             // 
+            this.GameOptions.Controls.Add(this.Label_Impossible);
+            this.GameOptions.Controls.Add(this.Label_Hard);
+            this.GameOptions.Controls.Add(this.Label_Intermediate);
+            this.GameOptions.Controls.Add(this.Label_Medium);
+            this.GameOptions.Controls.Add(this.Label_Easy);
+            this.GameOptions.Controls.Add(this.AIDiff_Label);
+            this.GameOptions.Controls.Add(this.label2);
             this.GameOptions.Controls.Add(this.StrategicCheckBox);
-            this.GameOptions.Controls.Add(this.RButtonImpossible);
             this.GameOptions.Controls.Add(this.LearnMCheckBox);
             this.GameOptions.Controls.Add(this.PredicitveCheckBox);
             this.GameOptions.Controls.Add(this.FGameCheckBox);
-            this.GameOptions.Controls.Add(this.RButtonHard);
             this.GameOptions.Controls.Add(this.Label_Err_Color);
             this.GameOptions.Controls.Add(this.button_Start);
             this.GameOptions.Controls.Add(this.AIcheckBox);
             this.GameOptions.Controls.Add(this.Color_Select_Blue);
             this.GameOptions.Controls.Add(this.Color_Select_Red);
-            this.GameOptions.Controls.Add(this.label2);
-            this.GameOptions.Controls.Add(this.Label_Diff);
-            this.GameOptions.Controls.Add(this.RButtonIntermediate);
-            this.GameOptions.Controls.Add(this.RButtonMed);
-            this.GameOptions.Controls.Add(this.RButtonEasy);
+            this.GameOptions.Controls.Add(this.DiffBar);
             this.GameOptions.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameOptions.Location = new System.Drawing.Point(13, 110);
+            this.GameOptions.Location = new System.Drawing.Point(12, 106);
             this.GameOptions.Margin = new System.Windows.Forms.Padding(4);
             this.GameOptions.Name = "GameOptions";
             this.GameOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -193,12 +203,81 @@
             this.GameOptions.TabStop = false;
             this.GameOptions.Text = "Game Options";
             // 
+            // Label_Impossible
+            // 
+            this.Label_Impossible.AutoSize = true;
+            this.Label_Impossible.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Impossible.Location = new System.Drawing.Point(327, 168);
+            this.Label_Impossible.Name = "Label_Impossible";
+            this.Label_Impossible.Size = new System.Drawing.Size(31, 27);
+            this.Label_Impossible.TabIndex = 74;
+            this.Label_Impossible.Text = "😈";
+            // 
+            // Label_Hard
+            // 
+            this.Label_Hard.AutoSize = true;
+            this.Label_Hard.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Hard.Location = new System.Drawing.Point(254, 168);
+            this.Label_Hard.Name = "Label_Hard";
+            this.Label_Hard.Size = new System.Drawing.Size(31, 27);
+            this.Label_Hard.TabIndex = 73;
+            this.Label_Hard.Text = "😠";
+            // 
+            // Label_Intermediate
+            // 
+            this.Label_Intermediate.AutoSize = true;
+            this.Label_Intermediate.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Intermediate.Location = new System.Drawing.Point(180, 168);
+            this.Label_Intermediate.Name = "Label_Intermediate";
+            this.Label_Intermediate.Size = new System.Drawing.Size(31, 27);
+            this.Label_Intermediate.TabIndex = 72;
+            this.Label_Intermediate.Text = "😕";
+            // 
+            // Label_Medium
+            // 
+            this.Label_Medium.AutoSize = true;
+            this.Label_Medium.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Medium.Location = new System.Drawing.Point(107, 168);
+            this.Label_Medium.Name = "Label_Medium";
+            this.Label_Medium.Size = new System.Drawing.Size(31, 27);
+            this.Label_Medium.TabIndex = 71;
+            this.Label_Medium.Text = "🙂";
+            // 
+            // Label_Easy
+            // 
+            this.Label_Easy.AutoSize = true;
+            this.Label_Easy.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Easy.Location = new System.Drawing.Point(34, 168);
+            this.Label_Easy.Name = "Label_Easy";
+            this.Label_Easy.Size = new System.Drawing.Size(31, 27);
+            this.Label_Easy.TabIndex = 70;
+            this.Label_Easy.Text = "😁";
+            // 
+            // AIDiff_Label
+            // 
+            this.AIDiff_Label.AutoSize = true;
+            this.AIDiff_Label.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AIDiff_Label.Location = new System.Drawing.Point(26, 121);
+            this.AIDiff_Label.Name = "AIDiff_Label";
+            this.AIDiff_Label.Size = new System.Drawing.Size(102, 21);
+            this.AIDiff_Label.TabIndex = 69;
+            this.AIDiff_Label.Text = "AI Difficulty:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 215);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 22);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Color:";
+            // 
             // StrategicCheckBox
             // 
             this.StrategicCheckBox.AutoSize = true;
             this.StrategicCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StrategicCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.StrategicCheckBox.Location = new System.Drawing.Point(50, 125);
+            this.StrategicCheckBox.Location = new System.Drawing.Point(232, 94);
             this.StrategicCheckBox.Name = "StrategicCheckBox";
             this.StrategicCheckBox.Size = new System.Drawing.Size(113, 24);
             this.StrategicCheckBox.TabIndex = 15;
@@ -206,31 +285,18 @@
             this.StrategicCheckBox.UseVisualStyleBackColor = true;
             this.StrategicCheckBox.CheckedChanged += new System.EventHandler(this.StrategicChkChanged);
             // 
-            // RButtonImpossible
-            // 
-            this.RButtonImpossible.AutoSize = true;
-            this.RButtonImpossible.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RButtonImpossible.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RButtonImpossible.Location = new System.Drawing.Point(256, 172);
-            this.RButtonImpossible.Name = "RButtonImpossible";
-            this.RButtonImpossible.Size = new System.Drawing.Size(103, 24);
-            this.RButtonImpossible.TabIndex = 14;
-            this.RButtonImpossible.Text = "Impossible";
-            this.RButtonImpossible.UseVisualStyleBackColor = true;
-            this.RButtonImpossible.CheckedChanged += new System.EventHandler(this.Diff_ChkChanged);
-            // 
             // LearnMCheckBox
             // 
             this.LearnMCheckBox.AutoSize = true;
-            this.LearnMCheckBox.Enabled = false;
-            this.LearnMCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LearnMCheckBox.Font = new System.Drawing.Font("Century Gothic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LearnMCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.LearnMCheckBox.Location = new System.Drawing.Point(50, 150);
+            this.LearnMCheckBox.Location = new System.Drawing.Point(30, 69);
             this.LearnMCheckBox.Name = "LearnMCheckBox";
-            this.LearnMCheckBox.Size = new System.Drawing.Size(131, 24);
+            this.LearnMCheckBox.Size = new System.Drawing.Size(145, 25);
             this.LearnMCheckBox.TabIndex = 13;
             this.LearnMCheckBox.Text = "Learing Mode";
             this.LearnMCheckBox.UseVisualStyleBackColor = true;
+            this.LearnMCheckBox.CheckedChanged += new System.EventHandler(this.LearnMCheckBox_CheckedChanged);
             // 
             // PredicitveCheckBox
             // 
@@ -239,7 +305,7 @@
             this.PredicitveCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PredicitveCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PredicitveCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.PredicitveCheckBox.Location = new System.Drawing.Point(50, 100);
+            this.PredicitveCheckBox.Location = new System.Drawing.Point(232, 69);
             this.PredicitveCheckBox.Name = "PredicitveCheckBox";
             this.PredicitveCheckBox.Size = new System.Drawing.Size(123, 24);
             this.PredicitveCheckBox.TabIndex = 12;
@@ -250,35 +316,22 @@
             // FGameCheckBox
             // 
             this.FGameCheckBox.AutoSize = true;
-            this.FGameCheckBox.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FGameCheckBox.Font = new System.Drawing.Font("Century Gothic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FGameCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FGameCheckBox.Location = new System.Drawing.Point(34, 38);
+            this.FGameCheckBox.Location = new System.Drawing.Point(30, 40);
             this.FGameCheckBox.Name = "FGameCheckBox";
-            this.FGameCheckBox.Size = new System.Drawing.Size(129, 26);
+            this.FGameCheckBox.Size = new System.Drawing.Size(121, 25);
             this.FGameCheckBox.TabIndex = 11;
             this.FGameCheckBox.Text = "Fast Game";
             this.FGameCheckBox.UseVisualStyleBackColor = true;
             this.FGameCheckBox.CheckedChanged += new System.EventHandler(this.FGameChkChanged);
-            // 
-            // RButtonHard
-            // 
-            this.RButtonHard.AutoSize = true;
-            this.RButtonHard.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RButtonHard.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RButtonHard.Location = new System.Drawing.Point(256, 145);
-            this.RButtonHard.Name = "RButtonHard";
-            this.RButtonHard.Size = new System.Drawing.Size(62, 24);
-            this.RButtonHard.TabIndex = 10;
-            this.RButtonHard.Text = "Hard";
-            this.RButtonHard.UseVisualStyleBackColor = true;
-            this.RButtonHard.CheckedChanged += new System.EventHandler(this.Diff_ChkChanged);
             // 
             // Label_Err_Color
             // 
             this.Label_Err_Color.AutoSize = true;
             this.Label_Err_Color.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label_Err_Color.ForeColor = System.Drawing.Color.Firebrick;
-            this.Label_Err_Color.Location = new System.Drawing.Point(106, 356);
+            this.Label_Err_Color.Location = new System.Drawing.Point(106, 367);
             this.Label_Err_Color.Name = "Label_Err_Color";
             this.Label_Err_Color.Size = new System.Drawing.Size(192, 18);
             this.Label_Err_Color.TabIndex = 9;
@@ -294,9 +347,9 @@
             this.button_Start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Start.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Start.ForeColor = System.Drawing.Color.Gray;
-            this.button_Start.Location = new System.Drawing.Point(145, 381);
+            this.button_Start.Location = new System.Drawing.Point(145, 392);
             this.button_Start.Name = "button_Start";
-            this.button_Start.Size = new System.Drawing.Size(102, 43);
+            this.button_Start.Size = new System.Drawing.Size(102, 38);
             this.button_Start.TabIndex = 8;
             this.button_Start.Text = "Start";
             this.button_Start.UseVisualStyleBackColor = false;
@@ -307,73 +360,52 @@
             this.AIcheckBox.AutoSize = true;
             this.AIcheckBox.Checked = true;
             this.AIcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AIcheckBox.Location = new System.Drawing.Point(34, 68);
+            this.AIcheckBox.Font = new System.Drawing.Font("Century Gothic", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AIcheckBox.Location = new System.Drawing.Point(221, 38);
             this.AIcheckBox.Name = "AIcheckBox";
-            this.AIcheckBox.Size = new System.Drawing.Size(74, 26);
+            this.AIcheckBox.Size = new System.Drawing.Size(76, 27);
             this.AIcheckBox.TabIndex = 7;
             this.AIcheckBox.Text = "vs AI";
             this.AIcheckBox.UseVisualStyleBackColor = true;
-            this.AIcheckBox.CheckedChanged += new System.EventHandler(this.vsAI_Check);
+            this.AIcheckBox.CheckedChanged += new System.EventHandler(this.VsAI_Check);
             // 
-            // label2
+            // Color_Select_Blue
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(30, 192);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 22);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Color";
+            this.Color_Select_Blue.Image = global::Connect_4.Properties.Resources.Large_Blue_Circle;
+            this.Color_Select_Blue.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Color_Select_Blue.Location = new System.Drawing.Point(206, 240);
+            this.Color_Select_Blue.Name = "Color_Select_Blue";
+            this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
+            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Color_Select_Blue.TabIndex = 6;
+            this.Color_Select_Blue.TabStop = false;
+            this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
             // 
-            // Label_Diff
+            // Color_Select_Red
             // 
-            this.Label_Diff.AutoSize = true;
-            this.Label_Diff.Location = new System.Drawing.Point(241, 42);
-            this.Label_Diff.Name = "Label_Diff";
-            this.Label_Diff.Size = new System.Drawing.Size(112, 22);
-            this.Label_Diff.TabIndex = 3;
-            this.Label_Diff.Text = "AI Difficulty";
+            this.Color_Select_Red.Image = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Color_Select_Red.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Color_Select_Red.Location = new System.Drawing.Point(63, 240);
+            this.Color_Select_Red.Name = "Color_Select_Red";
+            this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
+            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Color_Select_Red.TabIndex = 5;
+            this.Color_Select_Red.TabStop = false;
+            this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
             // 
-            // RButtonIntermediate
+            // DiffBar
             // 
-            this.RButtonIntermediate.AutoSize = true;
-            this.RButtonIntermediate.Checked = true;
-            this.RButtonIntermediate.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RButtonIntermediate.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RButtonIntermediate.Location = new System.Drawing.Point(256, 120);
-            this.RButtonIntermediate.Name = "RButtonIntermediate";
-            this.RButtonIntermediate.Size = new System.Drawing.Size(122, 24);
-            this.RButtonIntermediate.TabIndex = 2;
-            this.RButtonIntermediate.TabStop = true;
-            this.RButtonIntermediate.Text = "Intermediate";
-            this.RButtonIntermediate.UseVisualStyleBackColor = true;
-            this.RButtonIntermediate.CheckedChanged += new System.EventHandler(this.Diff_ChkChanged);
-            // 
-            // RButtonMed
-            // 
-            this.RButtonMed.AutoSize = true;
-            this.RButtonMed.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RButtonMed.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RButtonMed.Location = new System.Drawing.Point(256, 94);
-            this.RButtonMed.Name = "RButtonMed";
-            this.RButtonMed.Size = new System.Drawing.Size(87, 24);
-            this.RButtonMed.TabIndex = 1;
-            this.RButtonMed.Text = "Medium";
-            this.RButtonMed.UseVisualStyleBackColor = true;
-            this.RButtonMed.CheckedChanged += new System.EventHandler(this.Diff_ChkChanged);
-            // 
-            // RButtonEasy
-            // 
-            this.RButtonEasy.AutoSize = true;
-            this.RButtonEasy.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RButtonEasy.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.RButtonEasy.Location = new System.Drawing.Point(256, 70);
-            this.RButtonEasy.Margin = new System.Windows.Forms.Padding(4);
-            this.RButtonEasy.Name = "RButtonEasy";
-            this.RButtonEasy.Size = new System.Drawing.Size(59, 24);
-            this.RButtonEasy.TabIndex = 0;
-            this.RButtonEasy.Text = "Easy";
-            this.RButtonEasy.UseVisualStyleBackColor = true;
-            this.RButtonEasy.CheckedChanged += new System.EventHandler(this.Diff_ChkChanged);
+            this.DiffBar.LargeChange = 25;
+            this.DiffBar.Location = new System.Drawing.Point(34, 145);
+            this.DiffBar.Maximum = 100;
+            this.DiffBar.Name = "DiffBar";
+            this.DiffBar.Size = new System.Drawing.Size(321, 45);
+            this.DiffBar.SmallChange = 10;
+            this.DiffBar.TabIndex = 16;
+            this.DiffBar.TickFrequency = 0;
+            this.DiffBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.DiffBar.Value = 50;
+            this.DiffBar.Scroll += new System.EventHandler(this.DiffBar_Scroll);
             // 
             // button_Restart
             // 
@@ -384,14 +416,14 @@
             this.button_Restart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Restart.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Restart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
-            this.button_Restart.Location = new System.Drawing.Point(77, 184);
+            this.button_Restart.Location = new System.Drawing.Point(75, 184);
             this.button_Restart.Name = "button_Restart";
             this.button_Restart.Size = new System.Drawing.Size(102, 43);
             this.button_Restart.TabIndex = 10;
             this.button_Restart.Text = "Restart";
             this.button_Restart.UseVisualStyleBackColor = false;
             this.button_Restart.Visible = false;
-            this.button_Restart.Click += new System.EventHandler(this.button_Restart_Click);
+            this.button_Restart.Click += new System.EventHandler(this.Button_Restart_Click);
             // 
             // button_Exit
             // 
@@ -402,14 +434,14 @@
             this.button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Exit.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Exit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
-            this.button_Exit.Location = new System.Drawing.Point(235, 183);
+            this.button_Exit.Location = new System.Drawing.Point(233, 183);
             this.button_Exit.Name = "button_Exit";
             this.button_Exit.Size = new System.Drawing.Size(102, 43);
             this.button_Exit.TabIndex = 58;
             this.button_Exit.Text = "Exit";
             this.button_Exit.UseVisualStyleBackColor = false;
             this.button_Exit.Visible = false;
-            this.button_Exit.Click += new System.EventHandler(this.button_Exit_Click);
+            this.button_Exit.Click += new System.EventHandler(this.Button_Exit_Click);
             // 
             // label_Help
             // 
@@ -438,40 +470,19 @@
             this.DebugAI_CheckBox.AutoSize = true;
             this.DebugAI_CheckBox.Location = new System.Drawing.Point(12, 12);
             this.DebugAI_CheckBox.Name = "DebugAI_CheckBox";
-            this.DebugAI_CheckBox.Size = new System.Drawing.Size(15, 14);
+            this.DebugAI_CheckBox.Size = new System.Drawing.Size(39, 21);
             this.DebugAI_CheckBox.TabIndex = 61;
+            this.DebugAI_CheckBox.Text = "AI";
             this.DebugAI_CheckBox.UseVisualStyleBackColor = true;
             this.DebugAI_CheckBox.Visible = false;
+            #if DEBUG
             this.DebugAI_CheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // Color_Select_Blue
-            // 
-            this.Color_Select_Blue.Image = global::Connect_4.Properties.Resources.Large_Blue_Circle;
-            this.Color_Select_Blue.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Blue.Location = new System.Drawing.Point(206, 228);
-            this.Color_Select_Blue.Name = "Color_Select_Blue";
-            this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.Color_Select_Blue.TabIndex = 6;
-            this.Color_Select_Blue.TabStop = false;
-            this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
-            // 
-            // Color_Select_Red
-            // 
-            this.Color_Select_Red.Image = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Red.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Red.Location = new System.Drawing.Point(63, 228);
-            this.Color_Select_Red.Name = "Color_Select_Red";
-            this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.Color_Select_Red.TabIndex = 5;
-            this.Color_Select_Red.TabStop = false;
-            this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
+            #endif
             // 
             // LoadingBox
             // 
             this.LoadingBox.Image = global::Connect_4.Properties.Resources.Loading;
-            this.LoadingBox.Location = new System.Drawing.Point(12, 109);
+            this.LoadingBox.Location = new System.Drawing.Point(12, 106);
             this.LoadingBox.Name = "LoadingBox";
             this.LoadingBox.Size = new System.Drawing.Size(385, 443);
             this.LoadingBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -488,13 +499,13 @@
             this.TopPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.TopPicture.TabIndex = 57;
             this.TopPicture.TabStop = false;
-            this.TopPicture.Click += new System.EventHandler(this.button_Restart_Click);
+            this.TopPicture.Click += new System.EventHandler(this.Button_Restart_Click);
             // 
             // Turn_Right
             // 
             this.Turn_Right.Image = global::Connect_4.Properties.Resources.T_Large_Blue_Circle;
             this.Turn_Right.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Turn_Right.Location = new System.Drawing.Point(235, 140);
+            this.Turn_Right.Location = new System.Drawing.Point(233, 140);
             this.Turn_Right.Name = "Turn_Right";
             this.Turn_Right.Size = new System.Drawing.Size(64, 64);
             this.Turn_Right.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -506,7 +517,7 @@
             // 
             this.Turn_Left.Image = global::Connect_4.Properties.Resources.Large_Gold_Red_Circle;
             this.Turn_Left.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Turn_Left.Location = new System.Drawing.Point(115, 140);
+            this.Turn_Left.Location = new System.Drawing.Point(113, 140);
             this.Turn_Left.Name = "Turn_Left";
             this.Turn_Left.Size = new System.Drawing.Size(64, 64);
             this.Turn_Left.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -531,7 +542,7 @@
             // C_2_6
             // 
             this.C_2_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_6.Location = new System.Drawing.Point(113, 453);
+            this.C_2_6.Location = new System.Drawing.Point(110, 453);
             this.C_2_6.Name = "C_2_6";
             this.C_2_6.Size = new System.Drawing.Size(39, 39);
             this.C_2_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -542,7 +553,7 @@
             // C_3_6
             // 
             this.C_3_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_6.Location = new System.Drawing.Point(151, 453);
+            this.C_3_6.Location = new System.Drawing.Point(148, 453);
             this.C_3_6.Name = "C_3_6";
             this.C_3_6.Size = new System.Drawing.Size(39, 39);
             this.C_3_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -553,7 +564,7 @@
             // C_4_6
             // 
             this.C_4_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_6.Location = new System.Drawing.Point(189, 453);
+            this.C_4_6.Location = new System.Drawing.Point(186, 453);
             this.C_4_6.Name = "C_4_6";
             this.C_4_6.Size = new System.Drawing.Size(39, 39);
             this.C_4_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -564,7 +575,7 @@
             // C_5_6
             // 
             this.C_5_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_6.Location = new System.Drawing.Point(227, 453);
+            this.C_5_6.Location = new System.Drawing.Point(224, 453);
             this.C_5_6.Name = "C_5_6";
             this.C_5_6.Size = new System.Drawing.Size(39, 39);
             this.C_5_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -575,7 +586,7 @@
             // C_6_6
             // 
             this.C_6_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_6.Location = new System.Drawing.Point(265, 453);
+            this.C_6_6.Location = new System.Drawing.Point(262, 453);
             this.C_6_6.Name = "C_6_6";
             this.C_6_6.Size = new System.Drawing.Size(39, 39);
             this.C_6_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -586,7 +597,7 @@
             // C_7_6
             // 
             this.C_7_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_6.Location = new System.Drawing.Point(303, 453);
+            this.C_7_6.Location = new System.Drawing.Point(300, 453);
             this.C_7_6.Name = "C_7_6";
             this.C_7_6.Size = new System.Drawing.Size(39, 39);
             this.C_7_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -597,7 +608,7 @@
             // C_1_6
             // 
             this.C_1_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_6.Location = new System.Drawing.Point(75, 453);
+            this.C_1_6.Location = new System.Drawing.Point(72, 453);
             this.C_1_6.Name = "C_1_6";
             this.C_1_6.Size = new System.Drawing.Size(39, 39);
             this.C_1_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -608,7 +619,7 @@
             // C_2_5
             // 
             this.C_2_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_5.Location = new System.Drawing.Point(113, 415);
+            this.C_2_5.Location = new System.Drawing.Point(110, 415);
             this.C_2_5.Name = "C_2_5";
             this.C_2_5.Size = new System.Drawing.Size(39, 39);
             this.C_2_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -619,7 +630,7 @@
             // C_3_5
             // 
             this.C_3_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_5.Location = new System.Drawing.Point(151, 415);
+            this.C_3_5.Location = new System.Drawing.Point(148, 415);
             this.C_3_5.Name = "C_3_5";
             this.C_3_5.Size = new System.Drawing.Size(39, 39);
             this.C_3_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -630,7 +641,7 @@
             // C_4_5
             // 
             this.C_4_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_5.Location = new System.Drawing.Point(189, 415);
+            this.C_4_5.Location = new System.Drawing.Point(186, 415);
             this.C_4_5.Name = "C_4_5";
             this.C_4_5.Size = new System.Drawing.Size(39, 39);
             this.C_4_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -641,7 +652,7 @@
             // C_5_5
             // 
             this.C_5_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_5.Location = new System.Drawing.Point(227, 415);
+            this.C_5_5.Location = new System.Drawing.Point(224, 415);
             this.C_5_5.Name = "C_5_5";
             this.C_5_5.Size = new System.Drawing.Size(39, 39);
             this.C_5_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -652,7 +663,7 @@
             // C_6_5
             // 
             this.C_6_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_5.Location = new System.Drawing.Point(265, 415);
+            this.C_6_5.Location = new System.Drawing.Point(262, 415);
             this.C_6_5.Name = "C_6_5";
             this.C_6_5.Size = new System.Drawing.Size(39, 39);
             this.C_6_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -663,7 +674,7 @@
             // C_7_5
             // 
             this.C_7_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_5.Location = new System.Drawing.Point(303, 415);
+            this.C_7_5.Location = new System.Drawing.Point(300, 415);
             this.C_7_5.Name = "C_7_5";
             this.C_7_5.Size = new System.Drawing.Size(39, 39);
             this.C_7_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -674,7 +685,7 @@
             // C_1_5
             // 
             this.C_1_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_5.Location = new System.Drawing.Point(75, 415);
+            this.C_1_5.Location = new System.Drawing.Point(72, 415);
             this.C_1_5.Name = "C_1_5";
             this.C_1_5.Size = new System.Drawing.Size(39, 39);
             this.C_1_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -685,7 +696,7 @@
             // C_2_4
             // 
             this.C_2_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_4.Location = new System.Drawing.Point(113, 377);
+            this.C_2_4.Location = new System.Drawing.Point(110, 377);
             this.C_2_4.Name = "C_2_4";
             this.C_2_4.Size = new System.Drawing.Size(39, 39);
             this.C_2_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -696,7 +707,7 @@
             // C_3_4
             // 
             this.C_3_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_4.Location = new System.Drawing.Point(151, 377);
+            this.C_3_4.Location = new System.Drawing.Point(148, 377);
             this.C_3_4.Name = "C_3_4";
             this.C_3_4.Size = new System.Drawing.Size(39, 39);
             this.C_3_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -707,7 +718,7 @@
             // C_4_4
             // 
             this.C_4_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_4.Location = new System.Drawing.Point(189, 377);
+            this.C_4_4.Location = new System.Drawing.Point(186, 377);
             this.C_4_4.Name = "C_4_4";
             this.C_4_4.Size = new System.Drawing.Size(39, 39);
             this.C_4_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -718,7 +729,7 @@
             // C_5_4
             // 
             this.C_5_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_4.Location = new System.Drawing.Point(227, 377);
+            this.C_5_4.Location = new System.Drawing.Point(224, 377);
             this.C_5_4.Name = "C_5_4";
             this.C_5_4.Size = new System.Drawing.Size(39, 39);
             this.C_5_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -729,7 +740,7 @@
             // C_6_4
             // 
             this.C_6_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_4.Location = new System.Drawing.Point(265, 377);
+            this.C_6_4.Location = new System.Drawing.Point(262, 377);
             this.C_6_4.Name = "C_6_4";
             this.C_6_4.Size = new System.Drawing.Size(39, 39);
             this.C_6_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -740,7 +751,7 @@
             // C_7_4
             // 
             this.C_7_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_4.Location = new System.Drawing.Point(303, 377);
+            this.C_7_4.Location = new System.Drawing.Point(300, 377);
             this.C_7_4.Name = "C_7_4";
             this.C_7_4.Size = new System.Drawing.Size(39, 39);
             this.C_7_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -751,7 +762,7 @@
             // C_1_4
             // 
             this.C_1_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_4.Location = new System.Drawing.Point(75, 377);
+            this.C_1_4.Location = new System.Drawing.Point(72, 377);
             this.C_1_4.Name = "C_1_4";
             this.C_1_4.Size = new System.Drawing.Size(39, 39);
             this.C_1_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -762,7 +773,7 @@
             // C_2_3
             // 
             this.C_2_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_3.Location = new System.Drawing.Point(113, 339);
+            this.C_2_3.Location = new System.Drawing.Point(110, 339);
             this.C_2_3.Name = "C_2_3";
             this.C_2_3.Size = new System.Drawing.Size(39, 39);
             this.C_2_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -773,7 +784,7 @@
             // C_3_3
             // 
             this.C_3_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_3.Location = new System.Drawing.Point(151, 339);
+            this.C_3_3.Location = new System.Drawing.Point(148, 339);
             this.C_3_3.Name = "C_3_3";
             this.C_3_3.Size = new System.Drawing.Size(39, 39);
             this.C_3_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -784,7 +795,7 @@
             // C_4_3
             // 
             this.C_4_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_3.Location = new System.Drawing.Point(189, 339);
+            this.C_4_3.Location = new System.Drawing.Point(186, 339);
             this.C_4_3.Name = "C_4_3";
             this.C_4_3.Size = new System.Drawing.Size(39, 39);
             this.C_4_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -795,7 +806,7 @@
             // C_5_3
             // 
             this.C_5_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_3.Location = new System.Drawing.Point(227, 339);
+            this.C_5_3.Location = new System.Drawing.Point(224, 339);
             this.C_5_3.Name = "C_5_3";
             this.C_5_3.Size = new System.Drawing.Size(39, 39);
             this.C_5_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -806,7 +817,7 @@
             // C_6_3
             // 
             this.C_6_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_3.Location = new System.Drawing.Point(265, 339);
+            this.C_6_3.Location = new System.Drawing.Point(262, 339);
             this.C_6_3.Name = "C_6_3";
             this.C_6_3.Size = new System.Drawing.Size(39, 39);
             this.C_6_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -817,7 +828,7 @@
             // C_7_3
             // 
             this.C_7_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_3.Location = new System.Drawing.Point(303, 339);
+            this.C_7_3.Location = new System.Drawing.Point(300, 339);
             this.C_7_3.Name = "C_7_3";
             this.C_7_3.Size = new System.Drawing.Size(39, 39);
             this.C_7_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -828,7 +839,7 @@
             // C_1_3
             // 
             this.C_1_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_3.Location = new System.Drawing.Point(75, 339);
+            this.C_1_3.Location = new System.Drawing.Point(72, 339);
             this.C_1_3.Name = "C_1_3";
             this.C_1_3.Size = new System.Drawing.Size(39, 39);
             this.C_1_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -839,7 +850,7 @@
             // C_2_2
             // 
             this.C_2_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_2.Location = new System.Drawing.Point(113, 301);
+            this.C_2_2.Location = new System.Drawing.Point(110, 301);
             this.C_2_2.Name = "C_2_2";
             this.C_2_2.Size = new System.Drawing.Size(39, 39);
             this.C_2_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -850,7 +861,7 @@
             // C_3_2
             // 
             this.C_3_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_2.Location = new System.Drawing.Point(151, 301);
+            this.C_3_2.Location = new System.Drawing.Point(148, 301);
             this.C_3_2.Name = "C_3_2";
             this.C_3_2.Size = new System.Drawing.Size(39, 39);
             this.C_3_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -861,7 +872,7 @@
             // C_4_2
             // 
             this.C_4_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_2.Location = new System.Drawing.Point(189, 301);
+            this.C_4_2.Location = new System.Drawing.Point(186, 301);
             this.C_4_2.Name = "C_4_2";
             this.C_4_2.Size = new System.Drawing.Size(39, 39);
             this.C_4_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -872,7 +883,7 @@
             // C_5_2
             // 
             this.C_5_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_2.Location = new System.Drawing.Point(227, 301);
+            this.C_5_2.Location = new System.Drawing.Point(224, 301);
             this.C_5_2.Name = "C_5_2";
             this.C_5_2.Size = new System.Drawing.Size(39, 39);
             this.C_5_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -883,7 +894,7 @@
             // C_6_2
             // 
             this.C_6_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_2.Location = new System.Drawing.Point(265, 301);
+            this.C_6_2.Location = new System.Drawing.Point(262, 301);
             this.C_6_2.Name = "C_6_2";
             this.C_6_2.Size = new System.Drawing.Size(39, 39);
             this.C_6_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -894,7 +905,7 @@
             // C_7_2
             // 
             this.C_7_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_2.Location = new System.Drawing.Point(303, 301);
+            this.C_7_2.Location = new System.Drawing.Point(300, 301);
             this.C_7_2.Name = "C_7_2";
             this.C_7_2.Size = new System.Drawing.Size(39, 39);
             this.C_7_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -905,7 +916,7 @@
             // C_1_2
             // 
             this.C_1_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_2.Location = new System.Drawing.Point(75, 301);
+            this.C_1_2.Location = new System.Drawing.Point(72, 301);
             this.C_1_2.Name = "C_1_2";
             this.C_1_2.Size = new System.Drawing.Size(39, 39);
             this.C_1_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -916,7 +927,7 @@
             // C_2_1
             // 
             this.C_2_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_1.Location = new System.Drawing.Point(113, 263);
+            this.C_2_1.Location = new System.Drawing.Point(110, 263);
             this.C_2_1.Name = "C_2_1";
             this.C_2_1.Size = new System.Drawing.Size(39, 39);
             this.C_2_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -927,7 +938,7 @@
             // C_3_1
             // 
             this.C_3_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_1.Location = new System.Drawing.Point(151, 263);
+            this.C_3_1.Location = new System.Drawing.Point(148, 263);
             this.C_3_1.Name = "C_3_1";
             this.C_3_1.Size = new System.Drawing.Size(39, 39);
             this.C_3_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -938,7 +949,7 @@
             // C_4_1
             // 
             this.C_4_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_1.Location = new System.Drawing.Point(189, 263);
+            this.C_4_1.Location = new System.Drawing.Point(186, 263);
             this.C_4_1.Name = "C_4_1";
             this.C_4_1.Size = new System.Drawing.Size(39, 39);
             this.C_4_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -949,7 +960,7 @@
             // C_5_1
             // 
             this.C_5_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_1.Location = new System.Drawing.Point(227, 263);
+            this.C_5_1.Location = new System.Drawing.Point(224, 263);
             this.C_5_1.Name = "C_5_1";
             this.C_5_1.Size = new System.Drawing.Size(39, 39);
             this.C_5_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -960,7 +971,7 @@
             // C_6_1
             // 
             this.C_6_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_1.Location = new System.Drawing.Point(265, 263);
+            this.C_6_1.Location = new System.Drawing.Point(262, 263);
             this.C_6_1.Name = "C_6_1";
             this.C_6_1.Size = new System.Drawing.Size(39, 39);
             this.C_6_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -971,7 +982,7 @@
             // C_7_1
             // 
             this.C_7_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_1.Location = new System.Drawing.Point(303, 263);
+            this.C_7_1.Location = new System.Drawing.Point(300, 263);
             this.C_7_1.Name = "C_7_1";
             this.C_7_1.Size = new System.Drawing.Size(39, 39);
             this.C_7_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -982,7 +993,7 @@
             // C_1_1
             // 
             this.C_1_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_1.Location = new System.Drawing.Point(75, 263);
+            this.C_1_1.Location = new System.Drawing.Point(72, 263);
             this.C_1_1.Name = "C_1_1";
             this.C_1_1.Size = new System.Drawing.Size(39, 39);
             this.C_1_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -996,7 +1007,7 @@
             // C_7_0
             // 
             this.C_7_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_7_0.Location = new System.Drawing.Point(303, 225);
+            this.C_7_0.Location = new System.Drawing.Point(300, 225);
             this.C_7_0.Name = "C_7_0";
             this.C_7_0.Size = new System.Drawing.Size(39, 39);
             this.C_7_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1007,7 +1018,7 @@
             // C_6_0
             // 
             this.C_6_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_6_0.Location = new System.Drawing.Point(265, 225);
+            this.C_6_0.Location = new System.Drawing.Point(262, 225);
             this.C_6_0.Name = "C_6_0";
             this.C_6_0.Size = new System.Drawing.Size(39, 39);
             this.C_6_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1018,7 +1029,7 @@
             // C_5_0
             // 
             this.C_5_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_5_0.Location = new System.Drawing.Point(227, 225);
+            this.C_5_0.Location = new System.Drawing.Point(224, 225);
             this.C_5_0.Name = "C_5_0";
             this.C_5_0.Size = new System.Drawing.Size(39, 39);
             this.C_5_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1029,7 +1040,7 @@
             // C_4_0
             // 
             this.C_4_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_4_0.Location = new System.Drawing.Point(189, 225);
+            this.C_4_0.Location = new System.Drawing.Point(186, 225);
             this.C_4_0.Name = "C_4_0";
             this.C_4_0.Size = new System.Drawing.Size(39, 39);
             this.C_4_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1040,7 +1051,7 @@
             // C_3_0
             // 
             this.C_3_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_3_0.Location = new System.Drawing.Point(151, 225);
+            this.C_3_0.Location = new System.Drawing.Point(148, 225);
             this.C_3_0.Name = "C_3_0";
             this.C_3_0.Size = new System.Drawing.Size(39, 39);
             this.C_3_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1051,7 +1062,7 @@
             // C_2_0
             // 
             this.C_2_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_2_0.Location = new System.Drawing.Point(113, 225);
+            this.C_2_0.Location = new System.Drawing.Point(110, 225);
             this.C_2_0.Name = "C_2_0";
             this.C_2_0.Size = new System.Drawing.Size(39, 39);
             this.C_2_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1062,13 +1073,111 @@
             // C_1_0
             // 
             this.C_1_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_1_0.Location = new System.Drawing.Point(75, 225);
+            this.C_1_0.Location = new System.Drawing.Point(72, 225);
             this.C_1_0.Name = "C_1_0";
             this.C_1_0.Size = new System.Drawing.Size(39, 39);
             this.C_1_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.C_1_0.TabIndex = 8;
             this.C_1_0.TabStop = false;
             this.C_1_0.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(88, 495);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(15, 17);
+            this.label1.TabIndex = 62;
+            this.label1.Text = "1";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(127, 495);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 17);
+            this.label3.TabIndex = 63;
+            this.label3.Text = "2";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(164, 495);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(15, 17);
+            this.label4.TabIndex = 64;
+            this.label4.Text = "3";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label4.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(199, 497);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(15, 17);
+            this.label5.TabIndex = 65;
+            this.label5.Text = "4";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(241, 495);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(15, 17);
+            this.label6.TabIndex = 66;
+            this.label6.Text = "5";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label6.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(277, 495);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(15, 17);
+            this.label7.TabIndex = 67;
+            this.label7.Text = "6";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label7.Visible = false;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(313, 495);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(15, 17);
+            this.label8.TabIndex = 68;
+            this.label8.Text = "7";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label8.Visible = false;
             // 
             // Form1
             // 
@@ -1135,6 +1244,13 @@
             this.Controls.Add(this.C_2_0);
             this.Controls.Add(this.C_1_0);
             this.Controls.Add(this.button_Restart);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1144,11 +1260,11 @@
             this.Name = "Form1";
             this.Text = "Connect 4";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormKeyPress);
             this.GameOptions.ResumeLayout(false);
             this.GameOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).EndInit();
@@ -1208,12 +1324,8 @@
 
         }
 
-        #endregion
+#endregion
         private System.Windows.Forms.GroupBox GameOptions;
-        private System.Windows.Forms.RadioButton RButtonEasy;
-        private System.Windows.Forms.RadioButton RButtonMed;
-        private System.Windows.Forms.RadioButton RButtonIntermediate;
-        private System.Windows.Forms.Label Label_Diff;
         private System.Windows.Forms.PictureBox Color_Select_Red;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox Color_Select_Blue;
@@ -1275,7 +1387,6 @@
         private System.Windows.Forms.Button button_Restart;
         private System.Windows.Forms.Button button_Exit;
         private System.Windows.Forms.PictureBox LoadingBox;
-        private System.Windows.Forms.RadioButton RButtonHard;
         private System.Windows.Forms.CheckBox PredicitveCheckBox;
         private System.Windows.Forms.CheckBox FGameCheckBox;
         private System.Windows.Forms.PictureBox Help_PictureBox;
@@ -1283,8 +1394,21 @@
         private System.Windows.Forms.CheckBox LearnMCheckBox;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.CheckBox DebugAI_CheckBox;
-        private System.Windows.Forms.RadioButton RButtonImpossible;
         private System.Windows.Forms.CheckBox StrategicCheckBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label Label_Impossible;
+        private System.Windows.Forms.Label Label_Hard;
+        private System.Windows.Forms.Label Label_Intermediate;
+        private System.Windows.Forms.Label Label_Medium;
+        private System.Windows.Forms.Label Label_Easy;
+        private System.Windows.Forms.Label AIDiff_Label;
+        private System.Windows.Forms.TrackBar DiffBar;
     }
 }
 

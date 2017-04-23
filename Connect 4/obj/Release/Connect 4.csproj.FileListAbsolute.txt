@@ -16,3 +16,10 @@ D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect_4.Prope
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.csproj.GenerateResource.Cache
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.exe
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.pdb
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe.manifest
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.application
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe.CodeAnalysisLog.xml
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe.lastcodeanalysissucceeded
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.TrustInfo.xml
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.exe.manifest
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.application
