@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.GameOptions = new System.Windows.Forms.GroupBox();
+            this.Difficulty_Label = new System.Windows.Forms.Label();
             this.Label_Impossible = new System.Windows.Forms.Label();
             this.Label_Hard = new System.Windows.Forms.Label();
             this.Label_Intermediate = new System.Windows.Forms.Label();
@@ -114,6 +115,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.Glow = new System.Windows.Forms.PictureBox();
+            this.DebugStateButton = new System.Windows.Forms.Button();
             this.GameOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
@@ -172,10 +175,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Glow)).BeginInit();
             this.SuspendLayout();
             // 
             // GameOptions
             // 
+            this.GameOptions.Controls.Add(this.Difficulty_Label);
             this.GameOptions.Controls.Add(this.Label_Impossible);
             this.GameOptions.Controls.Add(this.Label_Hard);
             this.GameOptions.Controls.Add(this.Label_Intermediate);
@@ -203,55 +208,76 @@
             this.GameOptions.TabStop = false;
             this.GameOptions.Text = "Game Options";
             // 
+            // Difficulty_Label
+            // 
+            this.Difficulty_Label.AutoSize = true;
+            this.Difficulty_Label.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Difficulty_Label.ForeColor = System.Drawing.Color.DarkOrange;
+            this.Difficulty_Label.Location = new System.Drawing.Point(125, 122);
+            this.Difficulty_Label.Name = "Difficulty_Label";
+            this.Difficulty_Label.Size = new System.Drawing.Size(104, 20);
+            this.Difficulty_Label.TabIndex = 75;
+            this.Difficulty_Label.Text = "Intermediate";
+            // 
             // Label_Impossible
             // 
             this.Label_Impossible.AutoSize = true;
             this.Label_Impossible.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Impossible.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Label_Impossible.Location = new System.Drawing.Point(327, 168);
             this.Label_Impossible.Name = "Label_Impossible";
             this.Label_Impossible.Size = new System.Drawing.Size(31, 27);
             this.Label_Impossible.TabIndex = 74;
             this.Label_Impossible.Text = "😈";
+            this.Label_Impossible.Click += new System.EventHandler(this.Label_Impossible_Click);
             // 
             // Label_Hard
             // 
             this.Label_Hard.AutoSize = true;
             this.Label_Hard.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Hard.Location = new System.Drawing.Point(254, 168);
+            this.Label_Hard.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Hard.Location = new System.Drawing.Point(252, 168);
             this.Label_Hard.Name = "Label_Hard";
             this.Label_Hard.Size = new System.Drawing.Size(31, 27);
             this.Label_Hard.TabIndex = 73;
             this.Label_Hard.Text = "😠";
+            this.Label_Hard.Click += new System.EventHandler(this.Label_Hard_Click);
             // 
             // Label_Intermediate
             // 
             this.Label_Intermediate.AutoSize = true;
             this.Label_Intermediate.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Intermediate.ForeColor = System.Drawing.Color.DarkOrange;
             this.Label_Intermediate.Location = new System.Drawing.Point(180, 168);
             this.Label_Intermediate.Name = "Label_Intermediate";
             this.Label_Intermediate.Size = new System.Drawing.Size(31, 27);
             this.Label_Intermediate.TabIndex = 72;
             this.Label_Intermediate.Text = "😕";
+            this.Label_Intermediate.Click += new System.EventHandler(this.Label_Intermediate_Click);
             // 
             // Label_Medium
             // 
             this.Label_Medium.AutoSize = true;
             this.Label_Medium.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Medium.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Label_Medium.Location = new System.Drawing.Point(107, 168);
             this.Label_Medium.Name = "Label_Medium";
             this.Label_Medium.Size = new System.Drawing.Size(31, 27);
             this.Label_Medium.TabIndex = 71;
             this.Label_Medium.Text = "🙂";
+            this.Label_Medium.Click += new System.EventHandler(this.Label_Medium_Click);
             // 
             // Label_Easy
             // 
             this.Label_Easy.AutoSize = true;
             this.Label_Easy.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Easy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Label_Easy.Location = new System.Drawing.Point(34, 168);
             this.Label_Easy.Name = "Label_Easy";
             this.Label_Easy.Size = new System.Drawing.Size(31, 27);
             this.Label_Easy.TabIndex = 70;
             this.Label_Easy.Text = "😁";
+            this.Label_Easy.Click += new System.EventHandler(this.Label_Easy_Click);
             // 
             // AIDiff_Label
             // 
@@ -347,7 +373,7 @@
             this.button_Start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Start.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Start.ForeColor = System.Drawing.Color.Gray;
-            this.button_Start.Location = new System.Drawing.Point(145, 392);
+            this.button_Start.Location = new System.Drawing.Point(143, 380);
             this.button_Start.Name = "button_Start";
             this.button_Start.Size = new System.Drawing.Size(102, 38);
             this.button_Start.TabIndex = 8;
@@ -468,6 +494,8 @@
             // DebugAI_CheckBox
             // 
             this.DebugAI_CheckBox.AutoSize = true;
+            this.DebugAI_CheckBox.Checked = true;
+            this.DebugAI_CheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DebugAI_CheckBox.Location = new System.Drawing.Point(12, 12);
             this.DebugAI_CheckBox.Name = "DebugAI_CheckBox";
             this.DebugAI_CheckBox.Size = new System.Drawing.Size(39, 21);
@@ -475,9 +503,9 @@
             this.DebugAI_CheckBox.Text = "AI";
             this.DebugAI_CheckBox.UseVisualStyleBackColor = true;
             this.DebugAI_CheckBox.Visible = false;
-            #if DEBUG
-            this.DebugAI_CheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            #endif
+#if DEBUG
+            this.DebugAI_CheckBox.CheckedChanged += new System.EventHandler(this.DebugAI_CheckBox_CheckedChanged);
+#endif
             // 
             // LoadingBox
             // 
@@ -1179,12 +1207,41 @@
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label8.Visible = false;
             // 
+            // Glow
+            // 
+            this.Glow.BackColor = System.Drawing.Color.Transparent;
+            this.Glow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Glow.Image = ((System.Drawing.Image)(resources.GetObject("Glow.Image")));
+            this.Glow.Location = new System.Drawing.Point(358, 3);
+            this.Glow.Name = "Glow";
+            this.Glow.Size = new System.Drawing.Size(39, 39);
+            this.Glow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Glow.TabIndex = 69;
+            this.Glow.TabStop = false;
+            this.Glow.Visible = false;
+            // 
+            // DebugStateButton
+            // 
+            this.DebugStateButton.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DebugStateButton.Location = new System.Drawing.Point(12, 40);
+            this.DebugStateButton.Name = "DebugStateButton";
+            this.DebugStateButton.Size = new System.Drawing.Size(47, 23);
+            this.DebugStateButton.TabIndex = 70;
+            this.DebugStateButton.Text = "state";
+            this.DebugStateButton.UseVisualStyleBackColor = true;
+            this.DebugStateButton.Visible = false;
+#if DEBUG
+            this.DebugStateButton.Click += new System.EventHandler(this.DebugStateButton_Click);
+#endif
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(409, 561);
+            this.Controls.Add(this.DebugStateButton);
+            this.Controls.Add(this.Glow);
             this.Controls.Add(this.DebugAI_CheckBox);
             this.Controls.Add(this.GameOptions);
             this.Controls.Add(this.LoadingBox);
@@ -1319,6 +1376,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Glow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1409,6 +1467,9 @@
         private System.Windows.Forms.Label Label_Easy;
         private System.Windows.Forms.Label AIDiff_Label;
         private System.Windows.Forms.TrackBar DiffBar;
+        private System.Windows.Forms.Label Difficulty_Label;
+        private System.Windows.Forms.PictureBox Glow;
+        private System.Windows.Forms.Button DebugStateButton;
     }
 }
 
