@@ -14,7 +14,7 @@ Or directly download the [Release.exe](https://github.com/TheDotaWeirdo/Connect-
 Things you'll need to use the project:
 ```
 To run the .exe alone you will need the .NET framework 4.6.2
-For the whole project, you will need Visual Studio, [VS 2017](https://www.visualstudio.com/downloads/) was used for this project
+For the whole project, you will need Visual Studio, VS 2017 was used for this project
 ```
 
 ### Installing
