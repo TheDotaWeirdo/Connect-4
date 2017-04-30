@@ -3,6 +3,7 @@
 Connect 4 is an old-school game based done on a C# Windows Form Application.
 It features a complexe AI with Predictive, Strategic and 'Humanized' capabilities
 All along a simple responsive UI
+
 [Screenshots](http://imgur.com/a/1oeQN)
 
 ## Getting Started
