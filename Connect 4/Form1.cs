@@ -14,6 +14,7 @@ namespace Connect_4
 {
     public partial class Form1 : Form
     {
+        int[] TopImgSize = new int[] { 100, 155 };
         int GlowIndex = 0, CurrentMouseIndex = 0;
         bool InfiniteLoop = false;
         public MainGame MG = new MainGame();
@@ -83,7 +84,6 @@ namespace Connect_4
                 if (LearnMCheckBox.Checked && MG.vsAI)
                     T.Interval *= 2.5;
                 MG.Case[Cap][index] = MG.Turn + 1;
-                MG.State[index] = -1;
                 MG.Busy = true;
                 tempBitmap = W;
                 tempPBox = C[Cap][index];
@@ -199,7 +199,7 @@ namespace Connect_4
 
         private void PlayEnd(int index)
         {
-            if (MG.CheckWin() > 0)
+            if (MG.AssessWin() > 0)
             {
                 UpdateVisuals();
                 if (MG.Winner == 1)
@@ -236,14 +236,14 @@ namespace Connect_4
                         if ((y = MG.GetLow(x)) > 0)
                         {
                             MG.Case[y][x] = MG.P[0] + 1;
-                            if (MG.CheckWin(false) == MG.P[0] + 1)
+                            if (MG.CheckWin() == MG.P[0] + 1)
                             {
                                 Helps[0] = x;
                             }
                             else
                             {
                                 MG.Case[y][x] = MG.P[1] + 1;
-                                if (MG.CheckWin(false) == MG.P[1] + 1)
+                                if (MG.CheckWin() == MG.P[1] + 1)
                                 {
                                     Helps[1] = x;
                                 }
@@ -321,16 +321,20 @@ namespace Connect_4
                       Timer.Dispose();
                       if (index == 1)
                       {
-                          Thread.Sleep(85);
+                          if (!MG.FastGame)
+                              Thread.Sleep(150);
                           Turn_Right.Invoke(new Action(Turn_Right.Show));
                           Turn_Left.Invoke(new Action(Turn_Left.Show));
+                          if (!MG.FastGame)
+                              Thread.Sleep(150);
+                          TopPicture.Invoke(new Action(TopPicture.Show));
                           MG.Busy = false;
                           Point P = Cursor.Position;
                           Cursor.Position = new Point(0, 0);
                           Cursor.Position = P;
                           if (MG.Turn == MG.P[1] && MG.vsAI)
                           {
-                              Thread.Sleep(400);
+                              Thread.Sleep((MG.FastGame) ? 100 : 400);
                               Col_Click(4, true);
                           }
                       }
@@ -348,12 +352,12 @@ namespace Connect_4
 
         private void TopImgScaleSmall()
         {
-            TopPicture.Height = 100;
+            TopPicture.Height = TopImgSize[0];
         }
 
         private void TopImgScaleBig()
         {
-            TopPicture.Height = 155;
+            TopPicture.Height = TopImgSize[1];
         }
 
         private void HelpResetText()
@@ -421,7 +425,6 @@ namespace Connect_4
         {
             if (MG.P[0] != 0)
             {
-                button_Start.Location = new Point(143, 380);
                 Color_Select_Blue.Image = T_Large_Blue_Circle;
                 Color_Select_Red.Image = Large_Select_Red_Circle;
                 button_Start.ForeColor = Color.FromArgb(221, 46, 68);
@@ -432,6 +435,7 @@ namespace Connect_4
                 button_Start.BackColor = Color.White;
                 if (Label_Err_Color.Visible)
                     Label_Err_Color.Hide();
+                button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
                 MG.P[0] = 0; MG.P[1] = 1;
             }
         }
@@ -440,7 +444,6 @@ namespace Connect_4
         {
             if (MG.P[0] != 1)
             {
-                button_Start.Location = new Point(143, 380);
                 Color_Select_Red.Image = T_Large_Red_Circle;
                 Color_Select_Blue.Image = Large_Select_Blue_Circle;
                 button_Start.ForeColor = Color.FromArgb(86, 172, 238);
@@ -451,6 +454,7 @@ namespace Connect_4
                 button_Start.BackColor = Color.White;
                 if(Label_Err_Color.Visible)
                     Label_Err_Color.Hide();
+                button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
                 MG.P[0] = 1; MG.P[1] = 0;
             }
         }
@@ -459,10 +463,11 @@ namespace Connect_4
         {
             if (MG.P[0] != -1)
             {
-                button_Start.Location = new Point(143, 380);
+                button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
                 LoadingBox.Show();
                 MG.Loading = true;
-                System.Timers.Timer T = new System.Timers.Timer(25);
+                TopPicture.Hide();
+                System.Timers.Timer T = new System.Timers.Timer(50);
                 T.Start();
                 T.Elapsed += (s, E) =>
                 {
@@ -473,6 +478,7 @@ namespace Connect_4
                         SlideEffect();
                     }
                 };
+                FormResize(null, null);
                 Turn_Left.Invoke(new Action(TLUpdate));
                 Turn_Right.Invoke(new Action(TRUpdate));
                 if (LearnMCheckBox.Checked && MG.vsAI)
@@ -491,9 +497,9 @@ namespace Connect_4
             }
             else
             {
-                button_Start.Location = new Point(143, 395);
                 try { Label_Err_Color.Show(); }
                 catch (InvalidOperationException) { }
+                button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
             }
         }
 
@@ -501,6 +507,7 @@ namespace Connect_4
         {
             if(AIcheckBox.Checked)
             {
+                DebugAI_CheckBox.Checked =
                 MG.vsAI =
                 AIDiff_Label.Enabled = 
                 Label_Easy.Enabled =
@@ -516,6 +523,7 @@ namespace Connect_4
             }
             else
             {
+                DebugAI_CheckBox.Checked =
                 MG.vsAI =
                 AIDiff_Label.Enabled =
                 Label_Easy.Enabled =
@@ -538,7 +546,7 @@ namespace Connect_4
         private void PredicitveChkChanged(object sender, EventArgs e)
         {
             if (InfiniteLoop) return;
-            MG.PredicitveAI = PredicitveCheckBox.Checked;
+            MG.PredictiveAI = PredicitveCheckBox.Checked;
             if (PredicitveCheckBox.Checked)
             {
                 InfiniteLoop = true;
@@ -596,11 +604,12 @@ namespace Connect_4
             Helps = new int[] { 0, 0 };
             LossHelps = 0;
             MG.StrategicAI = StrategicCheckBox.Checked;
-            MG.PredicitveAI = PredicitveCheckBox.Checked;
+            MG.PredictiveAI = PredicitveCheckBox.Checked;
             UpdateVisuals();
             button_Exit.Hide(); button_Restart.Hide();
             GameOptions.Show();
             Turn_Right.Hide();
+            Help_PictureBox.Hide();
             Turn_Left.Hide();
             TopPicture.Image = Properties.Resources.Connect_4;
             TopPicture.Invoke(new Action(TopImgScaleSmall));
@@ -707,6 +716,7 @@ namespace Connect_4
             toolTip.SetToolTip(LearnMCheckBox, "Adds Tips to the match with insights on what to play");
             toolTip.SetToolTip(PredicitveCheckBox, "Enables Predicitve moves by the AI");
             toolTip.SetToolTip(StrategicCheckBox, "Enables Strategic moves by the AI, Predictive AI is Obligatory");
+            toolTip.SetToolTip(HumanizedCheckBox, "Coming Soon..");
             toolTip.SetToolTip(Label_Easy, "Easy");
             toolTip.SetToolTip(Label_Medium, "Medium");
             toolTip.SetToolTip(Label_Intermediate, "Intermediate");
@@ -721,6 +731,7 @@ namespace Connect_4
             C.Add(new List<PictureBox> { null, C_1_4, C_2_4, C_3_4, C_4_4, C_5_4, C_6_4, C_7_4 });
             C.Add(new List<PictureBox> { null, C_1_5, C_2_5, C_3_5, C_4_5, C_5_5, C_6_5, C_7_5 });
             C.Add(new List<PictureBox> { null, C_1_6, C_2_6, C_3_6, C_4_6, C_5_6, C_6_6, C_7_6 });
+            FormResize(null, null);
             C_1_0.Click += Col1_Click;
             C_1_1.Click += Col1_Click;
             C_1_2.Click += Col1_Click;
@@ -966,6 +977,145 @@ namespace Connect_4
         private void Col7_Leave(object sender, EventArgs e)
         { Col_Leave(7); CurrentMouseIndex = 0; }
 
+        private int HWDiff(int W, int H)
+        {
+            H = (int)(H / 1.411);
+            int w = W-425; int h = H - 425;
+            if (w > h)
+                return W - w + h;
+            return H - h + w;
+        }
+
+        private void FormResize(object sender, EventArgs e)
+        {  // Max : 725, 950
+            if(ActiveForm != null)
+                lock (ActiveForm)
+                { ResizeForm(); }
+            else
+                ResizeForm();
+        }
+
+        private void ResizeForm()
+        {  // Max : 725, 950
+            int W, H, GOW, GOH, CS; int[] CBL;
+            try
+            { W = ActiveForm.Width; H = ActiveForm.Height; if (W < ActiveForm.MinimumSize.Width) return; }
+            catch (Exception) { W = 425; H = 600; }
+            TopImgSize[0] = (int)(H * 0.166);
+            TopImgSize[1] = (int)(H * 0.2383);
+
+            {   //In-Game
+                CS = (HWDiff(W, H)) / 13 + 10;
+                CBL = new int[2] { (W / 2 - (CS * 7 - 7) / 2 - 6), (int)((30 + ((H - TopImgSize[0]) / 2 - (CS * 7 - 7) / 2 - 6) + TopImgSize[0]) * ((LearnMCheckBox.Checked && AIcheckBox.Checked) ? .9 : 1)) };
+                for (int x = 1; x < 8; x++)
+                {
+                    for (int y = 0; y < 7; y++)
+                    {
+                        lock (C[y][x])
+                        {
+                            C[y][x].Location = new Point(CBL[0] + CS * (x - 1), CBL[1] + CS * y);
+                            C[y][x].Size = new Size(CS, CS);
+                        }
+                    }
+                }
+                Help_PictureBox.Size = new Size((int)(HWDiff(W, H) / 14.16), (int)(HWDiff(W, H) / 14.16));
+                label_Help.Font = new Font("Century Gothic", HWDiff(W, H) / 47, FontStyle.Italic);
+                label_Help.Location = new Point(W / 21 + Help_PictureBox.Width, H - CS - label_Help.Height);
+                label_Help.Width = W - (W / 20) - label_Help.Location.X + 10;
+                Help_PictureBox.Location = new Point(W / 42, H - CS - (int)(label_Help.Height / 1.33) - (int)((Help_PictureBox.Height - 30) / 2));
+                button_Exit.Height = button_Restart.Height = button_Start.Height = (H - 600) / 25 + 45;
+                button_Exit.Width = button_Restart.Width = button_Start.Width = (W - 425) / 6 + 100;
+                button_Exit.Font = button_Start.Font = button_Restart.Font = new Font("Century Gothic", (float)(4.25 + HWDiff(W, H) / 42.5), FontStyle.Bold);
+                if (MG.P[0] == -1)
+                    button_Start.Font = new Font("Century Gothic", (float)(4.25 + HWDiff(W, H) / 42.5));
+                button_Exit.Location = new Point((W - button_Exit.Width) * 3 / 4, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1]) * ((LearnMCheckBox.Checked && AIcheckBox.Checked) ? .9 : 1)));
+                button_Restart.Location = new Point((W - button_Exit.Width) / 4, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1]) * ((LearnMCheckBox.Checked && AIcheckBox.Checked) ? .9 : 1)));
+                Turn_Left.Height = Turn_Left.Width = Turn_Right.Height = Turn_Right.Width = (int)(1.5 * CS);
+                Turn_Right.Location = new Point((W - Turn_Right.Height) * 3 / 4, (int)((((CBL[1] - TopImgSize[0]) / 2.85) + TopImgSize[0]) * ((LearnMCheckBox.Checked && AIcheckBox.Checked) ? .9 : 1)));
+                Turn_Left.Location = new Point((W - Turn_Right.Height) / 4, (int)((((CBL[1] - TopImgSize[0]) / 2.85) + TopImgSize[0]) * ((LearnMCheckBox.Checked && AIcheckBox.Checked) ? .9 : 1)));
+#if DEBUG
+                label1.Location = new Point(CBL[0] + CS * (1 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+                label3.Location = new Point(CBL[0] + CS * (2 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+                label4.Location = new Point(CBL[0] + CS * (3 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+                label5.Location = new Point(CBL[0] + CS * (4 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+                label6.Location = new Point(CBL[0] + CS * (5 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+                label7.Location = new Point(CBL[0] + CS * (6 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+                label8.Location = new Point(CBL[0] + CS * (7 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
+#endif
+            }
+
+            {   //Main Menu
+                GOW = Math.Min(660, W - 40);
+                GOH = (int)(H * 1.05) - ((H + 24) / 11) - 27 - TopImgSize[0];
+                TopPicture.Width = W - 40;
+                LoadingBox.Size = new Size(W, H);
+                LoadingBox.Location = new Point(0, 0);
+                GameOptions.Width = GOW; GOW += 40;
+                GameOptions.Height = GOH;
+                TopPicture.Height = TopImgSize[(MG.Finished) ? 1 : 0];
+                FGameCheckBox.Location = new Point(FGameCheckBox.Location.X, GOH / 15 + 6);
+                GameOptions.Location = new Point(Math.Max((W - 670) / 2, 12), 6 + TopImgSize[0]);
+                W = Math.Min(700, W);
+                Color_Select_Blue.Size = Color_Select_Red.Size = new Size((int)(HWDiff(W, H) / 3.5), (int)(HWDiff(W, H) / 3.5));
+                Color_Select_Red.Location = new Point((int)(0.9 * ((GOW - 40 - Color_Select_Red.Width) / 4)), GOH / 2 + GOH / 16 - 10);
+                Color_Select_Blue.Location = new Point((int)(1.1 * ((GOW - 40 - Color_Select_Red.Width) * 3 / 4)), GOH / 2 + GOH / 16 - 10);
+                Label_Err_Color.Location = new Point((GOW - 40) / 2 - 86, GOH - (int)(GOH / 5.89));
+                button_Start.Location = new Point((GOW - 30 - button_Start.Width) / 2, GOH - GOH / ((Label_Err_Color.Visible) ? 9 : 7));
+                Color_Label.Location = new Point((int)((W - 370) * .2) + 15, GOH / 2);
+                DiffBar.Width = W - 104;
+                Label_Easy.Font = Label_Hard.Font = Label_Medium.Font = Label_Impossible.Font = Label_Intermediate.Font = new Font("Century Gothic", (float)(7.25 + HWDiff(W, H) / 42.5));
+                int d = DiffBar.Width;// (int)((W - 104 - Label_Impossible.Width) *1.02);// - DiffBar.Location.X) * 1.025);
+                Label_Impossible.Location = new Point(W - 98 - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
+                Label_Easy.Location = new Point(DiffBar.Location.X - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
+                Label_Hard.Location = new Point(DiffBar.Location.X + 1 + (int)((Label_Hard.Width - 31) * .3) + (d - Label_Easy.Width + 4) / 4 * 3, GOH / 4 + 10 + 48);
+                Label_Medium.Location = new Point(DiffBar.Location.X - (int)((Label_Medium.Width - 31) * .3) + (d - Label_Easy.Width + 4) / 4, GOH / 4 + 10 + 48);
+                Label_Intermediate.Location = new Point(DiffBar.Location.X + (d - Label_Easy.Width + 4) / 2, GOH / 4 + 10 + 48);
+                AIDiff_Label.Location = new Point(25, GOH / 4 + 60 - (int)(2.5 * AIDiff_Label.Height));
+                Difficulty_Label.Location = new Point(25 + AIDiff_Label.Width, GOH / 4 + 69 - 3 * Difficulty_Label.Height);
+                Color_Label.Font = AIcheckBox.Font = new Font("Century Gothic", (float)(6.5 + HWDiff(W, H) / 63.75));
+                Difficulty_Label.Font = HumanizedCheckBox.Font = PredicitveCheckBox.Font = StrategicCheckBox.Font = new Font("Century Gothic", (float)(3.75 + HWDiff(W, H) / 63.75));
+                AIDiff_Label.Font = LearnMCheckBox.Font = FGameCheckBox.Font = new Font("Century Gothic", (float)(4.5 + HWDiff(W, H) / 63.75));
+                DiffBar.Location = new Point(DiffBar.Location.X, GOH / 4 + 10 + 25);
+                int p = GOH / 15 + 6, p1 = (int)(GameOptions.Width * .965) - HumanizedCheckBox.Width - (AIcheckBox.Width / 5);
+                AIcheckBox.Location = new Point(p1, p); p += (int)(AIcheckBox.Height * 1.12);
+                PredicitveCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p); p += (int)(1.5 * PredicitveCheckBox.Height - 11.5);
+                StrategicCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p); p += (int)(1.5 * StrategicCheckBox.Height - 11.5);
+                HumanizedCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p);
+                if (AIcheckBox.Location.X - (FGameCheckBox.Width + FGameCheckBox.Location.X) > (int)((FGameCheckBox.Width + FGameCheckBox.Location.X) * 1.3))
+                    LearnMCheckBox.Location = new Point((int)((FGameCheckBox.Width + FGameCheckBox.Location.X) * 1.3), GOH / 15 + 6);
+                else
+                    LearnMCheckBox.Location = new Point(30, GOH / 12 + 30);
+            }            
+        }
+
+        const int WM_SYSCOMMAND = 0x0112;
+        const int SC_MAXIMIZE = 0xF030;
+        const int SC_MINIMIZE = 0xF020;
+        Size OldSize = new Size(425, 600);
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_SYSCOMMAND)
+            {
+                switch ((int)m.WParam)
+                {
+                    case SC_MAXIMIZE:
+                        if (ActiveForm.Size.Equals(ActiveForm.MaximumSize))
+                            ActiveForm.Size = OldSize;
+                        else
+                        {
+                            OldSize = ActiveForm.Size;
+                            ActiveForm.Size = ActiveForm.MaximumSize;
+                            if (ActiveForm.DesktopLocation.Y + ActiveForm.MaximumSize.Height > Screen.FromControl(this).Bounds.Height)
+                                ActiveForm.Location = new Point(ActiveForm.Location.X, Screen.FromControl(this).Bounds.Height - ActiveForm.MaximumSize.Height);
+                        }
+                        FormResize(null, null);
+                        return;
+                }
+            }
+            base.WndProc(ref m);
+        }
+
 #if DEBUG
         private void DebugAI_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -973,8 +1123,7 @@ namespace Connect_4
         }
         private void DebugStateButton_Click(object sender, EventArgs e)
         {
-            if(!MG.Busy)
-                MG.PlayAI();
+            MG.CalculateStates();
             tempLabel = label1; tempInt = 1; tempLabel.Invoke(new Action(UpdateDebugState));
             tempLabel = label3; tempInt = 2; tempLabel.Invoke(new Action(UpdateDebugState));
             tempLabel = label4; tempInt = 3; tempLabel.Invoke(new Action(UpdateDebugState));
@@ -985,8 +1134,20 @@ namespace Connect_4
         }
         private void UpdateDebugState()
         {
+            int i = 0;
+            string s = "";
+            foreach(int a in MG.State[tempInt])
+            {
+                if (MG.State[tempInt].Count > 1 && a == 0) { }
+                else {
+                    if (i == 2)
+                    { i = 0; s += "\n"; }
+                    s += a;
+                    i++;
+                }
+            }
             lock (tempLabel)
-                tempLabel.Text = MG.State[tempInt].ToString() + "\n" + MG.Severity[tempInt].ToString();
+                tempLabel.Text = s + "\n" + MG.Severity[tempInt].ToString();
         }
 #endif
 

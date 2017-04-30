@@ -14,7 +14,7 @@ namespace Connect_4
         public bool Busy = true;
         public bool Loading = false;
         public bool vsAI = true;
-        public bool PredicitveAI = true;
+        public bool PredictiveAI = true;
         public bool StrategicAI = false;
         public bool FastGame = false;
         public int[] P = { -1, -1 };
@@ -32,14 +32,15 @@ namespace Connect_4
         double StrategicCheckChance;
         double StrategicBlockChance;
         double FutureStrategicBlockChance;
-        public Dictionary<int, int> State = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
+        public Dictionary<int, List<int>> State = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
         public Dictionary<int, int> Severity = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
         // States of each column are cases where specified conditions are met, a column can have more than one state at a time
         // State Severity of a column is calculated based on the multiple states applied in a column, the higher the severity the more likely the column will be played
 
         // -7: Possible Loss Prediction | checks if a play by the Player will create a possible Loss (6) (Loss in 4 moves)
         // -6: Possible Win Prediction | checks if a play by the Bot will create a possible Win (5) (win in 2 moves)
-        // -5: 
+        // -5: Block/Mistake Cancel Prediction | checks if a play by the Bot will force the player into surrendering a Future Block or Mistake
+        //                                                                | or if a play by the player will force the bot into surrendering a Future Block or Mistake
         // -4: StrategicCheck | checks if a play by the bot will create a future mistake state 
         // -3: StrategicBlock | checks if a play by the player will create a future block state
         // -2: FutureStrategicBlock | checks if (a play by the bot then player) OR (any play in a column) will create a block state
@@ -54,7 +55,8 @@ namespace Connect_4
 
         public int Diff {
             get { return diff; }
-            set { diff = value;
+            set {
+                diff = value;
                 Delay = (100 - value) * ((FastGame) ? 4 : 12);
                 WinChance = (value * .1) + 90;
                 BlockChance = (value * .2) + 80;
@@ -99,206 +101,112 @@ namespace Connect_4
 
         public int PlayAI()
         {
+            // Calculate the State & Severity of each column
+            CalculateStates();
+            // Waits for any ongoing animations to be done
+            while (Busy) { Thread.Sleep(1); }
+            if (Finished)
+                return 0; // In case the game was declared finished while calculations were ongoing
+            // Chooses a column based on the severity of all of them
+            // It will choose a random column from the highest severity 
+            return ChooseColumn();
+        }
+
+        public void CalculateStates()
+        {
             Random RND = new Random(Guid.NewGuid().GetHashCode());
-            int output = 0;
+            // Loops through all columns to calculate the states and severity
             for (int x = 1; x < 8; x++)
             {
-                Severity[x] = State[x] = 0;
+                // Resets the column's old values
+                Severity[x] = 0;
+                State[x] = new List<int> { 0 };
                 int y = GetLow(x);
-                //In Case of Possible Win or Loss
+                // If the Column is full, state = 3
                 if (y == 0)
-                { State[x] = 3; Severity[x] = -100; }
+                { State[x].Add(3); Severity[x] = -100; }
                 else
                 {
-                    State[x] = 0;
+                    // Checks for possible wins
                     Case[y][x] = P[1] + 1;
-                    if (CheckWin(false) == P[1] + 1 && RND.NextDouble()*100 <= WinChance)
+                    if (CheckWin() == P[1] + 1 && RND.NextDouble() * 100 <= WinChance)
                     {
-                        State[x] = 5;
+                        State[x].Add(5);
                         Severity[x] += 50;
                     }
                     else
                     {
+                        // Checks for possible losses
                         Case[y][x] = P[0] + 1;
-                        if (CheckWin(false) == P[0] + 1 && RND.NextDouble() * 100 <= BlockChance)
+                        if (CheckWin() == P[0] + 1 && RND.NextDouble() * 100 <= BlockChance)
                         {
-                            State[x] = 6;
-                            Severity[x] += 25;
+                            State[x].Add(6);
+                            Severity[x] += 15;
                         }
                     }
                     Case[y][x] = 0;
-                    if (PredicitveAI)
+                    // In case the column is 1-token short from being full
+                    if (y == 1)
+                    { State[x].Add(2); Severity[x] -= 1; }
+                    else
                     {
-                        if (y == 1)
-                        { State[x] = 2; Severity[x] += -1; }
-                        else
-                        {
-                            Case[y][x] = P[1] + 1; Case[y - 1][x] = P[0] + 1;
-                            if (CheckWin(false) - 1 == P[0] && RND.NextDouble() * 100 <= FutureBlockChance)
-                            { State[x] = 1; Severity[x] -= 5; }
-                            Case[y][x] = P[0] + 1; Case[y - 1][x] = P[1] + 1;
-                            if (CheckWin(false) - 1 == P[1] && RND.NextDouble() * 100 <= FutureMistakeChance)
-                            { State[x] = 4; Severity[x] -= 5; }
-                            Case[y][x] = Case[y - 1][x] = 0;
-                            //
-                            int temp;
-                            Case[y][x] = P[1] + 1;
-                            if ((temp = CountPossWinLoss()[0]) > 0 && RND.NextDouble() * 100 <= PredictWinChance)
-                            { if (State[x] <= 0) State[x] = -6; Severity[x] += 2 * temp; }
-                            Case[y][x] = P[0] + 1;
-                            if ((temp = CountPossWinLoss()[1]) > 0 && RND.NextDouble() * 100 <= PredictLossChance)
-                            { if (State[x] <= 0) State[x] = -7; Severity[x] += temp; }
-                            Case[y][x] = 0;
-                        }
-                    }
-                    if (StrategicAI)
-                    {
-                        if (StrategicCheck(x, 1) && RND.NextDouble() * 100 <= StrategicCheckChance)
-                        { if (State[x] <= 0) State[x] = -4; Severity[x] += 3; }
-                        if (StrategicCheck(x, 0) && RND.NextDouble() * 100 <= StrategicBlockChance)
-                        { if (State[x] <= 0) State[x] = -3; Severity[x] += 3; }
-                        if ((FutureStrategicCheck(x) || StrategicCheck(x, 2)) && RND.NextDouble() * 100 <= FutureStrategicBlockChance)
-                        { if (State[x] <= 0) State[x] = -2; Severity[x] -= 3; }
+                        // In case playing in the column will result in an open possible loss
+                        Case[y][x] = P[1] + 1; Case[y - 1][x] = P[0] + 1;
+                        if (RND.NextDouble() * 100 <= FutureBlockChance && CheckWin() - 1 == P[0])
+                        { State[x].Add(1); Severity[x] -= 5; }
+                        // In case playing in the column will result in a loss of a possible win
+                        Case[y][x] = P[0] + 1; Case[y - 1][x] = P[1] + 1;
+                        if (RND.NextDouble() * 100 <= FutureMistakeChance && CheckWin() - 1 == P[1])
+                        { State[x].Add(4); Severity[x] -= 4; }
+                        Case[y][x] = Case[y - 1][x] = 0;
                     }
                 }
             }
-            output = ChooseColumn(RND.Next(1, 8));
-            while (Busy)
-            { Thread.Sleep(1); }
-            if (Finished)
-                return 0;
-            return output;
+
+            for (int x = 1; x < 8; x++)
+            {
+                int y = GetLow(x);
+                // Predictive AI calculations
+                if (PredictiveAI)
+                {
+                    // In case playing the column will result in a possible win state
+                    int temp;
+                    Case[y][x] = P[1] + 1;
+                    if (RND.NextDouble() * 100 <= PredictWinChance && (temp = CountPossWin(x)) > 0)
+                    {  State[x].Add(-6); Severity[x] += (int) Math.Floor(1.4 * (temp + 1)); }
+                    // In case the Player playing the column will result in a possible loss state
+                    Case[y][x] = P[0] + 1;
+                    if (RND.NextDouble() * 100 <= PredictLossChance && (temp = CountPossLoss(x)) > 0)
+                    {  State[x].Add(-7); Severity[x] += (int) Math.Floor(1.4 * (temp + 1)); }
+                    Case[y][x] = 0;                    
+                }
+                // Strategic AI calculations
+                if (StrategicAI)
+                {
+                    // Checks if playing in the column will create a future mistake state (4)
+                    if (RND.NextDouble() * 100 <= StrategicCheckChance && StrategicCheck(x, 1))
+                    {  State[x].Add(-4); Severity[x] += 2; }
+                    // Checks if the Player playing in the column will create a future block state (1)
+                    if (RND.NextDouble() * 100 <= StrategicBlockChance && StrategicCheck(x, 0))
+                    {  State[x].Add(-3); Severity[x] += 2; }
+                    // Checks if a play by either the AI or player will create Future block state(1)
+                    // Or if a play by the AI then the Player in the column will create a future block state (1)
+                    if (!State[x].Contains(1) && !State[x].Contains(4) && RND.NextDouble() * 100 <= FutureStrategicBlockChance)
+                    {
+                        if(FutureStrategicCheck(x))
+                        { State[x].Add(-2); Severity[x] -= 2; }
+                        else if(StrategicCheck(x, 2))
+                        { State[x].Add(-2); Severity[x] -= 1; }
+                    }                    
+                }
+            }
         }
 
-        //public int PlayAI()
-        //{
-        //    Random RND = new Random(Guid.NewGuid().GetHashCode());
-        //    int output = 0;
-        //    for (int x = 1; x < 8; x++)
-        //    {
-        //        int y;
-        //        //In Case of Possible Win or Loss
-        //        if ((y = GetLow(x)) > 0)
-        //        {
-        //            Case[y][x] = P[1] + 1;
-        //            if (CheckWin(false) == P[1] + 1)
-        //            {
-        //                State[x] = 5;
-        //                StateSeverity[x] = 99;
-        //            }
-        //            else
-        //            {
-        //                Case[y][x] = P[0] + 1;
-        //                if (CheckWin(false) == P[0] + 1)
-        //                {
-        //                    State[x] = 6;
-        //                    StateSeverity[x] = 50;
-        //                }
-        //            }
-        //            Case[y][x] = 0;
-        //        }
-        //        //Predicitve AI column state calculations
-        //        if (PredicitveAI)
-        //        {
-        //            if (State[x] <= 0)
-        //            {
-        //                y = GetLow(x);
-        //                if (y > 1)
-        //                {
-        //                    Case[y][x] = P[1] + 1; Case[y - 1][x] = P[0] + 1;
-        //                    if (CheckWin(false) - 1 == P[0])
-        //                    { State[x] = 1; StateSeverity[x] = -9; }
-        //                    else
-        //                    { State[x] = 0; StateSeverity[x] = 0; }
-        //                    Case[y][x] = P[0] + 1; Case[y - 1][x] = P[1] + 1;
-        //                    if (State[x] <= 0 && CheckWin(false) - 1 == P[1])
-        //                    { State[x] = 4; StateSeverity[x] = -5; }
-        //                    Case[y][x] = Case[y - 1][x] = 0;
-        //                }
-        //                else if (y == 1)
-        //                { State[x] = 2; StateSeverity[x] = -2; }
-        //                else
-        //                { State[x] = 3; StateSeverity[x] = -99; }
-        //            }
-        //        }
-        //    }
-        //    //if (State.ContainsValue(5) && RND.NextDouble() * 100 <= WinChance) 
-        //    //{ output = GetUnblocked(RND.Next(1, 8)); goto EndPoint; }
-        //    //else if(State.ContainsValue(6) && RND.NextDouble() * 100 <= BlockChance)
-        //    //{ output = GetUnblocked(RND.Next(1, 8)); goto EndPoint; }
-        //    if (StrategicAI && RND.NextDouble() * 100 <= StrategicMovesChance)
-        //        for (int x = 1; x < 8; x++)
-        //        {
-        //            if (State[x] == 0)
-        //            {
-        //                if (StrategicCheck(x, 1))
-        //                { State[x] = -4; StateSeverity[x] += 2; }
-        //                if (StrategicCheck(x, 0))
-        //                { State[x] = -3; StateSeverity[x] += 3; }
-        //                if (FutureStrategicCheck(x) || StrategicCheck(x, 2))
-        //                { State[x] = -2; StateSeverity[x] -= 3; }
-        //                //int Y = GetLow(x);
-        //                //Case[Y][x] = P[1] + 1;
-        //                //if (CheckElligibility(x))
-        //                //{
-        //                //    int temp, y;
-        //                //    var SaveState = new Dictionary<int, int> { { 1, StateSeverity[1] }, { 2, StateSeverity[2] }, { 3, StateSeverity[3] }, { 4, StateSeverity[4] }, { 5, StateSeverity[5] }, { 6, StateSeverity[6] }, { 7, StateSeverity[7] } };
-        //                //    for (int X = 1; X < 8; X++)
-        //                //    {
-        //                //        if (X != x)
-        //                //        {
-        //                //            y = GetLow(X);
-        //                //            Case[y][X] = P[0] + 1;
-        //                //            if ((temp = CountPossWinLoss(X)[1]) > 0)
-        //                //            { State[x] -= 10; SaveState[x] -= temp; }
-        //                //            Case[y][X] = 0;
-        //                //        }
-        //                //    }
-        //                //    StateSeverity = SaveState;
-        //                //}
-        //                //Case[Y][x] = 0;
-        //            }
-        //        }
-        //    if (PredicitveAI)
-        //    {
-        //        //Predictive Moves
-        //        int temp;
-        //        var SaveState = new Dictionary<int, int> { { 1, StateSeverity[1] }, { 2, StateSeverity[2] }, { 3, StateSeverity[3] }, { 4, StateSeverity[4] }, { 5, StateSeverity[5] }, { 6, StateSeverity[6] }, { 7, StateSeverity[7] } };
-        //        Dictionary<int, int[]> d1, d2; d1 = new Dictionary<int, int[]>(); d2 = new Dictionary<int, int[]>();
-        //        for (int X = 1; X < 8; X++)
-        //        {
-        //            int Y = GetLow(X);
-        //            Case[Y][X] = P[1] + 1;
-        //            if (CheckElligibility(X))//State[X] == 0)
-        //            {
-        //                if ((temp = CountPossWinLoss()[0]) > 0)
-        //                { State[X] = -6; SaveState[X] += 2 * temp; }
-        //            }
-        //            Case[Y][X] = P[0] + 1;
-        //            if (CheckElligibility(X))
-        //            {
-        //                if ((temp = CountPossWinLoss()[1]) > 0)
-        //                { State[X] = -7; SaveState[X] += temp; }
-        //            }
-        //            Case[Y][X] = 0;
-        //            if (StrategicAI)
-        //            {
-
-        //            }
-        //        }
-        //        StateSeverity = SaveState;
-        //    }
-        //    EndPoint:
-        //    if (output > 0 && GetLow(output) > 0 && CheckElligibility(output))
-        //    { while (Busy) { Thread.Sleep(1); } if (Finished) return 0; return output; }
-        //    output = GetUnblocked(RND.Next(1, 8)); goto EndPoint;
-        //}
-
-        public int CheckWin(bool VChange = true)
+        public int AssessWin()
         {
-            int i = 0;
+            int output = 0;
             List<Point> LP = new List<Point>();
-            for (int y = 1; y < 7; y++)
+            for (int y = 6; y > 0; y--)
             {
                 for (int x = 1; x < 8; x++)
                 {
@@ -307,39 +215,91 @@ namespace Connect_4
                     {
                         CD = CheckDiagDown(x, y, true);
                         if (CD.Check)
-                            i = AssessWin(CD, ref LP);
+                        {
+                            output = CD.Color;
+                            for (int i = 0; i < CD.Points.Count; i++)
+                                LP.Add(CD.Points[i]);
+                        }
                     }
                     if (y > 3 && x < 5)
                     {
                         CD = CheckDiagUp(x, y, true);
                         if (CD.Check)
-                            i = AssessWin(CD, ref LP);
+                        {
+                            output = CD.Color;
+                            for (int i = 0; i < CD.Points.Count; i++)
+                                LP.Add(CD.Points[i]);
+                        }
                     }
                     if (x < 5)
                     {
                         CD = CheckHorizontal(x, y, true);
                         if (CD.Check)
-                            i = AssessWin(CD, ref LP);
+                        {
+                            output = CD.Color;
+                            for (int i = 0; i < CD.Points.Count; i++)
+                                LP.Add(CD.Points[i]);
+                        }
                     }
                     if (y < 4)
                     {
                         CD = CheckVertical(x, y, true);
                         if (CD.Check)
-                            i = AssessWin(CD, ref LP);
+                        {
+                            output = CD.Color;
+                            for (int i = 0; i < CD.Points.Count; i++)
+                                LP.Add(CD.Points[i]);
+                        }
                     }
                 }
             }
-            if (i > 0 && VChange)
+            if (output > 0)
             {
                 Finished = true;
-                Winner = i;
+                Winner = output;
                 for (int y = 1; y < 7; y++)
                     for (int x = 1; x < 8; x++)
                         Case[y][x] = -Case[y][x];
                 foreach (Point P in LP)
-                    Case[P.Y][P.X] = i + 2;
+                    Case[P.Y][P.X] = output + 2;
             }
-            return i;
+            return output;
+        }
+
+        public int CheckWin()
+        {
+            for (int y = 6; y > 0; y--)
+            {
+                for (int x = 1; x < 8; x++)
+                {
+                    CheckData CD;
+                    if (y < 4 && x < 5)
+                    {
+                        CD = CheckDiagDown(x, y, true);
+                        if (CD.Check)
+                            return CD.Color;
+                    }
+                    if (y > 3 && x < 5)
+                    {
+                        CD = CheckDiagUp(x, y, true);
+                        if (CD.Check)
+                            return CD.Color;
+                    }
+                    if (x < 5)
+                    {
+                        CD = CheckHorizontal(x, y, true);
+                        if (CD.Check)
+                            return CD.Color;
+                    }
+                    if (y < 4)
+                    {
+                        CD = CheckVertical(x, y, true);
+                        if (CD.Check)
+                            return CD.Color;
+                    }
+                }
+            }
+            return 0;
         }
 
         public bool CheckTie()
@@ -354,13 +314,6 @@ namespace Connect_4
             return true;
         }
 
-        private int AssessWin(CheckData CD, ref List<Point> LP)
-        {
-            for (int i = 0; i < CD.Points.Count; i++)
-                LP.Add(CD.Points[i]);  
-            return CD.Color;
-        }
-
         public int GetLow(int col)
         {
             for (int i = 6; i > 0; i--)
@@ -369,41 +322,57 @@ namespace Connect_4
             return 0;
         }
 
-        private int[] CountPossWinLoss(int n = 0)
+        private int CountPossLoss(int n = 0)
         {
-            int c5 = 0, c6 = 0;
+            int output = 0;
             for (int x = 1; x < 8; x++)
             {
                 int y;
                 //In Case of Possible Win or Loss
-                if ((y = GetLow(x)) > 0 && x != n) 
+                if ((y = GetLow(x)) > 0 && x != n)
                 {
-                    Case[y][x] = P[1] + 1;
-                    if (CheckWin(false) == P[1] + 1)
+                    Case[y][x] = P[0] + 1;
+                    if (CheckWin() == P[0] + 1)
                     {
-                        c5++;
-                    }
-                    else
-                    {
-                        Case[y][x] = P[0] + 1;
-                        if (CheckWin(false) == P[0] + 1)
-                        {
-                            c6++;
-                        }
+                        output++;
+                        if (StrategicAI && (State[x].Contains(1) || State[x].Contains(4)))
+                        { State[n].Add(-5); Severity[n] += 2; }
                     }
                     Case[y][x] = 0;
                 }
             }
-            return new int[] { c5, c6 };
+            return output ;
         }
 
-        private int ChooseColumn(int output = 0)
+        private int CountPossWin(int n = 0)
         {
-            Dictionary<int, int> Max = new Dictionary<int, int> { { 1, Severity[1] } };
+            int output = 0;
+            for (int x = 1; x < 8; x++)
+            {
+                int y;
+                //In Case of Possible Win or Loss
+                if ((y = GetLow(x)) > 0 && x != n)
+                {
+                    Case[y][x] = P[1] + 1;
+                    if (CheckWin() == P[1] + 1)
+                    {
+                        output++;
+                        if (StrategicAI && (State[x].Contains(1) || State[x].Contains(4)))
+                        { State[n].Add(-5); Severity[n] += 3; }
+                    }
+                    Case[y][x] = 0;
+                }
+            }
+            return output;
+        }
+
+        private int ChooseColumn()
+        {
+            int output = new Random().Next(1, 8), Max = Severity[1];
             for (int i = 2; i < 8; i++)
-                if (Severity[i] > Max.Last().Value)
-                    Max.Add(i, Severity[i]);
-            while (Severity[output] != Max.Last().Value)
+                if (Severity[i] > Max)
+                    Max = Severity[i];
+            while (Severity[output] != Max)
             { output = new Random().Next(1, 8); }
             return output;
         }
@@ -422,10 +391,10 @@ namespace Connect_4
         private bool FutureStrategicCheck(int x)
         {
             int FutureBlocksCount = 0;
-            foreach (int s in State.Values)
-                if (s == 1)
+            foreach (List<int> s in State.Values)
+                if (s.Contains(1))
                     FutureBlocksCount++;
-            var SaveState = new Dictionary<int, int> { { 1, State[1] }, { 2, State[2] }, { 3, State[3] }, { 4, State[4] }, { 5, State[5] }, { 6, State[6] }, { 7, State[7] } };
+            var SaveState = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
             //State.CopyTo(SaveState, 0);
             int Y = GetLow(x); if (Y < 2) return false;
             Case[Y][x] = P[1] + 1;
@@ -438,15 +407,15 @@ namespace Connect_4
                     if (y > 1)
                     {
                         Case[y][i] = P[1] + 1; Case[y - 1][i] = P[0] + 1;
-                        if (CheckWin(false) - 1 == P[0])
-                            State[i] = 1;
+                        if (!State[i].Contains(-4) && CheckWin() - 1 == P[0])
+                            SaveState[i].Add(1);
                         Case[y][i] = Case[y - 1][i] = 0;
                     }
                 }
             }
             int FBC = 0;
-            foreach (int s in SaveState.Values)
-                if (s == 1)
+            foreach (List<int> s in SaveState.Values)
+                if (s.Contains(1))
                     FBC++;
             Case[Y][x] = 0;
             Case[Y - 1][x] = 0;
@@ -458,10 +427,10 @@ namespace Connect_4
         private bool StrategicCheck(int x, int ID)
         {
             int FutureBlocksCount = 0;
-            foreach (int s in State.Values)
-                if (s == ((ID == 1) ? 4 : 1))
+            foreach (List<int> s in State.Values)
+                if (s.Contains((ID == 1) ? 4 : 1))
                     FutureBlocksCount++;
-            var SaveState = new Dictionary<int, int> { { 1, State[1] }, { 2, State[2] }, { 3, State[3] }, { 4, State[4] }, { 5, State[5] }, { 6, State[6] }, { 7, State[7] } };
+            var SaveState = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
             int Y = GetLow(x); if (Y < 1) return false;
             Case[Y][x] = P[(ID == 2) ? 0 : ID] + 1;
             for (int i = 1; i < 8; i++)
@@ -470,23 +439,23 @@ namespace Connect_4
                 if (y > 1)
                 {
                     Case[y][i] = P[1] + 1; Case[y - 1][i] = P[0] + 1;
-                    if (CheckWin(false) - 1 == P[0])
-                        SaveState[i] = 1;
+                    if (CheckWin() - 1 == P[0])
+                        SaveState[i].Add(1);
                     else
-                        SaveState[i] = 0;
+                        SaveState[i].Add(0);
                     Case[y][i] = P[0] + 1; Case[y - 1][i] = P[1] + 1;
-                    if (CheckWin(false) - 1 == P[1])
-                        SaveState[i] += 4;
+                    if (CheckWin() - 1 == P[1])
+                        SaveState[i].Add(4);
                     Case[y][i] = Case[y - 1][i] = 0;
                 }
                 else if (y == 1)
-                    SaveState[i] = 2;
+                    SaveState[i].Add(2);
                 else
-                    SaveState[i] = 3;
+                    SaveState[i].Add(3);
             }
             int FBC = 0;
-            foreach (int s in SaveState.Values)
-                if (s == ((ID == 1) ? 4 : 1))
+            foreach (List<int> s in SaveState.Values)
+                if (s.Contains((ID == 1) ? 4 : 1))
                     FBC++;
             Case[Y][x] = 0;
             if (FutureBlocksCount < FBC)
@@ -495,7 +464,7 @@ namespace Connect_4
                     return true;
                 else
                 {
-                    SaveState = new Dictionary<int, int> { { 1, State[1] }, { 2, State[2] }, { 3, State[3] }, { 4, State[4] }, { 5, State[5] }, { 6, State[6] }, { 7, State[7] } };
+                    SaveState = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
                     Y = GetLow(x); if (Y < 1) return false;
                     Case[Y][x] = P[1] + 1;
                     for (int i = 1; i < 8; i++)
@@ -504,14 +473,14 @@ namespace Connect_4
                         if (y > 1)
                         {
                             Case[y][i] = P[1] + 1; Case[y - 1][i] = P[0] + 1;
-                            if (CheckWin(false) - 1 == P[0])
-                                SaveState[i] = 1;
+                            if (CheckWin() - 1 == P[0])
+                                SaveState[i].Add(1);
                             Case[y][i] = Case[y - 1][i] = 0;
                         }
                     }
                     FBC = 0;
-                    foreach (int s in SaveState.Values)
-                        if (s == ((ID == 1) ? 4 : 1))
+                    foreach (List<int> s in SaveState.Values)
+                        if (s.Contains((ID == 1) ? 4 : 1))
                             FBC++;
                     Case[Y][x] = 0;
                     if (ID == 2 && FutureBlocksCount < FBC)

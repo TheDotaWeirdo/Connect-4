@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.GameOptions = new System.Windows.Forms.GroupBox();
+            this.HumanizedCheckBox = new System.Windows.Forms.CheckBox();
             this.Difficulty_Label = new System.Windows.Forms.Label();
             this.Label_Impossible = new System.Windows.Forms.Label();
             this.Label_Hard = new System.Windows.Forms.Label();
@@ -38,7 +39,7 @@
             this.Label_Medium = new System.Windows.Forms.Label();
             this.Label_Easy = new System.Windows.Forms.Label();
             this.AIDiff_Label = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.Color_Label = new System.Windows.Forms.Label();
             this.StrategicCheckBox = new System.Windows.Forms.CheckBox();
             this.LearnMCheckBox = new System.Windows.Forms.CheckBox();
             this.PredicitveCheckBox = new System.Windows.Forms.CheckBox();
@@ -54,6 +55,15 @@
             this.label_Help = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.DebugAI_CheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.DebugStateButton = new System.Windows.Forms.Button();
+            this.Glow = new System.Windows.Forms.PictureBox();
             this.LoadingBox = new System.Windows.Forms.PictureBox();
             this.TopPicture = new System.Windows.Forms.PictureBox();
             this.Turn_Right = new System.Windows.Forms.PictureBox();
@@ -108,19 +118,11 @@
             this.C_3_0 = new System.Windows.Forms.PictureBox();
             this.C_2_0 = new System.Windows.Forms.PictureBox();
             this.C_1_0 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.Glow = new System.Windows.Forms.PictureBox();
-            this.DebugStateButton = new System.Windows.Forms.Button();
             this.GameOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Glow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).BeginInit();
@@ -175,11 +177,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Glow)).BeginInit();
             this.SuspendLayout();
             // 
             // GameOptions
             // 
+            this.GameOptions.Controls.Add(this.HumanizedCheckBox);
             this.GameOptions.Controls.Add(this.Difficulty_Label);
             this.GameOptions.Controls.Add(this.Label_Impossible);
             this.GameOptions.Controls.Add(this.Label_Hard);
@@ -187,7 +189,7 @@
             this.GameOptions.Controls.Add(this.Label_Medium);
             this.GameOptions.Controls.Add(this.Label_Easy);
             this.GameOptions.Controls.Add(this.AIDiff_Label);
-            this.GameOptions.Controls.Add(this.label2);
+            this.GameOptions.Controls.Add(this.Color_Label);
             this.GameOptions.Controls.Add(this.StrategicCheckBox);
             this.GameOptions.Controls.Add(this.LearnMCheckBox);
             this.GameOptions.Controls.Add(this.PredicitveCheckBox);
@@ -199,7 +201,7 @@
             this.GameOptions.Controls.Add(this.Color_Select_Red);
             this.GameOptions.Controls.Add(this.DiffBar);
             this.GameOptions.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameOptions.Location = new System.Drawing.Point(12, 106);
+            this.GameOptions.Location = new System.Drawing.Point(382, 165);
             this.GameOptions.Margin = new System.Windows.Forms.Padding(4);
             this.GameOptions.Name = "GameOptions";
             this.GameOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -207,6 +209,19 @@
             this.GameOptions.TabIndex = 7;
             this.GameOptions.TabStop = false;
             this.GameOptions.Text = "Game Options";
+            // 
+            // HumanizedCheckBox
+            // 
+            this.HumanizedCheckBox.AutoSize = true;
+            this.HumanizedCheckBox.Enabled = false;
+            this.HumanizedCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HumanizedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.HumanizedCheckBox.Location = new System.Drawing.Point(232, 118);
+            this.HumanizedCheckBox.Name = "HumanizedCheckBox";
+            this.HumanizedCheckBox.Size = new System.Drawing.Size(128, 24);
+            this.HumanizedCheckBox.TabIndex = 76;
+            this.HumanizedCheckBox.Text = "Humanized AI";
+            this.HumanizedCheckBox.UseVisualStyleBackColor = true;
             // 
             // Difficulty_Label
             // 
@@ -289,14 +304,14 @@
             this.AIDiff_Label.TabIndex = 69;
             this.AIDiff_Label.Text = "AI Difficulty:";
             // 
-            // label2
+            // Color_Label
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 215);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 22);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Color:";
+            this.Color_Label.AutoSize = true;
+            this.Color_Label.Location = new System.Drawing.Point(25, 215);
+            this.Color_Label.Name = "Color_Label";
+            this.Color_Label.Size = new System.Drawing.Size(63, 22);
+            this.Color_Label.TabIndex = 4;
+            this.Color_Label.Text = "Color:";
             // 
             // StrategicCheckBox
             // 
@@ -375,7 +390,7 @@
             this.button_Start.ForeColor = System.Drawing.Color.Gray;
             this.button_Start.Location = new System.Drawing.Point(143, 380);
             this.button_Start.Name = "button_Start";
-            this.button_Start.Size = new System.Drawing.Size(102, 38);
+            this.button_Start.Size = new System.Drawing.Size(100, 38);
             this.button_Start.TabIndex = 8;
             this.button_Start.Text = "Start";
             this.button_Start.UseVisualStyleBackColor = false;
@@ -402,7 +417,7 @@
             this.Color_Select_Blue.Location = new System.Drawing.Point(206, 240);
             this.Color_Select_Blue.Name = "Color_Select_Blue";
             this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Color_Select_Blue.TabIndex = 6;
             this.Color_Select_Blue.TabStop = false;
             this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
@@ -414,7 +429,7 @@
             this.Color_Select_Red.Location = new System.Drawing.Point(63, 240);
             this.Color_Select_Red.Name = "Color_Select_Red";
             this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Color_Select_Red.TabIndex = 5;
             this.Color_Select_Red.TabStop = false;
             this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
@@ -471,11 +486,11 @@
             // 
             // label_Help
             // 
-            this.label_Help.Font = new System.Drawing.Font("Century Gothic", 9.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Help.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Help.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
-            this.label_Help.Location = new System.Drawing.Point(53, 500);
+            this.label_Help.Location = new System.Drawing.Point(46, 500);
             this.label_Help.Name = "label_Help";
-            this.label_Help.Size = new System.Drawing.Size(344, 52);
+            this.label_Help.Size = new System.Drawing.Size(354, 52);
             this.label_Help.TabIndex = 60;
             this.label_Help.Text = "Click on a column to place a token that will drop to the lowest empty space. Win " +
     "the Game by matching 4 tokens";
@@ -506,608 +521,6 @@
 #if DEBUG
             this.DebugAI_CheckBox.CheckedChanged += new System.EventHandler(this.DebugAI_CheckBox_CheckedChanged);
 #endif
-            // 
-            // LoadingBox
-            // 
-            this.LoadingBox.Image = global::Connect_4.Properties.Resources.Loading;
-            this.LoadingBox.Location = new System.Drawing.Point(12, 106);
-            this.LoadingBox.Name = "LoadingBox";
-            this.LoadingBox.Size = new System.Drawing.Size(385, 443);
-            this.LoadingBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.LoadingBox.TabIndex = 10;
-            this.LoadingBox.TabStop = false;
-            this.LoadingBox.Visible = false;
-            // 
-            // TopPicture
-            // 
-            this.TopPicture.Image = global::Connect_4.Properties.Resources.Connect_4;
-            this.TopPicture.Location = new System.Drawing.Point(12, 3);
-            this.TopPicture.Name = "TopPicture";
-            this.TopPicture.Size = new System.Drawing.Size(385, 100);
-            this.TopPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.TopPicture.TabIndex = 57;
-            this.TopPicture.TabStop = false;
-            this.TopPicture.Click += new System.EventHandler(this.Button_Restart_Click);
-            // 
-            // Turn_Right
-            // 
-            this.Turn_Right.Image = global::Connect_4.Properties.Resources.T_Large_Blue_Circle;
-            this.Turn_Right.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Turn_Right.Location = new System.Drawing.Point(233, 140);
-            this.Turn_Right.Name = "Turn_Right";
-            this.Turn_Right.Size = new System.Drawing.Size(64, 64);
-            this.Turn_Right.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Turn_Right.TabIndex = 11;
-            this.Turn_Right.TabStop = false;
-            this.Turn_Right.Visible = false;
-            // 
-            // Turn_Left
-            // 
-            this.Turn_Left.Image = global::Connect_4.Properties.Resources.Large_Gold_Red_Circle;
-            this.Turn_Left.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Turn_Left.Location = new System.Drawing.Point(113, 140);
-            this.Turn_Left.Name = "Turn_Left";
-            this.Turn_Left.Size = new System.Drawing.Size(64, 64);
-            this.Turn_Left.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Turn_Left.TabIndex = 10;
-            this.Turn_Left.TabStop = false;
-            this.Turn_Left.Visible = false;
-            // 
-            // Help_PictureBox
-            // 
-            this.Help_PictureBox.Image = global::Connect_4.Properties.Resources.Gold_Help;
-            this.Help_PictureBox.Location = new System.Drawing.Point(12, 511);
-            this.Help_PictureBox.MaximumSize = new System.Drawing.Size(30, 30);
-            this.Help_PictureBox.Name = "Help_PictureBox";
-            this.Help_PictureBox.Size = new System.Drawing.Size(30, 30);
-            this.Help_PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Help_PictureBox.TabIndex = 59;
-            this.Help_PictureBox.TabStop = false;
-            this.Help_PictureBox.Visible = false;
-            this.Help_PictureBox.MouseEnter += new System.EventHandler(this.Help_Show);
-            this.Help_PictureBox.MouseLeave += new System.EventHandler(this.Help_Hide);
-            // 
-            // C_2_6
-            // 
-            this.C_2_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_6.Location = new System.Drawing.Point(110, 453);
-            this.C_2_6.Name = "C_2_6";
-            this.C_2_6.Size = new System.Drawing.Size(39, 39);
-            this.C_2_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_6.TabIndex = 56;
-            this.C_2_6.TabStop = false;
-            this.C_2_6.Visible = false;
-            // 
-            // C_3_6
-            // 
-            this.C_3_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_6.Location = new System.Drawing.Point(148, 453);
-            this.C_3_6.Name = "C_3_6";
-            this.C_3_6.Size = new System.Drawing.Size(39, 39);
-            this.C_3_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_6.TabIndex = 55;
-            this.C_3_6.TabStop = false;
-            this.C_3_6.Visible = false;
-            // 
-            // C_4_6
-            // 
-            this.C_4_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_6.Location = new System.Drawing.Point(186, 453);
-            this.C_4_6.Name = "C_4_6";
-            this.C_4_6.Size = new System.Drawing.Size(39, 39);
-            this.C_4_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_6.TabIndex = 54;
-            this.C_4_6.TabStop = false;
-            this.C_4_6.Visible = false;
-            // 
-            // C_5_6
-            // 
-            this.C_5_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_6.Location = new System.Drawing.Point(224, 453);
-            this.C_5_6.Name = "C_5_6";
-            this.C_5_6.Size = new System.Drawing.Size(39, 39);
-            this.C_5_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_6.TabIndex = 53;
-            this.C_5_6.TabStop = false;
-            this.C_5_6.Visible = false;
-            // 
-            // C_6_6
-            // 
-            this.C_6_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_6.Location = new System.Drawing.Point(262, 453);
-            this.C_6_6.Name = "C_6_6";
-            this.C_6_6.Size = new System.Drawing.Size(39, 39);
-            this.C_6_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_6.TabIndex = 52;
-            this.C_6_6.TabStop = false;
-            this.C_6_6.Visible = false;
-            // 
-            // C_7_6
-            // 
-            this.C_7_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_6.Location = new System.Drawing.Point(300, 453);
-            this.C_7_6.Name = "C_7_6";
-            this.C_7_6.Size = new System.Drawing.Size(39, 39);
-            this.C_7_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_6.TabIndex = 51;
-            this.C_7_6.TabStop = false;
-            this.C_7_6.Visible = false;
-            // 
-            // C_1_6
-            // 
-            this.C_1_6.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_6.Location = new System.Drawing.Point(72, 453);
-            this.C_1_6.Name = "C_1_6";
-            this.C_1_6.Size = new System.Drawing.Size(39, 39);
-            this.C_1_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_6.TabIndex = 50;
-            this.C_1_6.TabStop = false;
-            this.C_1_6.Visible = false;
-            // 
-            // C_2_5
-            // 
-            this.C_2_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_5.Location = new System.Drawing.Point(110, 415);
-            this.C_2_5.Name = "C_2_5";
-            this.C_2_5.Size = new System.Drawing.Size(39, 39);
-            this.C_2_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_5.TabIndex = 49;
-            this.C_2_5.TabStop = false;
-            this.C_2_5.Visible = false;
-            // 
-            // C_3_5
-            // 
-            this.C_3_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_5.Location = new System.Drawing.Point(148, 415);
-            this.C_3_5.Name = "C_3_5";
-            this.C_3_5.Size = new System.Drawing.Size(39, 39);
-            this.C_3_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_5.TabIndex = 48;
-            this.C_3_5.TabStop = false;
-            this.C_3_5.Visible = false;
-            // 
-            // C_4_5
-            // 
-            this.C_4_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_5.Location = new System.Drawing.Point(186, 415);
-            this.C_4_5.Name = "C_4_5";
-            this.C_4_5.Size = new System.Drawing.Size(39, 39);
-            this.C_4_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_5.TabIndex = 47;
-            this.C_4_5.TabStop = false;
-            this.C_4_5.Visible = false;
-            // 
-            // C_5_5
-            // 
-            this.C_5_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_5.Location = new System.Drawing.Point(224, 415);
-            this.C_5_5.Name = "C_5_5";
-            this.C_5_5.Size = new System.Drawing.Size(39, 39);
-            this.C_5_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_5.TabIndex = 46;
-            this.C_5_5.TabStop = false;
-            this.C_5_5.Visible = false;
-            // 
-            // C_6_5
-            // 
-            this.C_6_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_5.Location = new System.Drawing.Point(262, 415);
-            this.C_6_5.Name = "C_6_5";
-            this.C_6_5.Size = new System.Drawing.Size(39, 39);
-            this.C_6_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_5.TabIndex = 45;
-            this.C_6_5.TabStop = false;
-            this.C_6_5.Visible = false;
-            // 
-            // C_7_5
-            // 
-            this.C_7_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_5.Location = new System.Drawing.Point(300, 415);
-            this.C_7_5.Name = "C_7_5";
-            this.C_7_5.Size = new System.Drawing.Size(39, 39);
-            this.C_7_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_5.TabIndex = 44;
-            this.C_7_5.TabStop = false;
-            this.C_7_5.Visible = false;
-            // 
-            // C_1_5
-            // 
-            this.C_1_5.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_5.Location = new System.Drawing.Point(72, 415);
-            this.C_1_5.Name = "C_1_5";
-            this.C_1_5.Size = new System.Drawing.Size(39, 39);
-            this.C_1_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_5.TabIndex = 43;
-            this.C_1_5.TabStop = false;
-            this.C_1_5.Visible = false;
-            // 
-            // C_2_4
-            // 
-            this.C_2_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_4.Location = new System.Drawing.Point(110, 377);
-            this.C_2_4.Name = "C_2_4";
-            this.C_2_4.Size = new System.Drawing.Size(39, 39);
-            this.C_2_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_4.TabIndex = 42;
-            this.C_2_4.TabStop = false;
-            this.C_2_4.Visible = false;
-            // 
-            // C_3_4
-            // 
-            this.C_3_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_4.Location = new System.Drawing.Point(148, 377);
-            this.C_3_4.Name = "C_3_4";
-            this.C_3_4.Size = new System.Drawing.Size(39, 39);
-            this.C_3_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_4.TabIndex = 41;
-            this.C_3_4.TabStop = false;
-            this.C_3_4.Visible = false;
-            // 
-            // C_4_4
-            // 
-            this.C_4_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_4.Location = new System.Drawing.Point(186, 377);
-            this.C_4_4.Name = "C_4_4";
-            this.C_4_4.Size = new System.Drawing.Size(39, 39);
-            this.C_4_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_4.TabIndex = 40;
-            this.C_4_4.TabStop = false;
-            this.C_4_4.Visible = false;
-            // 
-            // C_5_4
-            // 
-            this.C_5_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_4.Location = new System.Drawing.Point(224, 377);
-            this.C_5_4.Name = "C_5_4";
-            this.C_5_4.Size = new System.Drawing.Size(39, 39);
-            this.C_5_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_4.TabIndex = 39;
-            this.C_5_4.TabStop = false;
-            this.C_5_4.Visible = false;
-            // 
-            // C_6_4
-            // 
-            this.C_6_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_4.Location = new System.Drawing.Point(262, 377);
-            this.C_6_4.Name = "C_6_4";
-            this.C_6_4.Size = new System.Drawing.Size(39, 39);
-            this.C_6_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_4.TabIndex = 38;
-            this.C_6_4.TabStop = false;
-            this.C_6_4.Visible = false;
-            // 
-            // C_7_4
-            // 
-            this.C_7_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_4.Location = new System.Drawing.Point(300, 377);
-            this.C_7_4.Name = "C_7_4";
-            this.C_7_4.Size = new System.Drawing.Size(39, 39);
-            this.C_7_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_4.TabIndex = 37;
-            this.C_7_4.TabStop = false;
-            this.C_7_4.Visible = false;
-            // 
-            // C_1_4
-            // 
-            this.C_1_4.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_4.Location = new System.Drawing.Point(72, 377);
-            this.C_1_4.Name = "C_1_4";
-            this.C_1_4.Size = new System.Drawing.Size(39, 39);
-            this.C_1_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_4.TabIndex = 36;
-            this.C_1_4.TabStop = false;
-            this.C_1_4.Visible = false;
-            // 
-            // C_2_3
-            // 
-            this.C_2_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_3.Location = new System.Drawing.Point(110, 339);
-            this.C_2_3.Name = "C_2_3";
-            this.C_2_3.Size = new System.Drawing.Size(39, 39);
-            this.C_2_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_3.TabIndex = 35;
-            this.C_2_3.TabStop = false;
-            this.C_2_3.Visible = false;
-            // 
-            // C_3_3
-            // 
-            this.C_3_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_3.Location = new System.Drawing.Point(148, 339);
-            this.C_3_3.Name = "C_3_3";
-            this.C_3_3.Size = new System.Drawing.Size(39, 39);
-            this.C_3_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_3.TabIndex = 34;
-            this.C_3_3.TabStop = false;
-            this.C_3_3.Visible = false;
-            // 
-            // C_4_3
-            // 
-            this.C_4_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_3.Location = new System.Drawing.Point(186, 339);
-            this.C_4_3.Name = "C_4_3";
-            this.C_4_3.Size = new System.Drawing.Size(39, 39);
-            this.C_4_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_3.TabIndex = 33;
-            this.C_4_3.TabStop = false;
-            this.C_4_3.Visible = false;
-            // 
-            // C_5_3
-            // 
-            this.C_5_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_3.Location = new System.Drawing.Point(224, 339);
-            this.C_5_3.Name = "C_5_3";
-            this.C_5_3.Size = new System.Drawing.Size(39, 39);
-            this.C_5_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_3.TabIndex = 32;
-            this.C_5_3.TabStop = false;
-            this.C_5_3.Visible = false;
-            // 
-            // C_6_3
-            // 
-            this.C_6_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_3.Location = new System.Drawing.Point(262, 339);
-            this.C_6_3.Name = "C_6_3";
-            this.C_6_3.Size = new System.Drawing.Size(39, 39);
-            this.C_6_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_3.TabIndex = 31;
-            this.C_6_3.TabStop = false;
-            this.C_6_3.Visible = false;
-            // 
-            // C_7_3
-            // 
-            this.C_7_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_3.Location = new System.Drawing.Point(300, 339);
-            this.C_7_3.Name = "C_7_3";
-            this.C_7_3.Size = new System.Drawing.Size(39, 39);
-            this.C_7_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_3.TabIndex = 30;
-            this.C_7_3.TabStop = false;
-            this.C_7_3.Visible = false;
-            // 
-            // C_1_3
-            // 
-            this.C_1_3.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_3.Location = new System.Drawing.Point(72, 339);
-            this.C_1_3.Name = "C_1_3";
-            this.C_1_3.Size = new System.Drawing.Size(39, 39);
-            this.C_1_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_3.TabIndex = 29;
-            this.C_1_3.TabStop = false;
-            this.C_1_3.Visible = false;
-            // 
-            // C_2_2
-            // 
-            this.C_2_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_2.Location = new System.Drawing.Point(110, 301);
-            this.C_2_2.Name = "C_2_2";
-            this.C_2_2.Size = new System.Drawing.Size(39, 39);
-            this.C_2_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_2.TabIndex = 28;
-            this.C_2_2.TabStop = false;
-            this.C_2_2.Visible = false;
-            // 
-            // C_3_2
-            // 
-            this.C_3_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_2.Location = new System.Drawing.Point(148, 301);
-            this.C_3_2.Name = "C_3_2";
-            this.C_3_2.Size = new System.Drawing.Size(39, 39);
-            this.C_3_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_2.TabIndex = 27;
-            this.C_3_2.TabStop = false;
-            this.C_3_2.Visible = false;
-            // 
-            // C_4_2
-            // 
-            this.C_4_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_2.Location = new System.Drawing.Point(186, 301);
-            this.C_4_2.Name = "C_4_2";
-            this.C_4_2.Size = new System.Drawing.Size(39, 39);
-            this.C_4_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_2.TabIndex = 26;
-            this.C_4_2.TabStop = false;
-            this.C_4_2.Visible = false;
-            // 
-            // C_5_2
-            // 
-            this.C_5_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_2.Location = new System.Drawing.Point(224, 301);
-            this.C_5_2.Name = "C_5_2";
-            this.C_5_2.Size = new System.Drawing.Size(39, 39);
-            this.C_5_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_2.TabIndex = 25;
-            this.C_5_2.TabStop = false;
-            this.C_5_2.Visible = false;
-            // 
-            // C_6_2
-            // 
-            this.C_6_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_2.Location = new System.Drawing.Point(262, 301);
-            this.C_6_2.Name = "C_6_2";
-            this.C_6_2.Size = new System.Drawing.Size(39, 39);
-            this.C_6_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_2.TabIndex = 24;
-            this.C_6_2.TabStop = false;
-            this.C_6_2.Visible = false;
-            // 
-            // C_7_2
-            // 
-            this.C_7_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_2.Location = new System.Drawing.Point(300, 301);
-            this.C_7_2.Name = "C_7_2";
-            this.C_7_2.Size = new System.Drawing.Size(39, 39);
-            this.C_7_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_2.TabIndex = 23;
-            this.C_7_2.TabStop = false;
-            this.C_7_2.Visible = false;
-            // 
-            // C_1_2
-            // 
-            this.C_1_2.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_2.Location = new System.Drawing.Point(72, 301);
-            this.C_1_2.Name = "C_1_2";
-            this.C_1_2.Size = new System.Drawing.Size(39, 39);
-            this.C_1_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_2.TabIndex = 22;
-            this.C_1_2.TabStop = false;
-            this.C_1_2.Visible = false;
-            // 
-            // C_2_1
-            // 
-            this.C_2_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_2_1.Location = new System.Drawing.Point(110, 263);
-            this.C_2_1.Name = "C_2_1";
-            this.C_2_1.Size = new System.Drawing.Size(39, 39);
-            this.C_2_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_1.TabIndex = 21;
-            this.C_2_1.TabStop = false;
-            this.C_2_1.Visible = false;
-            // 
-            // C_3_1
-            // 
-            this.C_3_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_3_1.Location = new System.Drawing.Point(148, 263);
-            this.C_3_1.Name = "C_3_1";
-            this.C_3_1.Size = new System.Drawing.Size(39, 39);
-            this.C_3_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_1.TabIndex = 20;
-            this.C_3_1.TabStop = false;
-            this.C_3_1.Visible = false;
-            // 
-            // C_4_1
-            // 
-            this.C_4_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_4_1.Location = new System.Drawing.Point(186, 263);
-            this.C_4_1.Name = "C_4_1";
-            this.C_4_1.Size = new System.Drawing.Size(39, 39);
-            this.C_4_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_1.TabIndex = 19;
-            this.C_4_1.TabStop = false;
-            this.C_4_1.Visible = false;
-            // 
-            // C_5_1
-            // 
-            this.C_5_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_5_1.Location = new System.Drawing.Point(224, 263);
-            this.C_5_1.Name = "C_5_1";
-            this.C_5_1.Size = new System.Drawing.Size(39, 39);
-            this.C_5_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_1.TabIndex = 18;
-            this.C_5_1.TabStop = false;
-            this.C_5_1.Visible = false;
-            // 
-            // C_6_1
-            // 
-            this.C_6_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_6_1.Location = new System.Drawing.Point(262, 263);
-            this.C_6_1.Name = "C_6_1";
-            this.C_6_1.Size = new System.Drawing.Size(39, 39);
-            this.C_6_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_1.TabIndex = 17;
-            this.C_6_1.TabStop = false;
-            this.C_6_1.Visible = false;
-            // 
-            // C_7_1
-            // 
-            this.C_7_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_7_1.Location = new System.Drawing.Point(300, 263);
-            this.C_7_1.Name = "C_7_1";
-            this.C_7_1.Size = new System.Drawing.Size(39, 39);
-            this.C_7_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_1.TabIndex = 16;
-            this.C_7_1.TabStop = false;
-            this.C_7_1.Visible = false;
-            // 
-            // C_1_1
-            // 
-            this.C_1_1.Image = global::Connect_4.Properties.Resources.White_Circle;
-            this.C_1_1.Location = new System.Drawing.Point(72, 263);
-            this.C_1_1.Name = "C_1_1";
-            this.C_1_1.Size = new System.Drawing.Size(39, 39);
-            this.C_1_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_1.TabIndex = 15;
-            this.C_1_1.TabStop = false;
-            this.C_1_1.Visible = false;
-            this.C_1_1.Click += new System.EventHandler(this.Col1_Click);
-            this.C_1_1.MouseEnter += new System.EventHandler(this.Col1_Enter);
-            this.C_1_1.MouseLeave += new System.EventHandler(this.Col1_Leave);
-            // 
-            // C_7_0
-            // 
-            this.C_7_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_7_0.Location = new System.Drawing.Point(300, 225);
-            this.C_7_0.Name = "C_7_0";
-            this.C_7_0.Size = new System.Drawing.Size(39, 39);
-            this.C_7_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_7_0.TabIndex = 14;
-            this.C_7_0.TabStop = false;
-            this.C_7_0.Visible = false;
-            // 
-            // C_6_0
-            // 
-            this.C_6_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_6_0.Location = new System.Drawing.Point(262, 225);
-            this.C_6_0.Name = "C_6_0";
-            this.C_6_0.Size = new System.Drawing.Size(39, 39);
-            this.C_6_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_6_0.TabIndex = 13;
-            this.C_6_0.TabStop = false;
-            this.C_6_0.Visible = false;
-            // 
-            // C_5_0
-            // 
-            this.C_5_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_5_0.Location = new System.Drawing.Point(224, 225);
-            this.C_5_0.Name = "C_5_0";
-            this.C_5_0.Size = new System.Drawing.Size(39, 39);
-            this.C_5_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_5_0.TabIndex = 12;
-            this.C_5_0.TabStop = false;
-            this.C_5_0.Visible = false;
-            // 
-            // C_4_0
-            // 
-            this.C_4_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_4_0.Location = new System.Drawing.Point(186, 225);
-            this.C_4_0.Name = "C_4_0";
-            this.C_4_0.Size = new System.Drawing.Size(39, 39);
-            this.C_4_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_4_0.TabIndex = 11;
-            this.C_4_0.TabStop = false;
-            this.C_4_0.Visible = false;
-            // 
-            // C_3_0
-            // 
-            this.C_3_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_3_0.Location = new System.Drawing.Point(148, 225);
-            this.C_3_0.Name = "C_3_0";
-            this.C_3_0.Size = new System.Drawing.Size(39, 39);
-            this.C_3_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_3_0.TabIndex = 10;
-            this.C_3_0.TabStop = false;
-            this.C_3_0.Visible = false;
-            // 
-            // C_2_0
-            // 
-            this.C_2_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_2_0.Location = new System.Drawing.Point(110, 225);
-            this.C_2_0.Name = "C_2_0";
-            this.C_2_0.Size = new System.Drawing.Size(39, 39);
-            this.C_2_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_2_0.TabIndex = 9;
-            this.C_2_0.TabStop = false;
-            this.C_2_0.Visible = false;
-            // 
-            // C_1_0
-            // 
-            this.C_1_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
-            this.C_1_0.Location = new System.Drawing.Point(72, 225);
-            this.C_1_0.Name = "C_1_0";
-            this.C_1_0.Size = new System.Drawing.Size(39, 39);
-            this.C_1_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.C_1_0.TabIndex = 8;
-            this.C_1_0.TabStop = false;
-            this.C_1_0.Visible = false;
             // 
             // label1
             // 
@@ -1207,19 +620,6 @@
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label8.Visible = false;
             // 
-            // Glow
-            // 
-            this.Glow.BackColor = System.Drawing.Color.Transparent;
-            this.Glow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Glow.Image = ((System.Drawing.Image)(resources.GetObject("Glow.Image")));
-            this.Glow.Location = new System.Drawing.Point(358, 3);
-            this.Glow.Name = "Glow";
-            this.Glow.Size = new System.Drawing.Size(39, 39);
-            this.Glow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.Glow.TabIndex = 69;
-            this.Glow.TabStop = false;
-            this.Glow.Visible = false;
-            // 
             // DebugStateButton
             // 
             this.DebugStateButton.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1234,22 +634,678 @@
             this.DebugStateButton.Click += new System.EventHandler(this.DebugStateButton_Click);
 #endif
             // 
+            // Glow
+            // 
+            this.Glow.BackColor = System.Drawing.Color.Transparent;
+            this.Glow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.Glow.Image = ((System.Drawing.Image)(resources.GetObject("Glow.Image")));
+            this.Glow.Location = new System.Drawing.Point(358, 3);
+            this.Glow.Name = "Glow";
+            this.Glow.Size = new System.Drawing.Size(39, 39);
+            this.Glow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Glow.TabIndex = 69;
+            this.Glow.TabStop = false;
+            this.Glow.Visible = false;
+            // 
+            // LoadingBox
+            // 
+            this.LoadingBox.Image = global::Connect_4.Properties.Resources.Loading;
+            this.LoadingBox.Location = new System.Drawing.Point(374, 109);
+            this.LoadingBox.Name = "LoadingBox";
+            this.LoadingBox.Size = new System.Drawing.Size(385, 443);
+            this.LoadingBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.LoadingBox.TabIndex = 10;
+            this.LoadingBox.TabStop = false;
+            this.LoadingBox.Visible = false;
+            // 
+            // TopPicture
+            // 
+            this.TopPicture.Image = global::Connect_4.Properties.Resources.Connect_4;
+            this.TopPicture.Location = new System.Drawing.Point(12, 3);
+            this.TopPicture.Name = "TopPicture";
+            this.TopPicture.Size = new System.Drawing.Size(385, 100);
+            this.TopPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.TopPicture.TabIndex = 57;
+            this.TopPicture.TabStop = false;
+            this.TopPicture.Click += new System.EventHandler(this.Button_Restart_Click);
+            // 
+            // Turn_Right
+            // 
+            this.Turn_Right.Image = global::Connect_4.Properties.Resources.T_Large_Blue_Circle;
+            this.Turn_Right.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Turn_Right.Location = new System.Drawing.Point(233, 140);
+            this.Turn_Right.Name = "Turn_Right";
+            this.Turn_Right.Size = new System.Drawing.Size(64, 64);
+            this.Turn_Right.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Turn_Right.TabIndex = 11;
+            this.Turn_Right.TabStop = false;
+            this.Turn_Right.Visible = false;
+            // 
+            // Turn_Left
+            // 
+            this.Turn_Left.Image = global::Connect_4.Properties.Resources.Large_Gold_Red_Circle;
+            this.Turn_Left.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Turn_Left.Location = new System.Drawing.Point(113, 140);
+            this.Turn_Left.Name = "Turn_Left";
+            this.Turn_Left.Size = new System.Drawing.Size(64, 64);
+            this.Turn_Left.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Turn_Left.TabIndex = 10;
+            this.Turn_Left.TabStop = false;
+            this.Turn_Left.Visible = false;
+            // 
+            // Help_PictureBox
+            // 
+            this.Help_PictureBox.Image = global::Connect_4.Properties.Resources.Gold_Help;
+            this.Help_PictureBox.Location = new System.Drawing.Point(10, 511);
+            this.Help_PictureBox.Name = "Help_PictureBox";
+            this.Help_PictureBox.Size = new System.Drawing.Size(30, 30);
+            this.Help_PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Help_PictureBox.TabIndex = 59;
+            this.Help_PictureBox.TabStop = false;
+            this.Help_PictureBox.Visible = false;
+            this.Help_PictureBox.MouseEnter += new System.EventHandler(this.Help_Show);
+            this.Help_PictureBox.MouseLeave += new System.EventHandler(this.Help_Hide);
+            // 
+            // C_2_6
+            // 
+            this.C_2_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_6.ErrorImage")));
+            this.C_2_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_6.Location = new System.Drawing.Point(110, 453);
+            this.C_2_6.Name = "C_2_6";
+            this.C_2_6.Size = new System.Drawing.Size(39, 39);
+            this.C_2_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_6.TabIndex = 56;
+            this.C_2_6.TabStop = false;
+            this.C_2_6.Visible = false;
+            // 
+            // C_3_6
+            // 
+            this.C_3_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_6.ErrorImage")));
+            this.C_3_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_6.Location = new System.Drawing.Point(148, 453);
+            this.C_3_6.Name = "C_3_6";
+            this.C_3_6.Size = new System.Drawing.Size(39, 39);
+            this.C_3_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_6.TabIndex = 55;
+            this.C_3_6.TabStop = false;
+            this.C_3_6.Visible = false;
+            // 
+            // C_4_6
+            // 
+            this.C_4_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_6.ErrorImage")));
+            this.C_4_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_6.Location = new System.Drawing.Point(186, 453);
+            this.C_4_6.Name = "C_4_6";
+            this.C_4_6.Size = new System.Drawing.Size(39, 39);
+            this.C_4_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_6.TabIndex = 54;
+            this.C_4_6.TabStop = false;
+            this.C_4_6.Visible = false;
+            // 
+            // C_5_6
+            // 
+            this.C_5_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_6.ErrorImage")));
+            this.C_5_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_6.Location = new System.Drawing.Point(224, 453);
+            this.C_5_6.Name = "C_5_6";
+            this.C_5_6.Size = new System.Drawing.Size(39, 39);
+            this.C_5_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_6.TabIndex = 53;
+            this.C_5_6.TabStop = false;
+            this.C_5_6.Visible = false;
+            // 
+            // C_6_6
+            // 
+            this.C_6_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_6.ErrorImage")));
+            this.C_6_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_6.Location = new System.Drawing.Point(262, 453);
+            this.C_6_6.Name = "C_6_6";
+            this.C_6_6.Size = new System.Drawing.Size(39, 39);
+            this.C_6_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_6.TabIndex = 52;
+            this.C_6_6.TabStop = false;
+            this.C_6_6.Visible = false;
+            // 
+            // C_7_6
+            // 
+            this.C_7_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_6.ErrorImage")));
+            this.C_7_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_6.Location = new System.Drawing.Point(300, 453);
+            this.C_7_6.Name = "C_7_6";
+            this.C_7_6.Size = new System.Drawing.Size(39, 39);
+            this.C_7_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_6.TabIndex = 51;
+            this.C_7_6.TabStop = false;
+            this.C_7_6.Visible = false;
+            // 
+            // C_1_6
+            // 
+            this.C_1_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_6.ErrorImage")));
+            this.C_1_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_6.Location = new System.Drawing.Point(72, 453);
+            this.C_1_6.Name = "C_1_6";
+            this.C_1_6.Size = new System.Drawing.Size(39, 39);
+            this.C_1_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_6.TabIndex = 50;
+            this.C_1_6.TabStop = false;
+            this.C_1_6.Visible = false;
+            // 
+            // C_2_5
+            // 
+            this.C_2_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_5.ErrorImage")));
+            this.C_2_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_5.Location = new System.Drawing.Point(110, 415);
+            this.C_2_5.Name = "C_2_5";
+            this.C_2_5.Size = new System.Drawing.Size(39, 39);
+            this.C_2_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_5.TabIndex = 49;
+            this.C_2_5.TabStop = false;
+            this.C_2_5.Visible = false;
+            // 
+            // C_3_5
+            // 
+            this.C_3_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_5.ErrorImage")));
+            this.C_3_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_5.Location = new System.Drawing.Point(148, 415);
+            this.C_3_5.Name = "C_3_5";
+            this.C_3_5.Size = new System.Drawing.Size(39, 39);
+            this.C_3_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_5.TabIndex = 48;
+            this.C_3_5.TabStop = false;
+            this.C_3_5.Visible = false;
+            // 
+            // C_4_5
+            // 
+            this.C_4_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_5.ErrorImage")));
+            this.C_4_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_5.Location = new System.Drawing.Point(186, 415);
+            this.C_4_5.Name = "C_4_5";
+            this.C_4_5.Size = new System.Drawing.Size(39, 39);
+            this.C_4_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_5.TabIndex = 47;
+            this.C_4_5.TabStop = false;
+            this.C_4_5.Visible = false;
+            // 
+            // C_5_5
+            // 
+            this.C_5_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_5.ErrorImage")));
+            this.C_5_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_5.Location = new System.Drawing.Point(224, 415);
+            this.C_5_5.Name = "C_5_5";
+            this.C_5_5.Size = new System.Drawing.Size(39, 39);
+            this.C_5_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_5.TabIndex = 46;
+            this.C_5_5.TabStop = false;
+            this.C_5_5.Visible = false;
+            // 
+            // C_6_5
+            // 
+            this.C_6_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_5.ErrorImage")));
+            this.C_6_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_5.Location = new System.Drawing.Point(262, 415);
+            this.C_6_5.Name = "C_6_5";
+            this.C_6_5.Size = new System.Drawing.Size(39, 39);
+            this.C_6_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_5.TabIndex = 45;
+            this.C_6_5.TabStop = false;
+            this.C_6_5.Visible = false;
+            // 
+            // C_7_5
+            // 
+            this.C_7_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_5.ErrorImage")));
+            this.C_7_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_5.Location = new System.Drawing.Point(300, 415);
+            this.C_7_5.Name = "C_7_5";
+            this.C_7_5.Size = new System.Drawing.Size(39, 39);
+            this.C_7_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_5.TabIndex = 44;
+            this.C_7_5.TabStop = false;
+            this.C_7_5.Visible = false;
+            // 
+            // C_1_5
+            // 
+            this.C_1_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_5.ErrorImage")));
+            this.C_1_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_5.Location = new System.Drawing.Point(72, 415);
+            this.C_1_5.Name = "C_1_5";
+            this.C_1_5.Size = new System.Drawing.Size(39, 39);
+            this.C_1_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_5.TabIndex = 43;
+            this.C_1_5.TabStop = false;
+            this.C_1_5.Visible = false;
+            // 
+            // C_2_4
+            // 
+            this.C_2_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_4.ErrorImage")));
+            this.C_2_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_4.Location = new System.Drawing.Point(110, 377);
+            this.C_2_4.Name = "C_2_4";
+            this.C_2_4.Size = new System.Drawing.Size(39, 39);
+            this.C_2_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_4.TabIndex = 42;
+            this.C_2_4.TabStop = false;
+            this.C_2_4.Visible = false;
+            // 
+            // C_3_4
+            // 
+            this.C_3_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_4.ErrorImage")));
+            this.C_3_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_4.Location = new System.Drawing.Point(148, 377);
+            this.C_3_4.Name = "C_3_4";
+            this.C_3_4.Size = new System.Drawing.Size(39, 39);
+            this.C_3_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_4.TabIndex = 41;
+            this.C_3_4.TabStop = false;
+            this.C_3_4.Visible = false;
+            // 
+            // C_4_4
+            // 
+            this.C_4_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_4.ErrorImage")));
+            this.C_4_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_4.Location = new System.Drawing.Point(186, 377);
+            this.C_4_4.Name = "C_4_4";
+            this.C_4_4.Size = new System.Drawing.Size(39, 39);
+            this.C_4_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_4.TabIndex = 40;
+            this.C_4_4.TabStop = false;
+            this.C_4_4.Visible = false;
+            // 
+            // C_5_4
+            // 
+            this.C_5_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_4.ErrorImage")));
+            this.C_5_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_4.Location = new System.Drawing.Point(224, 377);
+            this.C_5_4.Name = "C_5_4";
+            this.C_5_4.Size = new System.Drawing.Size(39, 39);
+            this.C_5_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_4.TabIndex = 39;
+            this.C_5_4.TabStop = false;
+            this.C_5_4.Visible = false;
+            // 
+            // C_6_4
+            // 
+            this.C_6_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_4.ErrorImage")));
+            this.C_6_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_4.Location = new System.Drawing.Point(262, 377);
+            this.C_6_4.Name = "C_6_4";
+            this.C_6_4.Size = new System.Drawing.Size(39, 39);
+            this.C_6_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_4.TabIndex = 38;
+            this.C_6_4.TabStop = false;
+            this.C_6_4.Visible = false;
+            // 
+            // C_7_4
+            // 
+            this.C_7_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_4.ErrorImage")));
+            this.C_7_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_4.Location = new System.Drawing.Point(300, 377);
+            this.C_7_4.Name = "C_7_4";
+            this.C_7_4.Size = new System.Drawing.Size(39, 39);
+            this.C_7_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_4.TabIndex = 37;
+            this.C_7_4.TabStop = false;
+            this.C_7_4.Visible = false;
+            // 
+            // C_1_4
+            // 
+            this.C_1_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_4.ErrorImage")));
+            this.C_1_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_4.Location = new System.Drawing.Point(72, 377);
+            this.C_1_4.Name = "C_1_4";
+            this.C_1_4.Size = new System.Drawing.Size(39, 39);
+            this.C_1_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_4.TabIndex = 36;
+            this.C_1_4.TabStop = false;
+            this.C_1_4.Visible = false;
+            // 
+            // C_2_3
+            // 
+            this.C_2_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_3.ErrorImage")));
+            this.C_2_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_3.Location = new System.Drawing.Point(110, 339);
+            this.C_2_3.Name = "C_2_3";
+            this.C_2_3.Size = new System.Drawing.Size(39, 39);
+            this.C_2_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_3.TabIndex = 35;
+            this.C_2_3.TabStop = false;
+            this.C_2_3.Visible = false;
+            // 
+            // C_3_3
+            // 
+            this.C_3_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_3.ErrorImage")));
+            this.C_3_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_3.Location = new System.Drawing.Point(148, 339);
+            this.C_3_3.Name = "C_3_3";
+            this.C_3_3.Size = new System.Drawing.Size(39, 39);
+            this.C_3_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_3.TabIndex = 34;
+            this.C_3_3.TabStop = false;
+            this.C_3_3.Visible = false;
+            // 
+            // C_4_3
+            // 
+            this.C_4_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_3.ErrorImage")));
+            this.C_4_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_3.Location = new System.Drawing.Point(186, 339);
+            this.C_4_3.Name = "C_4_3";
+            this.C_4_3.Size = new System.Drawing.Size(39, 39);
+            this.C_4_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_3.TabIndex = 33;
+            this.C_4_3.TabStop = false;
+            this.C_4_3.Visible = false;
+            // 
+            // C_5_3
+            // 
+            this.C_5_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_3.ErrorImage")));
+            this.C_5_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_3.Location = new System.Drawing.Point(224, 339);
+            this.C_5_3.Name = "C_5_3";
+            this.C_5_3.Size = new System.Drawing.Size(39, 39);
+            this.C_5_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_3.TabIndex = 32;
+            this.C_5_3.TabStop = false;
+            this.C_5_3.Visible = false;
+            // 
+            // C_6_3
+            // 
+            this.C_6_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_3.ErrorImage")));
+            this.C_6_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_3.Location = new System.Drawing.Point(262, 339);
+            this.C_6_3.Name = "C_6_3";
+            this.C_6_3.Size = new System.Drawing.Size(39, 39);
+            this.C_6_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_3.TabIndex = 31;
+            this.C_6_3.TabStop = false;
+            this.C_6_3.Visible = false;
+            // 
+            // C_7_3
+            // 
+            this.C_7_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_3.ErrorImage")));
+            this.C_7_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_3.Location = new System.Drawing.Point(300, 339);
+            this.C_7_3.Name = "C_7_3";
+            this.C_7_3.Size = new System.Drawing.Size(39, 39);
+            this.C_7_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_3.TabIndex = 30;
+            this.C_7_3.TabStop = false;
+            this.C_7_3.Visible = false;
+            // 
+            // C_1_3
+            // 
+            this.C_1_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_3.ErrorImage")));
+            this.C_1_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_3.Location = new System.Drawing.Point(72, 339);
+            this.C_1_3.Name = "C_1_3";
+            this.C_1_3.Size = new System.Drawing.Size(39, 39);
+            this.C_1_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_3.TabIndex = 29;
+            this.C_1_3.TabStop = false;
+            this.C_1_3.Visible = false;
+            // 
+            // C_2_2
+            // 
+            this.C_2_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_2.ErrorImage")));
+            this.C_2_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_2.Location = new System.Drawing.Point(110, 301);
+            this.C_2_2.Name = "C_2_2";
+            this.C_2_2.Size = new System.Drawing.Size(39, 39);
+            this.C_2_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_2.TabIndex = 28;
+            this.C_2_2.TabStop = false;
+            this.C_2_2.Visible = false;
+            // 
+            // C_3_2
+            // 
+            this.C_3_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_2.ErrorImage")));
+            this.C_3_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_2.Location = new System.Drawing.Point(148, 301);
+            this.C_3_2.Name = "C_3_2";
+            this.C_3_2.Size = new System.Drawing.Size(39, 39);
+            this.C_3_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_2.TabIndex = 27;
+            this.C_3_2.TabStop = false;
+            this.C_3_2.Visible = false;
+            // 
+            // C_4_2
+            // 
+            this.C_4_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_2.ErrorImage")));
+            this.C_4_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_2.Location = new System.Drawing.Point(186, 301);
+            this.C_4_2.Name = "C_4_2";
+            this.C_4_2.Size = new System.Drawing.Size(39, 39);
+            this.C_4_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_2.TabIndex = 26;
+            this.C_4_2.TabStop = false;
+            this.C_4_2.Visible = false;
+            // 
+            // C_5_2
+            // 
+            this.C_5_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_2.ErrorImage")));
+            this.C_5_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_2.Location = new System.Drawing.Point(224, 301);
+            this.C_5_2.Name = "C_5_2";
+            this.C_5_2.Size = new System.Drawing.Size(39, 39);
+            this.C_5_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_2.TabIndex = 25;
+            this.C_5_2.TabStop = false;
+            this.C_5_2.Visible = false;
+            // 
+            // C_6_2
+            // 
+            this.C_6_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_2.ErrorImage")));
+            this.C_6_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_2.Location = new System.Drawing.Point(262, 301);
+            this.C_6_2.Name = "C_6_2";
+            this.C_6_2.Size = new System.Drawing.Size(39, 39);
+            this.C_6_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_2.TabIndex = 24;
+            this.C_6_2.TabStop = false;
+            this.C_6_2.Visible = false;
+            // 
+            // C_7_2
+            // 
+            this.C_7_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_2.ErrorImage")));
+            this.C_7_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_2.Location = new System.Drawing.Point(300, 301);
+            this.C_7_2.Name = "C_7_2";
+            this.C_7_2.Size = new System.Drawing.Size(39, 39);
+            this.C_7_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_2.TabIndex = 23;
+            this.C_7_2.TabStop = false;
+            this.C_7_2.Visible = false;
+            // 
+            // C_1_2
+            // 
+            this.C_1_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_2.ErrorImage")));
+            this.C_1_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_2.Location = new System.Drawing.Point(72, 301);
+            this.C_1_2.Name = "C_1_2";
+            this.C_1_2.Size = new System.Drawing.Size(39, 39);
+            this.C_1_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_2.TabIndex = 22;
+            this.C_1_2.TabStop = false;
+            this.C_1_2.Visible = false;
+            // 
+            // C_2_1
+            // 
+            this.C_2_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_1.ErrorImage")));
+            this.C_2_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_1.Location = new System.Drawing.Point(110, 263);
+            this.C_2_1.Name = "C_2_1";
+            this.C_2_1.Size = new System.Drawing.Size(39, 39);
+            this.C_2_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_1.TabIndex = 21;
+            this.C_2_1.TabStop = false;
+            this.C_2_1.Visible = false;
+            // 
+            // C_3_1
+            // 
+            this.C_3_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_1.ErrorImage")));
+            this.C_3_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_1.Location = new System.Drawing.Point(148, 263);
+            this.C_3_1.Name = "C_3_1";
+            this.C_3_1.Size = new System.Drawing.Size(39, 39);
+            this.C_3_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_1.TabIndex = 20;
+            this.C_3_1.TabStop = false;
+            this.C_3_1.Visible = false;
+            // 
+            // C_4_1
+            // 
+            this.C_4_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_1.ErrorImage")));
+            this.C_4_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_1.Location = new System.Drawing.Point(186, 263);
+            this.C_4_1.Name = "C_4_1";
+            this.C_4_1.Size = new System.Drawing.Size(39, 39);
+            this.C_4_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_1.TabIndex = 19;
+            this.C_4_1.TabStop = false;
+            this.C_4_1.Visible = false;
+            // 
+            // C_5_1
+            // 
+            this.C_5_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_1.ErrorImage")));
+            this.C_5_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_1.Location = new System.Drawing.Point(224, 263);
+            this.C_5_1.Name = "C_5_1";
+            this.C_5_1.Size = new System.Drawing.Size(39, 39);
+            this.C_5_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_1.TabIndex = 18;
+            this.C_5_1.TabStop = false;
+            this.C_5_1.Visible = false;
+            // 
+            // C_6_1
+            // 
+            this.C_6_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_1.ErrorImage")));
+            this.C_6_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_1.Location = new System.Drawing.Point(262, 263);
+            this.C_6_1.Name = "C_6_1";
+            this.C_6_1.Size = new System.Drawing.Size(39, 39);
+            this.C_6_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_1.TabIndex = 17;
+            this.C_6_1.TabStop = false;
+            this.C_6_1.Visible = false;
+            // 
+            // C_7_1
+            // 
+            this.C_7_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_1.ErrorImage")));
+            this.C_7_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_1.Location = new System.Drawing.Point(300, 263);
+            this.C_7_1.Name = "C_7_1";
+            this.C_7_1.Size = new System.Drawing.Size(39, 39);
+            this.C_7_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_1.TabIndex = 16;
+            this.C_7_1.TabStop = false;
+            this.C_7_1.Visible = false;
+            // 
+            // C_1_1
+            // 
+            this.C_1_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_1.ErrorImage")));
+            this.C_1_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_1.Location = new System.Drawing.Point(72, 263);
+            this.C_1_1.Name = "C_1_1";
+            this.C_1_1.Size = new System.Drawing.Size(39, 39);
+            this.C_1_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_1.TabIndex = 15;
+            this.C_1_1.TabStop = false;
+            this.C_1_1.Visible = false;
+            this.C_1_1.Click += new System.EventHandler(this.Col1_Click);
+            this.C_1_1.MouseEnter += new System.EventHandler(this.Col1_Enter);
+            this.C_1_1.MouseLeave += new System.EventHandler(this.Col1_Leave);
+            // 
+            // C_7_0
+            // 
+            this.C_7_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_7_0.Location = new System.Drawing.Point(300, 225);
+            this.C_7_0.Name = "C_7_0";
+            this.C_7_0.Size = new System.Drawing.Size(39, 39);
+            this.C_7_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_7_0.TabIndex = 14;
+            this.C_7_0.TabStop = false;
+            this.C_7_0.Visible = false;
+            // 
+            // C_6_0
+            // 
+            this.C_6_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_6_0.Location = new System.Drawing.Point(262, 225);
+            this.C_6_0.Name = "C_6_0";
+            this.C_6_0.Size = new System.Drawing.Size(39, 39);
+            this.C_6_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_6_0.TabIndex = 13;
+            this.C_6_0.TabStop = false;
+            this.C_6_0.Visible = false;
+            // 
+            // C_5_0
+            // 
+            this.C_5_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_5_0.Location = new System.Drawing.Point(224, 225);
+            this.C_5_0.Name = "C_5_0";
+            this.C_5_0.Size = new System.Drawing.Size(39, 39);
+            this.C_5_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_5_0.TabIndex = 12;
+            this.C_5_0.TabStop = false;
+            this.C_5_0.Visible = false;
+            // 
+            // C_4_0
+            // 
+            this.C_4_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_4_0.Location = new System.Drawing.Point(186, 225);
+            this.C_4_0.Name = "C_4_0";
+            this.C_4_0.Size = new System.Drawing.Size(39, 39);
+            this.C_4_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_4_0.TabIndex = 11;
+            this.C_4_0.TabStop = false;
+            this.C_4_0.Visible = false;
+            // 
+            // C_3_0
+            // 
+            this.C_3_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_3_0.Location = new System.Drawing.Point(148, 225);
+            this.C_3_0.Name = "C_3_0";
+            this.C_3_0.Size = new System.Drawing.Size(39, 39);
+            this.C_3_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_3_0.TabIndex = 10;
+            this.C_3_0.TabStop = false;
+            this.C_3_0.Visible = false;
+            // 
+            // C_2_0
+            // 
+            this.C_2_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_2_0.Location = new System.Drawing.Point(110, 225);
+            this.C_2_0.Name = "C_2_0";
+            this.C_2_0.Size = new System.Drawing.Size(39, 39);
+            this.C_2_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_2_0.TabIndex = 9;
+            this.C_2_0.TabStop = false;
+            this.C_2_0.Visible = false;
+            // 
+            // C_1_0
+            // 
+            this.C_1_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_1_0.Location = new System.Drawing.Point(72, 225);
+            this.C_1_0.Name = "C_1_0";
+            this.C_1_0.Size = new System.Drawing.Size(39, 39);
+            this.C_1_0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.C_1_0.TabIndex = 8;
+            this.C_1_0.TabStop = false;
+            this.C_1_0.Visible = false;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(409, 561);
+            this.Controls.Add(this.GameOptions);
+            this.Controls.Add(this.LoadingBox);
+            this.Controls.Add(this.label_Help);
             this.Controls.Add(this.DebugStateButton);
             this.Controls.Add(this.Glow);
             this.Controls.Add(this.DebugAI_CheckBox);
-            this.Controls.Add(this.GameOptions);
-            this.Controls.Add(this.LoadingBox);
             this.Controls.Add(this.TopPicture);
             this.Controls.Add(this.Turn_Right);
             this.Controls.Add(this.Turn_Left);
             this.Controls.Add(this.Help_PictureBox);
-            this.Controls.Add(this.label_Help);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.C_2_6);
             this.Controls.Add(this.C_3_6);
@@ -1309,19 +1365,21 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(725, 950);
             this.MinimumSize = new System.Drawing.Size(425, 600);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect 4";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.FormResize);
             this.GameOptions.ResumeLayout(false);
             this.GameOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Glow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).EndInit();
@@ -1376,7 +1434,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Glow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1385,7 +1442,7 @@
 #endregion
         private System.Windows.Forms.GroupBox GameOptions;
         private System.Windows.Forms.PictureBox Color_Select_Red;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label Color_Label;
         private System.Windows.Forms.PictureBox Color_Select_Blue;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.CheckBox AIcheckBox;
@@ -1470,6 +1527,7 @@
         private System.Windows.Forms.Label Difficulty_Label;
         private System.Windows.Forms.PictureBox Glow;
         private System.Windows.Forms.Button DebugStateButton;
+        private System.Windows.Forms.CheckBox HumanizedCheckBox;
     }
 }
 

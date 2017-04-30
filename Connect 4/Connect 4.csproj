@@ -158,9 +158,6 @@
     <None Include="T_Large_Red_Circle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connect4.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Loading.png" />
   </ItemGroup>
   <ItemGroup>
@@ -191,12 +188,12 @@
     <None Include="Gold_Help.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="White_Circle_Error.png" />
     <None Include="Arrow.gif" />
     <None Include="Arrow_Blue.gif" />
     <None Include="Arrow_Red.gif" />
     <None Include="Connect-4.png" />
     <Content Include="Connect-4.ico" />
-    <Content Include="Connect4.ico" />
     <None Include="Resources\Arrow.bmp" />
     <None Include="Large_White_Circle.png" />
     <None Include="Large_Select_Red_Circle.png" />

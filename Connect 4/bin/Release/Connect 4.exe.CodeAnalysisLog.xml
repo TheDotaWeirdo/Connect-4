@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#Col_Click(System.Int32,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-25 10:42:57Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="96">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
              <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="110">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
              <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="124">'Form1.Col_Click(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
@@ -21,28 +21,42 @@
           </Member>
           <Member Name="#Col_Enter(System.Int32,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-25 10:42:57Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="157">'Form1.Col_Enter(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#Col_Leave(System.Int32,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-25 10:42:57Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="168">'Form1.Col_Leave(int, bool)' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FormResize(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="993">'Form1.FormResize(object, EventArgs)' locks on a reference of type 'Form'. Replace this with a lock against an object with strong-identity.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ResizeForm()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="1018">'Form1.ResizeForm()' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#UpdateControl()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-25 10:42:57Z" FixCategory="NonBreaking">
-             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="409">'Form1.UpdateControl()' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="413">'Form1.UpdateControl()' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#UpdateVisuals()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-25 10:42:57Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2017-04-30 16:22:27Z" FixCategory="NonBreaking">
              <Issue Certainty="75" Level="CriticalError" Path="D:\Desktop\Documents\Programming\Connect-4\Connect 4" File="Form1.cs" Line="281">'Form1.UpdateVisuals()' locks on a reference of type 'PictureBox'. Replace this with a lock against an object with strong-identity.</Issue>
             </Message>
            </Messages>

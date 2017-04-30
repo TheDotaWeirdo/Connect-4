@@ -283,6 +283,16 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap White_Circle_Error {
+            get {
+                object obj = ResourceManager.GetObject("White_Circle_Error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Win_Blue {
             get {
                 object obj = ResourceManager.GetObject("Win_Blue", resourceCulture);
