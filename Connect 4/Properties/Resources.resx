@@ -118,23 +118,71 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Large_White_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Large_White_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Arrow_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Arrow_Red.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Loading.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="White_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\White_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="T_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\T_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Large_Gold_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Large_Gold_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Large_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Gold_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Gold_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="T_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\T_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Connect_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Connect-4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Large_White_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Large_White_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Win_Tie" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Win_Tie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Large_Gold_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Large_Gold_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Large_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Large_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Blue_Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Blue_Loading.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Gold_Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Gold_Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Arrow_Blue.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Win_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Win_Red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Large_Select_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Large_Select_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Gold_Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Gold_Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="T_Large_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\T_Large_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="T_Large_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\T_Large_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Gold_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Gold_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,58 +190,16 @@
   <data name="Win_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Win_Blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Large_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Large_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="White_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\White_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Win_Tie" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Win_Tie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Win_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Win_Red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Arrow_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Arrow_Red.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Arrow_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Arrow_Blue.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="T_Large_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\T_Large_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Connect_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Connect-4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="T_Large_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\T_Large_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Loading.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Large_Select_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Select_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Gold_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Gold_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Large_Gold_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Large_Gold_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Large_Gold_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Large_Gold_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Large_Select_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Large_Select_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="T_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\T_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="White_Circle_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\White_Circle_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Red_Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Red_Loading.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

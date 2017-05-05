@@ -93,6 +93,16 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Blue_Loading {
+            get {
+                object obj = ResourceManager.GetObject("Blue_Loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Connect_4 {
             get {
                 object obj = ResourceManager.GetObject("Connect_4", resourceCulture);
@@ -226,6 +236,16 @@ namespace Connect_4.Properties {
         internal static System.Drawing.Bitmap Red_Circle {
             get {
                 object obj = ResourceManager.GetObject("Red_Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Red_Loading {
+            get {
+                object obj = ResourceManager.GetObject("Red_Loading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

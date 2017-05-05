@@ -80,6 +80,7 @@ namespace Connect_4
                         return;
                     }
                 }
+                MG.Moves++;
                 System.Timers.Timer T = new System.Timers.Timer((FGameCheckBox.Checked) ? 16.25 : 31);
                 if (LearnMCheckBox.Checked && MG.vsAI)
                     T.Interval *= 2.5;
@@ -141,7 +142,7 @@ namespace Connect_4
                 if (MG.vsAI && MG.Turn == MG.P[0])
                 {
                     Thread workingThread = new Thread(new ThreadStart(PlayAI))
-                    { IsBackground = true, Priority = ThreadPriority.BelowNormal };
+                    { IsBackground = true, Priority = ThreadPriority.AboveNormal };
                     workingThread.Start();
                 }
             }
@@ -256,7 +257,7 @@ namespace Connect_4
                 }
                 MG.Busy = false;
                 Thread.Sleep(35);
-                if (CurrentMouseIndex > 0 && MG.GetLow(CurrentMouseIndex) > 0 && (MG.Turn == MG.P[0] || !MG.vsAI))
+                if (CurrentMouseIndex > 0 && MG.GetLow(CurrentMouseIndex) > 0 && (MG.Turn == ((MG.LeftIsRed) ? 0 : 1) || !MG.vsAI))
                     Col_Enter(CurrentMouseIndex, true);
             }
         }
@@ -371,10 +372,10 @@ namespace Connect_4
 
         private void TLUpdate()
         {
-            if (MG.P[0] == 0)
+            if (MG.LeftIsRed)
             {
                 if (MG.Turn == 0)
-                    Turn_Left.Image = Large_Gold_Red_Circle;
+                    Turn_Left.Image = Red_Loading;
                 else
                     Turn_Left.Image = T_Large_Red_Circle;
             }
@@ -383,23 +384,23 @@ namespace Connect_4
                 if (MG.Turn == 0)
                     Turn_Left.Image = T_Large_Blue_Circle;
                 else
-                    Turn_Left.Image = Large_Gold_Blue_Circle;
+                    Turn_Left.Image = Blue_Loading;
             }
         }
 
         private void TRUpdate()
         {
-            if (MG.P[0] == 0)
+            if (MG.LeftIsRed)
             {
                 if (MG.Turn == 0)
                     Turn_Right.Image = T_Large_Blue_Circle;
                 else
-                    Turn_Right.Image = Large_Gold_Blue_Circle;
+                    Turn_Right.Image = Blue_Loading;
             }
             else
             {
                 if (MG.Turn == 0)
-                    Turn_Right.Image = Large_Gold_Red_Circle;
+                    Turn_Right.Image = Red_Loading;
                 else
                     Turn_Right.Image = T_Large_Red_Circle;
             }
@@ -437,6 +438,7 @@ namespace Connect_4
                     Label_Err_Color.Hide();
                 button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
                 MG.P[0] = 0; MG.P[1] = 1;
+                MG.LeftIsRed = true;
             }
         }
 
@@ -456,6 +458,7 @@ namespace Connect_4
                     Label_Err_Color.Hide();
                 button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
                 MG.P[0] = 1; MG.P[1] = 0;
+                MG.LeftIsRed = false;
             }
         }
 
@@ -466,6 +469,7 @@ namespace Connect_4
                 button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
                 LoadingBox.Show();
                 MG.Loading = true;
+                MG.Finished = false;
                 TopPicture.Hide();
                 System.Timers.Timer T = new System.Timers.Timer(50);
                 T.Start();
@@ -514,10 +518,11 @@ namespace Connect_4
                 Label_Medium.Enabled =
                 Label_Intermediate.Enabled =
                 Label_Hard.Enabled =
-                Label_Impossible.Enabled =
+                Label_Merciless.Enabled =
                 PredicitveCheckBox.Enabled = 
                 LearnMCheckBox.Enabled = 
                 Difficulty_Label.Enabled =
+                HumanizedCheckBox.Enabled =
                 StrategicCheckBox.Enabled = true;
                 DiffBar_Scroll(null, null);
             }
@@ -530,10 +535,11 @@ namespace Connect_4
                 Label_Medium.Enabled =
                 Label_Intermediate.Enabled =
                 Label_Hard.Enabled =
-                Label_Impossible.Enabled =
+                Label_Merciless.Enabled =
                 PredicitveCheckBox.Enabled =
                 LearnMCheckBox.Enabled =
                 Difficulty_Label.Enabled =
+                HumanizedCheckBox.Enabled =
                 StrategicCheckBox.Enabled = false;
             }
         }        
@@ -546,65 +552,88 @@ namespace Connect_4
         private void PredicitveChkChanged(object sender, EventArgs e)
         {
             if (InfiniteLoop) return;
-            MG.PredictiveAI = PredicitveCheckBox.Checked;
-            if (PredicitveCheckBox.Checked)
+            InfiniteLoop = true;
+            if (MG.PredictiveAI = PredicitveCheckBox.Checked)
             {
-                InfiniteLoop = true;
-                DiffBar.Value = Math.Max(25, DiffBar.Value);
-                if (DiffBar.Value == 25)
-                    DiffBar_Scroll(null, null);
-                PredicitveCheckBox.Checked = true;
-                InfiniteLoop = false;
-            }
-            else
-            {
-                StrategicCheckBox.Checked = false;
-                DiffBar.Value = Math.Min(50, DiffBar.Value);
+                DiffBar.Value = Math.Max(50, DiffBar.Value);
                 if (DiffBar.Value == 50)
                     DiffBar_Scroll(null, null);
             }
+            else
+            {
+                DiffBar.Value = Math.Min(25, DiffBar.Value);
+                if (DiffBar.Value == 25)
+                    DiffBar_Scroll(null, null);
+            }
+            InfiniteLoop = false;
+        }
+
+        private void HumanizedChkChanged(object sender, EventArgs e)
+        {
+            if (InfiniteLoop) return;
+            if (MG.HumanizedAI = HumanizedCheckBox.Checked)
+            {
+                if (DiffBar.Value != 100)
+                {
+                    DiffBar.Value = 100;
+                    DiffBar_Scroll(null, null);
+                }
+            }
+            InfiniteLoop = false;
         }
 
         private void StrategicChkChanged(object sender, EventArgs e)
         {
-            MG.StrategicAI = StrategicCheckBox.Checked;
-            if (StrategicCheckBox.Checked)
+            if (InfiniteLoop) return;
+            InfiniteLoop = true;
+            if (MG.StrategicAI = StrategicCheckBox.Checked)
             {
-                PredicitveCheckBox.Checked = true;
                 DiffBar.Value = Math.Max(75, DiffBar.Value);
                 if (DiffBar.Value == 75)
                     DiffBar_Scroll(null, null);
+                PredicitveCheckBox.Checked = true;
             }
             else
             {
-                DiffBar.Value = Math.Min(75, DiffBar.Value);
-                if (DiffBar.Value == 75)
+                DiffBar.Value = Math.Min(50, DiffBar.Value);
+                if (DiffBar.Value == 50)
                     DiffBar_Scroll(null, null);
             }
+            InfiniteLoop = false;
         }
 
         private void LearnMCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            InfiniteLoop = true;
             if (LearnMCheckBox.Checked)
             {
                 DiffBar.Value = Math.Min(25, DiffBar.Value);
                 if (DiffBar.Value == 25)
                     DiffBar_Scroll(null, null);
             }
+            InfiniteLoop = false;
         }
 
         private void Button_Restart_Click(object sender, EventArgs e)
         {
+            if (!MG.Finished &&  MG.Moves > 3)
+            { 
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to restart an ongoing game?", "Restart?", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)            
+                    return;
+            }
             int[] _P = MG.P;
             int _Diff = MG.Diff;
             bool _vsAI = MG.vsAI;
             bool _FG = MG.FastGame;
+            bool _LeftIsRed = MG.LeftIsRed;
             MG = new MainGame()
-            { P = _P, Diff = _Diff, vsAI = _vsAI, FastGame = _FG };
+            { P = _P, Diff = _Diff, vsAI = _vsAI, FastGame = _FG, LeftIsRed = _LeftIsRed,
+              StrategicAI = StrategicCheckBox.Checked,
+              PredictiveAI = PredicitveCheckBox.Checked,
+              HumanizedAI = HumanizedCheckBox.Checked };
             Helps = new int[] { 0, 0 };
             LossHelps = 0;
-            MG.StrategicAI = StrategicCheckBox.Checked;
-            MG.PredictiveAI = PredicitveCheckBox.Checked;
             UpdateVisuals();
             button_Exit.Hide(); button_Restart.Hide();
             GameOptions.Show();
@@ -625,50 +654,55 @@ namespace Connect_4
         private void DiffBar_Scroll(object sender, EventArgs e)
         {
             MG.Diff = DiffBar.Value;
+            if (!InfiniteLoop)
+            {
+                InfiniteLoop = true;
+                HumanizedCheckBox.Checked = (MG.Diff == 100);
+                if (!PredicitveCheckBox.Checked)
+                    PredicitveCheckBox.Checked = (MG.Diff >= 50);
+                else
+                    PredicitveCheckBox.Checked = (MG.Diff >= 25);
+                if (!StrategicCheckBox.Checked)
+                    StrategicCheckBox.Checked = (MG.Diff >= 75);
+                else
+                    StrategicCheckBox.Checked = (MG.Diff >= 50);
+                if (!LearnMCheckBox.Checked)
+                    LearnMCheckBox.Checked = (MG.Diff <= 15);
+                else
+                    LearnMCheckBox.Checked = (MG.Diff <= 30);
+                InfiniteLoop = false;
+            }
             if (MG.Diff < 13)
             {
                 Difficulty_Label.Text = "Easy";
                 Difficulty_Label.ForeColor = Label_Easy.ForeColor = Color.LimeGreen;
-                Label_Impossible.ForeColor = Label_Medium.ForeColor = Label_Intermediate.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
-                LearnMCheckBox.Checked = true;
-                PredicitveCheckBox.Checked = false;
-                StrategicCheckBox.Checked = false;
+                Label_Merciless.ForeColor = Label_Medium.ForeColor = Label_Intermediate.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
                 return;
             }
             if (MG.Diff < 38)
             {
                 Difficulty_Label.Text = "Medium";
                 Difficulty_Label.ForeColor = Label_Medium.ForeColor = Color.DodgerBlue;
-                Label_Easy.ForeColor = Label_Impossible.ForeColor = Label_Intermediate.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
-                if (MG.Diff < 25)
-                    PredicitveCheckBox.Checked = false;
-                StrategicCheckBox.Checked = false;
+                Label_Easy.ForeColor = Label_Merciless.ForeColor = Label_Intermediate.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
                 return;
             }
             if (MG.Diff < 63)
             {
                 Difficulty_Label.Text = "Intermediate";
                 Difficulty_Label.ForeColor = Label_Intermediate.ForeColor = Color.DarkOrange;
-                Label_Easy.ForeColor = Label_Medium.ForeColor = Label_Impossible.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
-                LearnMCheckBox.Checked = false;
-                StrategicCheckBox.Checked = false;
+                Label_Easy.ForeColor = Label_Medium.ForeColor = Label_Merciless.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
                 return;
             }
             if (MG.Diff < 88)
             {
                 Difficulty_Label.Text = "Hard";
                 Difficulty_Label.ForeColor = Label_Hard.ForeColor = Color.Red;
-                Label_Easy.ForeColor = Label_Medium.ForeColor = Label_Intermediate.ForeColor = Label_Impossible.ForeColor = Color.FromArgb(64, 64, 64);
-                LearnMCheckBox.Checked = false;
-                PredicitveCheckBox.Checked = true;
+                Label_Easy.ForeColor = Label_Medium.ForeColor = Label_Intermediate.ForeColor = Label_Merciless.ForeColor = Color.FromArgb(64, 64, 64);
                 return;
             }
-            Difficulty_Label.Text = "Impossible";
-            Difficulty_Label.ForeColor = Label_Impossible.ForeColor = Color.DarkViolet;
+            Difficulty_Label.Text = "Merciless";
+            Difficulty_Label.ForeColor = Label_Merciless.ForeColor = Color.DarkViolet;
             Label_Easy.ForeColor = Label_Medium.ForeColor = Label_Intermediate.ForeColor = Label_Hard.ForeColor = Color.FromArgb(64, 64, 64);
-            LearnMCheckBox.Checked = false;
-            PredicitveCheckBox.Checked = true;
-            StrategicCheckBox.Checked = true;
         }
 
         private void Button_Exit_Click(object sender, EventArgs e)
@@ -709,6 +743,11 @@ namespace Connect_4
                 label7.Visible = true;
                 label8.Visible = true;
             #endif
+            if(Screen.FromControl(this).Bounds.Height < MaximumSize.Height)
+            {
+                int nms = MaximumSize.Height / Screen.FromControl(this).Bounds.Height;
+                MaximumSize = new Size(MaximumSize.Width / nms, MaximumSize.Height / nms);
+            }
             System.Timers.Timer T = new System.Timers.Timer(100);
             T.Elapsed += T_Elapsed;
             //T.Start();
@@ -721,7 +760,7 @@ namespace Connect_4
             toolTip.SetToolTip(Label_Medium, "Medium");
             toolTip.SetToolTip(Label_Intermediate, "Intermediate");
             toolTip.SetToolTip(Label_Hard, "Hard");
-            toolTip.SetToolTip(Label_Impossible, "Impossible");
+            toolTip.SetToolTip(Label_Merciless, "Merciless");
             toolTip.SetToolTip(TopPicture, "Restart");
             HelpT.Elapsed += HelpT_Elapsed;
             C.Add(new List<PictureBox> { null, C_1_0, C_2_0, C_3_0, C_4_0, C_5_0, C_6_0, C_7_0 });
@@ -924,7 +963,7 @@ namespace Connect_4
             DiffBar_Scroll(null, null);
         }
 
-        private void Label_Impossible_Click(object sender, EventArgs e)
+        private void Label_Merciless_Click(object sender, EventArgs e)
         {
             DiffBar.Value = 100;
             DiffBar_Scroll(null, null);
@@ -1052,7 +1091,7 @@ namespace Connect_4
                 LoadingBox.Location = new Point(0, 0);
                 GameOptions.Width = GOW; GOW += 40;
                 GameOptions.Height = GOH;
-                TopPicture.Height = TopImgSize[(MG.Finished) ? 1 : 0];
+                TopPicture.Height = TopImgSize[(MG.Finished && !GameOptions.Visible) ? 1 : 0];
                 FGameCheckBox.Location = new Point(FGameCheckBox.Location.X, GOH / 15 + 6);
                 GameOptions.Location = new Point(Math.Max((W - 670) / 2, 12), 6 + TopImgSize[0]);
                 W = Math.Min(700, W);
@@ -1063,18 +1102,18 @@ namespace Connect_4
                 button_Start.Location = new Point((GOW - 30 - button_Start.Width) / 2, GOH - GOH / ((Label_Err_Color.Visible) ? 9 : 7));
                 Color_Label.Location = new Point((int)((W - 370) * .2) + 15, GOH / 2);
                 DiffBar.Width = W - 104;
-                Label_Easy.Font = Label_Hard.Font = Label_Medium.Font = Label_Impossible.Font = Label_Intermediate.Font = new Font("Century Gothic", (float)(7.25 + HWDiff(W, H) / 42.5));
-                int d = DiffBar.Width;// (int)((W - 104 - Label_Impossible.Width) *1.02);// - DiffBar.Location.X) * 1.025);
-                Label_Impossible.Location = new Point(W - 98 - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
+                Label_Easy.Font = Label_Hard.Font = Label_Medium.Font = Label_Merciless.Font = Label_Intermediate.Font = new Font("Century Gothic", (float)(7.25 + HWDiff(W, H) / 42.5));
+                int d = DiffBar.Width;
+                Label_Merciless.Location = new Point(W - 98 - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
                 Label_Easy.Location = new Point(DiffBar.Location.X - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
                 Label_Hard.Location = new Point(DiffBar.Location.X + 1 + (int)((Label_Hard.Width - 31) * .3) + (d - Label_Easy.Width + 4) / 4 * 3, GOH / 4 + 10 + 48);
                 Label_Medium.Location = new Point(DiffBar.Location.X - (int)((Label_Medium.Width - 31) * .3) + (d - Label_Easy.Width + 4) / 4, GOH / 4 + 10 + 48);
                 Label_Intermediate.Location = new Point(DiffBar.Location.X + (d - Label_Easy.Width + 4) / 2, GOH / 4 + 10 + 48);
-                AIDiff_Label.Location = new Point(25, GOH / 4 + 60 - (int)(2.5 * AIDiff_Label.Height));
-                Difficulty_Label.Location = new Point(25 + AIDiff_Label.Width, GOH / 4 + 69 - 3 * Difficulty_Label.Height);
                 Color_Label.Font = AIcheckBox.Font = new Font("Century Gothic", (float)(6.5 + HWDiff(W, H) / 63.75));
                 Difficulty_Label.Font = HumanizedCheckBox.Font = PredicitveCheckBox.Font = StrategicCheckBox.Font = new Font("Century Gothic", (float)(3.75 + HWDiff(W, H) / 63.75));
                 AIDiff_Label.Font = LearnMCheckBox.Font = FGameCheckBox.Font = new Font("Century Gothic", (float)(4.5 + HWDiff(W, H) / 63.75));
+                Difficulty_Label.Location = new Point((int)(-18 + 1.45 * AIDiff_Label.Width), GOH / 4 + 69 - 3 * Difficulty_Label.Height);
+                AIDiff_Label.Location = new Point(25, GOH / 4 + 60 - (int)(2.5 * AIDiff_Label.Height));
                 DiffBar.Location = new Point(DiffBar.Location.X, GOH / 4 + 10 + 25);
                 int p = GOH / 15 + 6, p1 = (int)(GameOptions.Width * .965) - HumanizedCheckBox.Width - (AIcheckBox.Width / 5);
                 AIcheckBox.Location = new Point(p1, p); p += (int)(AIcheckBox.Height * 1.12);
@@ -1116,14 +1155,16 @@ namespace Connect_4
             base.WndProc(ref m);
         }
 
-#if DEBUG
         private void DebugAI_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
+#if DEBUG
             MG.vsAI = DebugAI_CheckBox.Checked;
+#endif
         }
         private void DebugStateButton_Click(object sender, EventArgs e)
         {
-            MG.CalculateStates();
+#if DEBUG
+            MG.PlayAI();
             tempLabel = label1; tempInt = 1; tempLabel.Invoke(new Action(UpdateDebugState));
             tempLabel = label3; tempInt = 2; tempLabel.Invoke(new Action(UpdateDebugState));
             tempLabel = label4; tempInt = 3; tempLabel.Invoke(new Action(UpdateDebugState));
@@ -1131,25 +1172,27 @@ namespace Connect_4
             tempLabel = label6; tempInt = 5; tempLabel.Invoke(new Action(UpdateDebugState));
             tempLabel = label7; tempInt = 6; tempLabel.Invoke(new Action(UpdateDebugState));
             tempLabel = label8; tempInt = 7; tempLabel.Invoke(new Action(UpdateDebugState));
+#endif
         }
         private void UpdateDebugState()
         {
+#if DEBUG
             int i = 0;
             string s = "";
-            foreach(int a in MG.State[tempInt])
+            foreach(int a in MG.AIState[tempInt])
             {
-                if (MG.State[tempInt].Count > 1 && a == 0) { }
+                if (MG.AIState[tempInt].Count > 1 && a == 0) { }
                 else {
                     if (i == 2)
                     { i = 0; s += "\n"; }
-                    s += a;
+                    s += "'"+a+"'";
                     i++;
                 }
             }
             lock (tempLabel)
-                tempLabel.Text = s + "\n" + MG.Severity[tempInt].ToString();
-        }
+                tempLabel.Text = s + "\n|" + MG.AISeverity[tempInt].ToString()+"|";
 #endif
+        }
 
     }
 }

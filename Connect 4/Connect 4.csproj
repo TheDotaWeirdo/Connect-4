@@ -188,11 +188,12 @@
     <None Include="Gold_Help.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Red_Loading.gif" />
     <None Include="White_Circle_Error.png" />
-    <None Include="Arrow.gif" />
     <None Include="Arrow_Blue.gif" />
     <None Include="Arrow_Red.gif" />
     <None Include="Connect-4.png" />
+    <None Include="Blue_Loading.gif" />
     <Content Include="Connect-4.ico" />
     <None Include="Resources\Arrow.bmp" />
     <None Include="Large_White_Circle.png" />

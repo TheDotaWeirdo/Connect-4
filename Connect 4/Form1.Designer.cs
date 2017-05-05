@@ -33,7 +33,7 @@
             this.GameOptions = new System.Windows.Forms.GroupBox();
             this.HumanizedCheckBox = new System.Windows.Forms.CheckBox();
             this.Difficulty_Label = new System.Windows.Forms.Label();
-            this.Label_Impossible = new System.Windows.Forms.Label();
+            this.Label_Merciless = new System.Windows.Forms.Label();
             this.Label_Hard = new System.Windows.Forms.Label();
             this.Label_Intermediate = new System.Windows.Forms.Label();
             this.Label_Medium = new System.Windows.Forms.Label();
@@ -183,7 +183,7 @@
             // 
             this.GameOptions.Controls.Add(this.HumanizedCheckBox);
             this.GameOptions.Controls.Add(this.Difficulty_Label);
-            this.GameOptions.Controls.Add(this.Label_Impossible);
+            this.GameOptions.Controls.Add(this.Label_Merciless);
             this.GameOptions.Controls.Add(this.Label_Hard);
             this.GameOptions.Controls.Add(this.Label_Intermediate);
             this.GameOptions.Controls.Add(this.Label_Medium);
@@ -201,7 +201,7 @@
             this.GameOptions.Controls.Add(this.Color_Select_Red);
             this.GameOptions.Controls.Add(this.DiffBar);
             this.GameOptions.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameOptions.Location = new System.Drawing.Point(382, 165);
+            this.GameOptions.Location = new System.Drawing.Point(10, 110);
             this.GameOptions.Margin = new System.Windows.Forms.Padding(4);
             this.GameOptions.Name = "GameOptions";
             this.GameOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -213,7 +213,6 @@
             // HumanizedCheckBox
             // 
             this.HumanizedCheckBox.AutoSize = true;
-            this.HumanizedCheckBox.Enabled = false;
             this.HumanizedCheckBox.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HumanizedCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.HumanizedCheckBox.Location = new System.Drawing.Point(232, 118);
@@ -222,6 +221,7 @@
             this.HumanizedCheckBox.TabIndex = 76;
             this.HumanizedCheckBox.Text = "Humanized AI";
             this.HumanizedCheckBox.UseVisualStyleBackColor = true;
+            this.HumanizedCheckBox.CheckedChanged += new System.EventHandler(this.HumanizedChkChanged);
             // 
             // Difficulty_Label
             // 
@@ -234,17 +234,17 @@
             this.Difficulty_Label.TabIndex = 75;
             this.Difficulty_Label.Text = "Intermediate";
             // 
-            // Label_Impossible
+            // Label_Merciless
             // 
-            this.Label_Impossible.AutoSize = true;
-            this.Label_Impossible.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Impossible.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Label_Impossible.Location = new System.Drawing.Point(327, 168);
-            this.Label_Impossible.Name = "Label_Impossible";
-            this.Label_Impossible.Size = new System.Drawing.Size(31, 27);
-            this.Label_Impossible.TabIndex = 74;
-            this.Label_Impossible.Text = "😈";
-            this.Label_Impossible.Click += new System.EventHandler(this.Label_Impossible_Click);
+            this.Label_Merciless.AutoSize = true;
+            this.Label_Merciless.Font = new System.Drawing.Font("Century Gothic", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Merciless.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Label_Merciless.Location = new System.Drawing.Point(327, 168);
+            this.Label_Merciless.Name = "Label_Merciless";
+            this.Label_Merciless.Size = new System.Drawing.Size(31, 27);
+            this.Label_Merciless.TabIndex = 74;
+            this.Label_Merciless.Text = "😈";
+            this.Label_Merciless.Click += new System.EventHandler(this.Label_Merciless_Click);
             // 
             // Label_Hard
             // 
@@ -518,9 +518,7 @@
             this.DebugAI_CheckBox.Text = "AI";
             this.DebugAI_CheckBox.UseVisualStyleBackColor = true;
             this.DebugAI_CheckBox.Visible = false;
-#if DEBUG
             this.DebugAI_CheckBox.CheckedChanged += new System.EventHandler(this.DebugAI_CheckBox_CheckedChanged);
-#endif
             // 
             // label1
             // 
@@ -630,9 +628,7 @@
             this.DebugStateButton.Text = "state";
             this.DebugStateButton.UseVisualStyleBackColor = true;
             this.DebugStateButton.Visible = false;
-#if DEBUG
             this.DebugStateButton.Click += new System.EventHandler(this.DebugStateButton_Click);
-#endif
             // 
             // Glow
             // 
@@ -650,9 +646,9 @@
             // LoadingBox
             // 
             this.LoadingBox.Image = global::Connect_4.Properties.Resources.Loading;
-            this.LoadingBox.Location = new System.Drawing.Point(374, 109);
+            this.LoadingBox.Location = new System.Drawing.Point(10, 109);
             this.LoadingBox.Name = "LoadingBox";
-            this.LoadingBox.Size = new System.Drawing.Size(385, 443);
+            this.LoadingBox.Size = new System.Drawing.Size(390, 68);
             this.LoadingBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.LoadingBox.TabIndex = 10;
             this.LoadingBox.TabStop = false;
@@ -1517,7 +1513,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label Label_Impossible;
+        private System.Windows.Forms.Label Label_Merciless;
         private System.Windows.Forms.Label Label_Hard;
         private System.Windows.Forms.Label Label_Intermediate;
         private System.Windows.Forms.Label Label_Medium;
