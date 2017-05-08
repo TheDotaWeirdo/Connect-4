@@ -130,6 +130,9 @@
   <data name="Large_Gold_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Gold_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Restart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Restart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Large_Blue_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Blue_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -172,6 +175,9 @@
   <data name="Large_Select_Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Large_Select_Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Red_Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Red_Loading.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Red_Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Red_Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -199,7 +205,7 @@
   <data name="White_Circle_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\White_Circle_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Red_Loading" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Red_Loading.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Restart_BG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Restart_BG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -63,7 +63,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.DebugStateButton = new System.Windows.Forms.Button();
-            this.Glow = new System.Windows.Forms.PictureBox();
+            this.Restart_btn_N = new System.Windows.Forms.Button();
+            this.Restart_btn_Y = new System.Windows.Forms.Button();
+            this.Restart_PB = new System.Windows.Forms.PictureBox();
+            this.Restart_BG_YN = new System.Windows.Forms.PictureBox();
+            this.Restart_PB_BG = new System.Windows.Forms.PictureBox();
             this.LoadingBox = new System.Windows.Forms.PictureBox();
             this.TopPicture = new System.Windows.Forms.PictureBox();
             this.Turn_Right = new System.Windows.Forms.PictureBox();
@@ -122,7 +126,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Glow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Restart_PB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Restart_BG_YN)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Restart_PB_BG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).BeginInit();
@@ -201,7 +207,7 @@
             this.GameOptions.Controls.Add(this.Color_Select_Red);
             this.GameOptions.Controls.Add(this.DiffBar);
             this.GameOptions.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameOptions.Location = new System.Drawing.Point(10, 110);
+            this.GameOptions.Location = new System.Drawing.Point(491, 125);
             this.GameOptions.Margin = new System.Windows.Forms.Padding(4);
             this.GameOptions.Name = "GameOptions";
             this.GameOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -365,7 +371,6 @@
             this.FGameCheckBox.TabIndex = 11;
             this.FGameCheckBox.Text = "Fast Game";
             this.FGameCheckBox.UseVisualStyleBackColor = true;
-            this.FGameCheckBox.CheckedChanged += new System.EventHandler(this.FGameChkChanged);
             // 
             // Label_Err_Color
             // 
@@ -630,18 +635,78 @@
             this.DebugStateButton.Visible = false;
             this.DebugStateButton.Click += new System.EventHandler(this.DebugStateButton_Click);
             // 
-            // Glow
+            // Restart_btn_N
             // 
-            this.Glow.BackColor = System.Drawing.Color.Transparent;
-            this.Glow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.Glow.Image = ((System.Drawing.Image)(resources.GetObject("Glow.Image")));
-            this.Glow.Location = new System.Drawing.Point(358, 3);
-            this.Glow.Name = "Glow";
-            this.Glow.Size = new System.Drawing.Size(39, 39);
-            this.Glow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.Glow.TabIndex = 69;
-            this.Glow.TabStop = false;
-            this.Glow.Visible = false;
+            this.Restart_btn_N.BackColor = System.Drawing.Color.White;
+            this.Restart_btn_N.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
+            this.Restart_btn_N.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.Restart_btn_N.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(224)))), ((int)(((byte)(227)))));
+            this.Restart_btn_N.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Restart_btn_N.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Restart_btn_N.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
+            this.Restart_btn_N.Location = new System.Drawing.Point(237, 339);
+            this.Restart_btn_N.Name = "Restart_btn_N";
+            this.Restart_btn_N.Size = new System.Drawing.Size(102, 43);
+            this.Restart_btn_N.TabIndex = 74;
+            this.Restart_btn_N.Text = "No";
+            this.Restart_btn_N.UseVisualStyleBackColor = false;
+            this.Restart_btn_N.Visible = false;
+            this.Restart_btn_N.Click += new System.EventHandler(this.Restart_btn_N_Click);
+            // 
+            // Restart_btn_Y
+            // 
+            this.Restart_btn_Y.BackColor = System.Drawing.Color.White;
+            this.Restart_btn_Y.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
+            this.Restart_btn_Y.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.Restart_btn_Y.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(234)))), ((int)(((byte)(246)))));
+            this.Restart_btn_Y.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Restart_btn_Y.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Restart_btn_Y.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
+            this.Restart_btn_Y.Location = new System.Drawing.Point(72, 339);
+            this.Restart_btn_Y.Name = "Restart_btn_Y";
+            this.Restart_btn_Y.Size = new System.Drawing.Size(102, 43);
+            this.Restart_btn_Y.TabIndex = 73;
+            this.Restart_btn_Y.Text = "Yes";
+            this.Restart_btn_Y.UseVisualStyleBackColor = false;
+            this.Restart_btn_Y.Visible = false;
+            this.Restart_btn_Y.Click += new System.EventHandler(this.Restart_btn_Y_Click);
+            // 
+            // Restart_PB
+            // 
+            this.Restart_PB.BackColor = System.Drawing.Color.White;
+            this.Restart_PB.Image = global::Connect_4.Properties.Resources.Restart;
+            this.Restart_PB.Location = new System.Drawing.Point(7, 204);
+            this.Restart_PB.Name = "Restart_PB";
+            this.Restart_PB.Size = new System.Drawing.Size(390, 58);
+            this.Restart_PB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Restart_PB.TabIndex = 75;
+            this.Restart_PB.TabStop = false;
+            this.Restart_PB.Visible = false;
+            // 
+            // Restart_BG_YN
+            // 
+            this.Restart_BG_YN.BackColor = System.Drawing.Color.White;
+            this.Restart_BG_YN.BackgroundImage = global::Connect_4.Properties.Resources.Restart_BG;
+            this.Restart_BG_YN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Restart_BG_YN.Location = new System.Drawing.Point(12, 328);
+            this.Restart_BG_YN.Name = "Restart_BG_YN";
+            this.Restart_BG_YN.Size = new System.Drawing.Size(388, 60);
+            this.Restart_BG_YN.TabIndex = 72;
+            this.Restart_BG_YN.TabStop = false;
+            this.Restart_BG_YN.Visible = false;
+            // 
+            // Restart_PB_BG
+            // 
+            this.Restart_PB_BG.BackColor = System.Drawing.Color.White;
+            this.Restart_PB_BG.BackgroundImage = global::Connect_4.Properties.Resources.Restart_BG;
+            this.Restart_PB_BG.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Restart_PB_BG.Location = new System.Drawing.Point(10, 140);
+            this.Restart_PB_BG.Name = "Restart_PB_BG";
+            this.Restart_PB_BG.Size = new System.Drawing.Size(390, 58);
+            this.Restart_PB_BG.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Restart_PB_BG.TabIndex = 71;
+            this.Restart_PB_BG.TabStop = false;
+            this.Restart_PB_BG.Visible = false;
             // 
             // LoadingBox
             // 
@@ -656,6 +721,7 @@
             // 
             // TopPicture
             // 
+            this.TopPicture.Enabled = false;
             this.TopPicture.Image = global::Connect_4.Properties.Resources.Connect_4;
             this.TopPicture.Location = new System.Drawing.Point(12, 3);
             this.TopPicture.Name = "TopPicture";
@@ -1291,12 +1357,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(409, 561);
+            this.ClientSize = new System.Drawing.Size(417, 611);
+            this.Controls.Add(this.Restart_PB);
+            this.Controls.Add(this.Restart_btn_N);
+            this.Controls.Add(this.Restart_btn_Y);
+            this.Controls.Add(this.Restart_BG_YN);
+            this.Controls.Add(this.Restart_PB_BG);
             this.Controls.Add(this.GameOptions);
             this.Controls.Add(this.LoadingBox);
             this.Controls.Add(this.label_Help);
             this.Controls.Add(this.DebugStateButton);
-            this.Controls.Add(this.Glow);
             this.Controls.Add(this.DebugAI_CheckBox);
             this.Controls.Add(this.TopPicture);
             this.Controls.Add(this.Turn_Right);
@@ -1363,8 +1433,7 @@
             this.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximumSize = new System.Drawing.Size(725, 950);
-            this.MinimumSize = new System.Drawing.Size(425, 600);
+            this.MinimumSize = new System.Drawing.Size(433, 650);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect 4";
@@ -1375,7 +1444,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Glow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Restart_PB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Restart_BG_YN)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Restart_PB_BG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).EndInit();
@@ -1521,9 +1592,13 @@
         private System.Windows.Forms.Label AIDiff_Label;
         private System.Windows.Forms.TrackBar DiffBar;
         private System.Windows.Forms.Label Difficulty_Label;
-        private System.Windows.Forms.PictureBox Glow;
         private System.Windows.Forms.Button DebugStateButton;
         private System.Windows.Forms.CheckBox HumanizedCheckBox;
+        private System.Windows.Forms.PictureBox Restart_PB_BG;
+        private System.Windows.Forms.PictureBox Restart_BG_YN;
+        private System.Windows.Forms.Button Restart_btn_N;
+        private System.Windows.Forms.Button Restart_btn_Y;
+        private System.Windows.Forms.PictureBox Restart_PB;
     }
 }
 
