@@ -15,7 +15,7 @@ namespace Connect_4
     public partial class Form1 : Form
     {
         int[] TopImgSize = new int[] { 100, 155 };
-        int CurrentMouseIndex = 0, LossHelps = 0;
+        int CurrentCol = 4, LossHelps = 0;
         bool InfiniteLoop = false, Helped = false;
         public delegate void ControlUpdate(PictureBox PB, Bitmap B);
         public ControlUpdate CUpdte = new ControlUpdate(UpdateControl);
@@ -170,16 +170,19 @@ namespace Connect_4
         {
             if (Forced || ((!MG.vsAI || MG._Turn == ((MG.LeftIsRed) ? 0 : 1)) && !MG.Finished && !MG.Busy && MG.GetLow(index, MG.Case) > 0))
             {
+                if (CurrentCol != 0) Col_Leave(CurrentCol, true);
                 C[0][index].Invoke(new Action(C[0][index].Show));
                 int i = MG.GetLow(index, MG.Case);
                 if (i > 0)
                     lock (C[i][index])
                     { C[i][index].Image = BitLibrary["TC" + MG._Turn]; }
             }
+            CurrentCol = index;
         }
 
         private void Col_Leave(int index, bool Forced = false)
         {
+            if (CurrentCol != index) Col_Leave(CurrentCol);
             if (C[0][index].Visible || Forced)
             {
                 C[0][index].Invoke(new Action(C[0][index].Hide));
@@ -187,6 +190,7 @@ namespace Connect_4
                 lock (C[i][index])
                 { if (i > 0) C[i][index].Image = BitLibrary["W"]; }
             }
+            CurrentCol = 0;
         }
 
         private void PlayAI()
@@ -234,6 +238,7 @@ namespace Connect_4
             }
             else if (MG.Tied)
             {
+                MG.Finished = true;
                 UpdateVisuals(); 
                 TopPicture.Image = Win_Tie;
                 TopPicture.Invoke(new Action(TopImgScaleBig));
@@ -248,8 +253,8 @@ namespace Connect_4
                 Turn_Left.Invoke(new Action(TLUpdate));
                 Turn_Right.Invoke(new Action(TRUpdate));
                 MG.Busy = false;
-                if (CurrentMouseIndex > 0 && MG.GetLow(CurrentMouseIndex, MG.Case) > 0 && (MG._Turn == ((MG.LeftIsRed) ? 0 : 1) || !MG.vsAI))
-                    Col_Enter(CurrentMouseIndex, true);
+                if (CurrentCol > 0 && MG.GetLow(CurrentCol, MG.Case) > 0 && (MG._Turn == ((MG.LeftIsRed) ? 0 : 1) || !MG.vsAI))
+                    Col_Enter(CurrentCol, true);
                 if (MG.LearnMode && MG._Turn == MG.P[0])
                 {
                     Helped = false;
@@ -309,14 +314,21 @@ namespace Connect_4
                               Thread.Sleep(150);
                           TopPicture.Invoke(new Action(TopPicture.Show));
                           MG.Busy = false;
-                          Point P = Cursor.Position;
-                          Cursor.Position = new Point(0, 0);
-                          Cursor.Position = P;
-                          if (MG._Turn == MG.P[1] && MG.vsAI)
+                          for (int x = 1; x < 8; x++)
+                          {
+                              for (int y = 1; y < 7; y++)
+                              {
+                                  if (C[y][x].Bounds.Contains((Cursor.HotSpot)))
+                                  { CurrentCol = x; goto p; }
+                              }
+                          }
+                          p: if (MG._Turn == MG.P[1] && MG.vsAI)
                           {
                               Thread.Sleep((MG.FastGame) ? 100 : 400);
                               Col_Click(4, true);
                           }
+                          else
+                              Col_Enter((CurrentCol == 0) ? 4 : CurrentCol);
                       }
                   }
               };
@@ -413,6 +425,9 @@ namespace Connect_4
                 for (int y = 1; y < 7; y++)
                     MG.Case[y][x] *= -1;
             UpdateVisuals();
+            int i = CurrentCol;
+            Col_Leave(CurrentCol, true);
+            CurrentCol = i;
         }
         
         //Events
@@ -508,6 +523,7 @@ namespace Connect_4
         {
             if(AIcheckBox.Checked)
             {
+                DiffBar.Enabled =
                 DebugAI_CheckBox.Checked =
                 MG.vsAI =
                 AIDiff_Label.Enabled = 
@@ -525,6 +541,7 @@ namespace Connect_4
             }
             else
             {
+                DiffBar.Enabled =
                 DebugAI_CheckBox.Checked =
                 MG.vsAI =
                 AIDiff_Label.Enabled =
@@ -606,6 +623,8 @@ namespace Connect_4
             if (MG.Busy && !MG.Finished) return;
             if (!MG.Finished &&  MG.Moves > 3)
             { PromptRestart(); return; }
+            if(CurrentCol != 0)
+                Col_Leave(CurrentCol);
             int[] _P = MG.P;
             int _Diff = MG.Diff;
             bool _vsAI = MG.vsAI;
@@ -658,6 +677,8 @@ namespace Connect_4
                 for (int y = 1; y < 7; y++)
                     MG.Case[y][x] *= -1;
             UpdateVisuals();
+            if(CurrentCol != 0)
+                Col_Enter(CurrentCol);
         }
 
         private void DiffBar_Scroll(object sender, EventArgs e)
@@ -982,46 +1003,45 @@ namespace Connect_4
         { Col_Click(7); }
 
         private void Col1_Enter(object sender, EventArgs e)
-        { Col_Enter(1); CurrentMouseIndex = 1; }
+        { Col_Enter(1); }
         private void Col2_Enter(object sender, EventArgs e)
-        { Col_Enter(2); CurrentMouseIndex = 2; }
+        { Col_Enter(2); }
         private void Col3_Enter(object sender, EventArgs e)
-        { Col_Enter(3); CurrentMouseIndex = 3; }
+        { Col_Enter(3); }
         private void Col4_Enter(object sender, EventArgs e)
-        { Col_Enter(4); CurrentMouseIndex = 4; }
+        { Col_Enter(4); }
         private void Col5_Enter(object sender, EventArgs e)
-        { Col_Enter(5); CurrentMouseIndex = 5; }
+        { Col_Enter(5); }
         private void Col6_Enter(object sender, EventArgs e)
-        { Col_Enter(6); CurrentMouseIndex = 6; }
+        { Col_Enter(6); }
         private void Col7_Enter(object sender, EventArgs e)
-        { Col_Enter(7); CurrentMouseIndex = 7; }
+        { Col_Enter(7); }
 
         private void Col1_Leave(object sender, EventArgs e)
-        { Col_Leave(1); CurrentMouseIndex = 0; }
+        { Col_Leave(1); }
         private void Col2_Leave(object sender, EventArgs e)
-        { Col_Leave(2); CurrentMouseIndex = 0; }
+        { Col_Leave(2); }
         private void Col3_Leave(object sender, EventArgs e)
-        { Col_Leave(3); CurrentMouseIndex = 0; }
+        { Col_Leave(3); }
         private void Col4_Leave(object sender, EventArgs e)
-        { Col_Leave(4); CurrentMouseIndex = 0; }
+        { Col_Leave(4); }
         private void Col5_Leave(object sender, EventArgs e)
-        { Col_Leave(5); CurrentMouseIndex = 0; }
+        { Col_Leave(5); }
         private void Col6_Leave(object sender, EventArgs e)
-        { Col_Leave(6); CurrentMouseIndex = 0; }
+        { Col_Leave(6); }
         private void Col7_Leave(object sender, EventArgs e)
-        { Col_Leave(7); CurrentMouseIndex = 0; }
+        { Col_Leave(7); }
 
         private int HWDiff(int W, int H)
         {
-            H = (int)(H / 1.411);
-            int w = W-425; int h = H - 425;
-            if (w > h)
-                return W - w + h;
-            return H - h + w;
+            H = H * 2 / 3;
+            if (W > H)
+                return H * 11 / 10;
+            return W * 11 / 10;
         }
 
         private void FormResize(object sender, EventArgs e)
-        {  // Max : 725, 950
+        {  
             bool b = MG.Busy; MG.Busy = true;
             if(ActiveForm != null)
                 { ResizeForm(); }
@@ -1031,7 +1051,7 @@ namespace Connect_4
         }
 
         private void ResizeForm()
-        {  // Max : 666, 1000
+        { 
             int W, H, GOW, GOH, CS; int[] CBL;
             try
             { W = ActiveForm.Width; H = ActiveForm.Height; if (W < ActiveForm.MinimumSize.Width) return; }
@@ -1137,6 +1157,139 @@ namespace Connect_4
             }            
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if(GameOptions.Visible)
+            {
+                if (DiffBar.Enabled && ( keyData == Keys.Right || keyData == Keys.D))
+                {
+                    DiffBar.Value = Math.Min(100, DiffBar.Value + 5);
+                    DiffBar_Scroll(null, null);
+                    return true;
+                }
+
+                if (DiffBar.Enabled && (keyData == Keys.Left || keyData == Keys.A))
+                {
+                    DiffBar.Value = Math.Max(0, DiffBar.Value - 5);
+                    DiffBar_Scroll(null, null);
+                    return true;
+                }
+
+                if (keyData == Keys.D1 || keyData == Keys.NumPad1)
+                {
+                    Color_Select_Red_Click(null, null);
+                    return true;
+                }
+
+                if (keyData == Keys.D2 || keyData == Keys.NumPad2)
+                {
+                    Color_Select_Blue_Click(null, null);
+                    return true;
+                }
+
+                switch (keyData)
+                {
+                    case Keys.F1: FGameCheckBox.Checked = !FGameCheckBox.Checked; return true;
+                    case Keys.F2: if (AIcheckBox.Checked) LearnMCheckBox.Checked = !LearnMCheckBox.Checked; return true;
+                    case Keys.F3: AIcheckBox.Checked = !AIcheckBox.Checked; return true;
+                    case Keys.F4: if (AIcheckBox.Checked) PredicitveCheckBox.Checked = !PredicitveCheckBox.Checked; return true;
+                    case Keys.F5: if (AIcheckBox.Checked) StrategicCheckBox.Checked = !StrategicCheckBox.Checked; return true;
+                    case Keys.F6: if (AIcheckBox.Checked) HumanizedCheckBox.Checked = !HumanizedCheckBox.Checked; return true;
+                }
+            }
+
+            if(keyData==Keys.Back)
+            {
+                if (TopPicture.Enabled)
+                {
+                    Button_Restart_Click(null, null);
+                    return true;
+                }
+                if(Restart_btn_N.Visible)
+                {
+                    Restart_btn_N_Click(null, null);
+                    return true;
+                }
+            }
+
+            if (keyData == Keys.Enter)
+            {
+                if(GameOptions.Visible)
+                {
+                    Start_Click(null, null);
+                    return true;
+                }
+                if (button_Restart.Visible)
+                {
+                    Button_Restart_Click(null, null);
+                    return true;
+                }
+                if(Restart_btn_Y.Visible)
+                {
+                    Restart_btn_Y_Click(null, null);
+                    return true;
+                }
+            }
+
+            if (button_Exit.Visible && keyData == Keys.Escape)
+            {
+                Button_Exit_Click(null, null);
+                return true;
+            }
+
+            if (!GameOptions.Visible && CurrentCol != 1 && (keyData == Keys.Left || keyData == Keys.A))
+            {
+                int NMI;
+                for (NMI = CurrentCol - 1; NMI > 0; NMI--)
+                {
+                    if (MG.Case[1][NMI] == 0)
+                        break;
+                }
+                if (CurrentCol == 0) NMI = 4;
+                else if (NMI == 0) NMI = CurrentCol;
+                Col_Enter(NMI);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            if (!GameOptions.Visible && CurrentCol != 7 && (keyData == Keys.Right || keyData == Keys.D))
+            {
+                int NMI;
+                for (NMI = CurrentCol + 1; NMI < 8; NMI++)
+                {
+                    if (MG.Case[1][NMI] == 0)
+                        break;
+                }
+                if (CurrentCol == 0) NMI = 4;
+                else if (NMI == 8) NMI = CurrentCol;
+                Col_Enter(NMI);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            if (!GameOptions.Visible && MG.Case[1][1] == 0 && (keyData == Keys.Q || keyData == Keys.NumPad1 || keyData == Keys.D1))
+            { Col_Leave(CurrentCol); Col1_Enter(null, null); return true; }
+            if (!GameOptions.Visible && MG.Case[1][2] == 0 && (keyData == Keys.W || keyData == Keys.NumPad2 || keyData == Keys.D2))
+            { Col_Leave(CurrentCol); Col2_Enter(null, null); return true; }
+            if (!GameOptions.Visible && MG.Case[1][3] == 0 && (keyData == Keys.E || keyData == Keys.NumPad3 || keyData == Keys.D3))
+            { Col_Leave(CurrentCol); Col3_Enter(null, null); return true; }
+            if (!GameOptions.Visible && MG.Case[1][4] == 0 && (keyData == Keys.R || keyData == Keys.NumPad4 || keyData == Keys.D4))
+            { Col_Leave(CurrentCol); Col4_Enter(null, null); return true; }
+            if (!GameOptions.Visible && MG.Case[1][5] == 0 && (keyData == Keys.T || keyData == Keys.NumPad5 || keyData == Keys.D5))
+            { Col_Leave(CurrentCol); Col5_Enter(null, null); return true; }
+            if (!GameOptions.Visible && MG.Case[1][6] == 0 && (keyData == Keys.Y || keyData == Keys.NumPad6 || keyData == Keys.D6))
+            { Col_Leave(CurrentCol); Col6_Enter(null, null); return true; }
+            if (!GameOptions.Visible && MG.Case[1][7] == 0 && (keyData == Keys.U || keyData == Keys.NumPad7 || keyData == Keys.D7))
+            { Col_Leave(CurrentCol); Col7_Enter(null, null); return true; }
+
+            if (CurrentCol != 0 && !GameOptions.Visible && (keyData == Keys.Down || keyData == Keys.S || keyData == Keys.Space || keyData == Keys.Enter))
+            {
+                Col_Click(CurrentCol);
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Call the base class
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        
         private void DebugAI_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
 #if DEBUG
