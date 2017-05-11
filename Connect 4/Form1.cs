@@ -14,18 +14,18 @@ namespace Connect_4
 {
     public partial class Form1 : Form
     {
-        int[] TopImgSize = new int[] { 100, 155 };
-        int CurrentCol = 4, LossHelps = 0;
-        bool InfiniteLoop = false, Helped = false;
-        public delegate void ControlUpdate(PictureBox PB, Bitmap B);
-        public ControlUpdate CUpdte = new ControlUpdate(UpdateControl);
-        public MainGame MG = new MainGame();
-        public List<List<PictureBox>> C = new List<List<PictureBox>>();
-        Dictionary<string, Bitmap> BitLibrary = new Dictionary<string, Bitmap>();
-        System.Timers.Timer HelpT = new System.Timers.Timer(10000);
+        private int[] TopImgSize = new int[] { 100, 155 };
+        private int CurrentCol = 4, LossHelps = 0;
+        private bool InfiniteLoop = false, Helped = false;
+        private delegate void ControlUpdate(PictureBox PB, Bitmap B);
+        private ControlUpdate CUpdte = new ControlUpdate(UpdateControl);
+        private MainGame MG = new MainGame();
+        private List<List<PictureBox>> C = new List<List<PictureBox>>();
+        private Dictionary<string, Bitmap> BitLibrary = new Dictionary<string, Bitmap>();
+        private System.Timers.Timer HelpT = new System.Timers.Timer(10000);
 #if DEBUG
-        public delegate void DebugUpdate(Label L, int i, MainGame mg);
-        public DebugUpdate DSUpdate = new DebugUpdate(UpdateDebugState);
+        private delegate void DebugUpdate(Label L, int i, MainGame mg);
+        private DebugUpdate DSUpdate = new DebugUpdate(UpdateDebugState);
 #endif
 
         public Form1()
@@ -182,6 +182,7 @@ namespace Connect_4
 
         private void Col_Leave(int index, bool Forced = false)
         {
+            if (index == 0) return;
             if (CurrentCol != index) Col_Leave(CurrentCol);
             if (C[0][index].Visible || Forced)
             {
@@ -233,6 +234,7 @@ namespace Connect_4
                 TopPicture.Invoke(new Action(TopImgScaleBig));
                 button_Exit.Invoke(new Action(button_Exit.Show));
                 button_Restart.Invoke(new Action(button_Restart.Show));
+                button_Share.Invoke(new Action(button_Share.Show));
                 Turn_Right.Invoke(new Action(Turn_Right.Hide));
                 Turn_Left.Invoke(new Action(Turn_Left.Hide));
             }
@@ -244,6 +246,7 @@ namespace Connect_4
                 TopPicture.Invoke(new Action(TopImgScaleBig));
                 button_Exit.Invoke(new Action(button_Exit.Show));
                 button_Restart.Invoke(new Action(button_Restart.Show));
+                button_Share.Invoke(new Action(button_Share.Hide));
                 Turn_Right.Invoke(new Action(Turn_Right.Hide));
                 Turn_Left.Invoke(new Action(Turn_Left.Hide));
             }
@@ -394,9 +397,7 @@ namespace Connect_4
         private static void UpdateControl(PictureBox PB, Bitmap B)
         {
             lock (PB)
-            {
                 PB.Image = B;
-            }
         }
 
         private void SetInGamePrefs()
@@ -408,6 +409,7 @@ namespace Connect_4
             MG.PredictiveAI = PredicitveCheckBox.Checked;
             MG.LearnMode = LearnMCheckBox.Checked;
             MG.FastGame = FGameCheckBox.Checked;
+            MG.Starter = MG.P[MG._Turn];
         }
 
         private void PromptRestart()
@@ -621,7 +623,7 @@ namespace Connect_4
         private void Button_Restart_Click(object sender, EventArgs e)
         {
             if (MG.Busy && !MG.Finished) return;
-            if (!MG.Finished &&  MG.Moves > 3)
+            if (!MG.Finished &&  MG.MoveCount > 3)
             { PromptRestart(); return; }
             if(CurrentCol != 0)
                 Col_Leave(CurrentCol);
@@ -637,7 +639,7 @@ namespace Connect_4
               HumanizedAI = HumanizedCheckBox.Checked };
             LossHelps = 0;
             UpdateVisuals();
-            button_Exit.Hide(); button_Restart.Hide();
+            button_Exit.Hide(); button_Restart.Hide(); button_Share.Hide();
             GameOptions.Show();
             Turn_Right.Hide();
             Help_PictureBox.Hide();
@@ -1081,13 +1083,14 @@ namespace Connect_4
                         C[y][x].Size = new Size(CS, CS);
                     }
                 }
-                button_Exit.Height = button_Restart.Height = button_Start.Height = (H - 650) / 25 + 45;
+                button_Share.Width = button_Share.Height = button_Exit.Height = button_Restart.Height = button_Start.Height = (H - 650) / 25 + 45;
                 button_Exit.Width = button_Restart.Width = button_Start.Width = (W - 433) / 6 + 100;
                 button_Exit.Font = button_Start.Font = button_Restart.Font = new Font("Century Gothic", (float)(4.25 + HWDiff(W, H) / 42.5), FontStyle.Bold);
                 if (MG.P[0] == -1)
                     button_Start.Font = new Font("Century Gothic", (float)(4.25 + HWDiff(W, H) / 42.5));
-                button_Exit.Location = new Point((W - button_Exit.Width) * 3 / 4, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1]) ));
-                button_Restart.Location = new Point((W - button_Exit.Width) / 4, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1]) ));
+                button_Exit.Location = new Point((W - button_Exit.Width) * 17 / 20, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1]) ));
+                button_Restart.Location = new Point((W - button_Exit.Width) * 3 / 20, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
+                button_Share.Location = new Point((W - button_Share.Width) / 2, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
                 Turn_Left.Height = Turn_Left.Width = Turn_Right.Height = Turn_Right.Width = (int)(1.5 * CS);
                 Turn_Right.Location = new Point((W - Turn_Right.Height) * 3 / 4, (int)((((CBL[1] - TopImgSize[0]) / 2.85) + TopImgSize[0]) ));
                 Turn_Left.Location = new Point((W - Turn_Right.Height) / 4, (int)((((CBL[1] - TopImgSize[0]) / 2.85) + TopImgSize[0]) ));
@@ -1296,6 +1299,12 @@ namespace Connect_4
             MG.vsAI = DebugAI_CheckBox.Checked;
 #endif
         }
+
+        private void button_Share_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(MG.Moves);
+        }
+
         private void DebugStateButton_Click(object sender, EventArgs e)
         {
 #if DEBUG

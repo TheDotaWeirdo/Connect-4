@@ -188,6 +188,7 @@
     <None Include="Gold_Help.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Share.png" />
     <None Include="Restart_BG.png" />
     <None Include="Restart.png" />
     <None Include="Red_Loading.gif" />

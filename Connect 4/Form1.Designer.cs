@@ -47,8 +47,6 @@
             this.Label_Err_Color = new System.Windows.Forms.Label();
             this.button_Start = new System.Windows.Forms.Button();
             this.AIcheckBox = new System.Windows.Forms.CheckBox();
-            this.Color_Select_Blue = new System.Windows.Forms.PictureBox();
-            this.Color_Select_Red = new System.Windows.Forms.PictureBox();
             this.DiffBar = new System.Windows.Forms.TrackBar();
             this.button_Restart = new System.Windows.Forms.Button();
             this.button_Exit = new System.Windows.Forms.Button();
@@ -65,9 +63,12 @@
             this.DebugStateButton = new System.Windows.Forms.Button();
             this.Restart_btn_N = new System.Windows.Forms.Button();
             this.Restart_btn_Y = new System.Windows.Forms.Button();
+            this.button_Share = new System.Windows.Forms.Button();
             this.Restart_PB = new System.Windows.Forms.PictureBox();
             this.Restart_BG_YN = new System.Windows.Forms.PictureBox();
             this.Restart_PB_BG = new System.Windows.Forms.PictureBox();
+            this.Color_Select_Blue = new System.Windows.Forms.PictureBox();
+            this.Color_Select_Red = new System.Windows.Forms.PictureBox();
             this.LoadingBox = new System.Windows.Forms.PictureBox();
             this.TopPicture = new System.Windows.Forms.PictureBox();
             this.Turn_Right = new System.Windows.Forms.PictureBox();
@@ -123,12 +124,12 @@
             this.C_2_0 = new System.Windows.Forms.PictureBox();
             this.C_1_0 = new System.Windows.Forms.PictureBox();
             this.GameOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_BG_YN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB_BG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).BeginInit();
@@ -207,7 +208,7 @@
             this.GameOptions.Controls.Add(this.Color_Select_Red);
             this.GameOptions.Controls.Add(this.DiffBar);
             this.GameOptions.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameOptions.Location = new System.Drawing.Point(491, 125);
+            this.GameOptions.Location = new System.Drawing.Point(342, 28);
             this.GameOptions.Margin = new System.Windows.Forms.Padding(4);
             this.GameOptions.Name = "GameOptions";
             this.GameOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -339,9 +340,9 @@
             this.LearnMCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.LearnMCheckBox.Location = new System.Drawing.Point(30, 69);
             this.LearnMCheckBox.Name = "LearnMCheckBox";
-            this.LearnMCheckBox.Size = new System.Drawing.Size(145, 25);
+            this.LearnMCheckBox.Size = new System.Drawing.Size(155, 25);
             this.LearnMCheckBox.TabIndex = 13;
-            this.LearnMCheckBox.Text = "Learing Mode";
+            this.LearnMCheckBox.Text = "Learning Mode";
             this.LearnMCheckBox.UseVisualStyleBackColor = true;
             this.LearnMCheckBox.CheckedChanged += new System.EventHandler(this.LearnMCheckBox_CheckedChanged);
             // 
@@ -414,30 +415,6 @@
             this.AIcheckBox.Text = "vs AI";
             this.AIcheckBox.UseVisualStyleBackColor = true;
             this.AIcheckBox.CheckedChanged += new System.EventHandler(this.VsAI_Check);
-            // 
-            // Color_Select_Blue
-            // 
-            this.Color_Select_Blue.Image = global::Connect_4.Properties.Resources.Large_Blue_Circle;
-            this.Color_Select_Blue.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Blue.Location = new System.Drawing.Point(206, 240);
-            this.Color_Select_Blue.Name = "Color_Select_Blue";
-            this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Color_Select_Blue.TabIndex = 6;
-            this.Color_Select_Blue.TabStop = false;
-            this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
-            // 
-            // Color_Select_Red
-            // 
-            this.Color_Select_Red.Image = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Red.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Red.Location = new System.Drawing.Point(63, 240);
-            this.Color_Select_Red.Name = "Color_Select_Red";
-            this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Color_Select_Red.TabIndex = 5;
-            this.Color_Select_Red.TabStop = false;
-            this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
             // 
             // DiffBar
             // 
@@ -671,11 +648,32 @@
             this.Restart_btn_Y.Visible = false;
             this.Restart_btn_Y.Click += new System.EventHandler(this.Restart_btn_Y_Click);
             // 
+            // button_Share
+            // 
+            this.button_Share.BackColor = System.Drawing.Color.White;
+            this.button_Share.BackgroundImage = global::Connect_4.Properties.Resources.Share;
+            this.button_Share.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button_Share.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.button_Share.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(135)))), ((int)(((byte)(21)))));
+            this.button_Share.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(243)))), ((int)(((byte)(232)))));
+            this.button_Share.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Share.Font = new System.Drawing.Font("Century Gothic", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Share.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.button_Share.Location = new System.Drawing.Point(183, 183);
+            this.button_Share.Name = "button_Share";
+            this.button_Share.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.button_Share.Size = new System.Drawing.Size(31, 35);
+            this.button_Share.TabIndex = 76;
+            this.button_Share.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button_Share.UseVisualStyleBackColor = false;
+            this.button_Share.Visible = false;
+            this.button_Share.Click += new System.EventHandler(this.button_Share_Click);
+            // 
             // Restart_PB
             // 
             this.Restart_PB.BackColor = System.Drawing.Color.White;
             this.Restart_PB.Image = global::Connect_4.Properties.Resources.Restart;
-            this.Restart_PB.Location = new System.Drawing.Point(7, 204);
+            this.Restart_PB.Location = new System.Drawing.Point(12, 275);
             this.Restart_PB.Name = "Restart_PB";
             this.Restart_PB.Size = new System.Drawing.Size(390, 58);
             this.Restart_PB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -700,13 +698,37 @@
             this.Restart_PB_BG.BackColor = System.Drawing.Color.White;
             this.Restart_PB_BG.BackgroundImage = global::Connect_4.Properties.Resources.Restart_BG;
             this.Restart_PB_BG.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Restart_PB_BG.Location = new System.Drawing.Point(10, 140);
+            this.Restart_PB_BG.Location = new System.Drawing.Point(7, 282);
             this.Restart_PB_BG.Name = "Restart_PB_BG";
             this.Restart_PB_BG.Size = new System.Drawing.Size(390, 58);
             this.Restart_PB_BG.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Restart_PB_BG.TabIndex = 71;
             this.Restart_PB_BG.TabStop = false;
             this.Restart_PB_BG.Visible = false;
+            // 
+            // Color_Select_Blue
+            // 
+            this.Color_Select_Blue.Image = global::Connect_4.Properties.Resources.Large_Blue_Circle;
+            this.Color_Select_Blue.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Color_Select_Blue.Location = new System.Drawing.Point(206, 240);
+            this.Color_Select_Blue.Name = "Color_Select_Blue";
+            this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
+            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Color_Select_Blue.TabIndex = 6;
+            this.Color_Select_Blue.TabStop = false;
+            this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
+            // 
+            // Color_Select_Red
+            // 
+            this.Color_Select_Red.Image = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Color_Select_Red.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
+            this.Color_Select_Red.Location = new System.Drawing.Point(63, 240);
+            this.Color_Select_Red.Name = "Color_Select_Red";
+            this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
+            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Color_Select_Red.TabIndex = 5;
+            this.Color_Select_Red.TabStop = false;
+            this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
             // 
             // LoadingBox
             // 
@@ -1358,6 +1380,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(417, 611);
+            this.Controls.Add(this.button_Share);
             this.Controls.Add(this.Restart_PB);
             this.Controls.Add(this.Restart_btn_N);
             this.Controls.Add(this.Restart_btn_Y);
@@ -1441,12 +1464,12 @@
             this.Resize += new System.EventHandler(this.FormResize);
             this.GameOptions.ResumeLayout(false);
             this.GameOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_BG_YN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB_BG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).EndInit();
@@ -1599,6 +1622,7 @@
         private System.Windows.Forms.Button Restart_btn_N;
         private System.Windows.Forms.Button Restart_btn_Y;
         private System.Windows.Forms.PictureBox Restart_PB;
+        private System.Windows.Forms.Button button_Share;
     }
 }
 

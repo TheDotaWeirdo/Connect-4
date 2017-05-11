@@ -10,6 +10,7 @@ namespace Connect_4
 {
     public class MainGame
     {
+        public string Moves { get; private set; }
         public bool LeftIsRed = true;
         public bool Finished = true;
         public bool Busy = true;
@@ -19,32 +20,33 @@ namespace Connect_4
         public bool StrategicAI = false;
         public bool HumanizedAI = false;
         public bool FastGame = false;
-        public bool Calculating = false;
+        private bool Calculating = false;
         private bool Lmode = false;
+        public int Starter;
         public int[] P = { -1, -1 };
-        public int _Turn = 0;
+        public int _Turn;
         private int diff;
         public List<List<int>> Case = new List<List<int>>();
-        public List<List<int>> _Case = new List<List<int>>();
-        public int Delay;
+        private List<List<int>> _Case = new List<List<int>>();
+        public int Delay { get; private set; }
         private int winner = 0;
-        public int Moves = 0;
-        double WinChance, BlockChance, ThreatBlockChance, ThreatChance, PredictWinChance, PredictLossChance, StrategicCheckChance, StrategicBlockChance, FutureStrategicBlockChance, SacrificeChance;
-        public int Positiveness = 0;
-        public List<int> PlayerPositiveness = new List<int>();
-        public Dictionary<int, int> Effectiveness = new Dictionary<int, int> { { -10, 1 }, { -9, -1 }, { -8, 3 }, { -7, -2 }, { -6, 2 }, { -5, 3 }, { -4, 1 }, { -3, -1 }, { -2, -2 }, { -1, -2 }, { 0, 0 }, { 1, -2 }, { 2, 0 }, { 3, 0 }, { 4, 2 }, { 5, 2 }, { 6, -1 }, { 7, -1 }, { 8, 1 } };
-        public Dictionary<int, List<int>> St = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
-        public Dictionary<int, int> Se = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
+        public int MoveCount { get { return Moves.Length; } }
+        private double WinChance, BlockChance, ThreatBlockChance, ThreatChance, PredictWinChance, PredictLossChance, StrategicCheckChance, StrategicBlockChance, FutureStrategicBlockChance, SacrificeChance;
+        private int Positiveness = 0;
+        private List<int> PlayerPositiveness = new List<int>();
+        private Dictionary<int, int> Effectiveness = new Dictionary<int, int> { { -10, 1 }, { -9, -1 }, { -8, 3 }, { -7, -2 }, { -6, 2 }, { -5, 3 }, { -4, 1 }, { -3, -1 }, { -2, -2 }, { -1, -2 }, { 0, 0 }, { 1, -2 }, { 2, 0 }, { 3, 0 }, { 4, 2 }, { 5, 2 }, { 6, -1 }, { 7, -1 }, { 8, 1 }, { 9, 2 } };
+        private Dictionary<int, List<int>> St = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
+        private Dictionary<int, int> Se = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
         public List<Dictionary<int, List<int>>> PlayerState = new List<Dictionary<int, List<int>>>();
         public List<Dictionary<int, int>> PlayerSeverity = new List<Dictionary<int, int>>();
-        public Dictionary<int, List<int>> HumanState = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
-        public Dictionary<int, int> HumanSeverity = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
+        private Dictionary<int, List<int>> HumanState = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
+        private Dictionary<int, int> HumanSeverity = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
         public Dictionary<int, List<int>> AIState = new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } };
         public Dictionary<int, int> AISeverity = new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } };
         // States of each column are cases where specified conditions are met, a column can have more than one state at a time
         // State Severity of a column is calculated based on the multiple states applied in a column, the higher the severity the more likely the column will be played
 
-        // -10: FuturePredictiveCheck | checks if a play by the bot will create a Predicted Threat (8) state in another column
+        //-10: FuturePredictiveCheck | checks if a play by the bot will create a Predicted Threat (8) state in another column
         // -9: FuturePredictiveBlock | checks if a play by the player will create a Predicted ThreatBlocked (7) state in another column
         // -8: Threat Sacrifice | sacrifice a Threat in order to force another one (win in 3 moves)
         // -7: Possible Loss Prediction | checks if a play by the Player will create a possible Loss (6) (Loss in 4 moves)
@@ -63,6 +65,8 @@ namespace Connect_4
         //  6: Possible Loss | (Loss in 1 move)
         //  7: Predicted ThreatBlocked | checks if a ThreatBlock will occur after one play in the column
         //  8: Predicted Threat | checks if a Threat will occur after one play in the column
+        //  9: Relevant Future Threat Block | checks if there is any 3+ layer threat possibility that is relevant by odd/even standards
+        //10: Relevant Future Threat | checks if there is any 3+ layer threat possibility that is relevant by odd/even standards
 
         public int Diff
         {
@@ -161,6 +165,149 @@ namespace Connect_4
             set { Lmode = value; }
         }
 
+        private Dictionary<string, Pattern> Patterns = new Dictionary<string, Pattern>();
+
+        class Pattern
+        {
+            public char Type; //Situation (s) OR Combination (c)
+            public List<List<int>> Shape = new List<List<int>>();
+            public int Severity;
+            public int StateID;
+            public int Effectiveness;
+            public int PlayerID = 0;
+
+            public Pattern(char c, int id, int s, int e) { Type = c; StateID = id; Severity = s; Effectiveness = e; }
+
+            public Pattern Mirror
+            {
+                get
+                {
+                    List<List<int>> shape = new List<List<int>>();
+                    for (int i = 0; i < Shape.Count; i++)
+                    {
+                        List<int> tmp = new List<int>();
+                        for (int j = 0; j < Shape[0].Count; j++)
+                        {
+                            if (Shape[i][j] == 1)
+                                tmp.Add(2);
+                            else
+                                tmp.Add(Shape[i][j]);
+                        }
+                        shape.Add(tmp);
+                    }
+                    return new Pattern(Type, StateID + 1, Severity, -Effectiveness) { Shape = shape, PlayerID = 1 };
+                }
+            }
+
+            public bool Compare(List<List<int>> _case)
+            {
+                switch (Type)
+                {
+                    case 's': return Compare_s(_case);
+                    case 'c': return Compare_c(_case);
+                    default:
+                        throw new NotImplementedException();
+                }
+
+            }
+
+            private bool Compare_s(List<List<int>> _case)
+            {
+                for (int x = 1; x < 8; x++)
+                {
+                    for (int y = 1; y < 7; y++)
+                    {
+                        if (Shape[y][x] != -1 && Shape[y][x] != _case[y][x])
+                            return false;
+                    }
+                }
+                return true;
+            }
+
+            private bool Compare_c(List<List<int>> _case)
+            {
+                int X = Shape[1].Count, Y = Shape.Count;
+                List<List<int>> Flip;
+                MirrorShape();
+                for (int i = 0; i < 4; i++)
+                {
+                    Flip = FlipPatern(i);
+                    for (int x = 1; x < 8; x++)
+                    {
+                        for (int y = 1; y < 7; y++)
+                        {
+                            if (ComparePatern(x, y, _case, Flip))
+                                return true;
+                        }
+                    }
+                }
+                MirrorShape();
+                for (int i = 0; i < 4; i++)
+                {
+                    Flip = FlipPatern(i);
+                    for (int x = 1; x < 8; x++)
+                    {
+                        for (int y = 1; y < 7; y++)
+                        {
+                            if (ComparePatern(x, y, _case, Flip))
+                                return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            private bool ComparePatern(int x, int y, List<List<int>> _case, List<List<int>> source)
+            {
+                int X = source[1].Count, Y = source.Count;
+                if (x + X <= 8 && y + Y <= 7)
+                {
+                    for (int i = 0; i < X; i++)
+                    {
+                        for (int j = 0; j < Y; j++)
+                        {
+                            if (source[j][i] != -1 && source[j][i] != _case[y + j][x + i])
+                                return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            private List<List<int>> FlipPatern(int times, List<List<int>> source = null)
+            {
+                if (source == null) { source = Shape; }
+                if (times == 0) return source;
+                var output = new List<List<int>>();
+                for (int x = 0; x < source[0].Count; x++)
+                {
+                    List<int> tmp = new List<int>();
+                    for (int y = source.Count - 1; y >= 0; y--)
+                    {
+                        tmp.Add(source[y][x]);
+                    }
+                    output.Add(tmp);
+                }
+                if (times == 1) return output;
+                return FlipPatern(times - 1, output);
+            }
+
+            private void MirrorShape()
+            {
+                for (int i = 0; i < Shape.Count; i++)
+                    Shape[i].Reverse();
+            }
+
+            private int GetLow(int col, List<List<int>> _case)
+            {
+                for (int i = 0; i < 6; i++)
+                    if (_case[i][col] > 0)
+                        return i;
+                return 0;
+            }
+        }
+
         class CheckData
         {
             public bool Check;
@@ -175,13 +322,67 @@ namespace Connect_4
 
         public MainGame()
         {
-            for (int i = 0; i < 7; i++)
-            {
-                Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
-            }
             _Turn = (new Random().NextDouble() < .5) ? 0 : 1;
+            Moves = _Turn.ToString();
             Diff = 50;
             ResetPlayerStSe();
+            // Case initialization
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            Case.Add(new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 });
+            // Pattern initialization
+            // Seven
+            Patterns.Add("Seven1", new Pattern('c', 20, 4, -3));
+            Patterns["Seven1"].Shape.Add(new List<int> { 1, -1, 1, -1 });
+            Patterns["Seven1"].Shape.Add(new List<int> { -1, 1, 1, -1 });
+            Patterns["Seven1"].Shape.Add(new List<int> { -1, -1, 1, -1 });
+            Patterns["Seven1"].Shape.Add(new List<int> { -1, -1, 0, 0 });
+            Patterns.Add("Seven2", Patterns["Seven1"].Mirror);
+            // Arrow
+            Patterns.Add("Arrow1", new Pattern('c', 22, 2, -3));
+            Patterns["Arrow1"].Shape.Add(new List<int> { 0, 0, -1, -1 });
+            Patterns["Arrow1"].Shape.Add(new List<int> { 0, 1, 1, 1 });
+            Patterns["Arrow1"].Shape.Add(new List<int> { -1, 1, 1, -1 });
+            Patterns["Arrow1"].Shape.Add(new List<int> { -1, 1, -1, 1 });
+            Patterns.Add("Arrow2", Patterns["Arrow1"].Mirror);
+            // L
+            Patterns.Add("L1", new Pattern('c', 24, 3, -2));
+            Patterns["L1"].Shape.Add(new List<int> { -1, 0, -1, -1 });
+            Patterns["L1"].Shape.Add(new List<int> { 0, 1, 1, 1 });
+            Patterns["L1"].Shape.Add(new List<int> { -1, 1, -1, -1 });
+            Patterns["L1"].Shape.Add(new List<int> { -1, 1, -1, -1 });
+            Patterns.Add("L2", Patterns["L1"].Mirror);
+            // Diamond
+            Patterns.Add("Diamond1", new Pattern('c', 26, 5, -3));
+            Patterns["Diamond1"].Shape.Add(new List<int> { -1, 0, -1, 0, -1 });
+            Patterns["Diamond1"].Shape.Add(new List<int> { 0, -1, 1, -1, 0 });
+            Patterns["Diamond1"].Shape.Add(new List<int> { -1, 1, -1, 1, -1 });
+            Patterns["Diamond1"].Shape.Add(new List<int> { -1, -1, 1, -1, -1 });
+            Patterns.Add("Diamond2", Patterns["Diamond1"].Mirror);
+            // Square
+            Patterns.Add("Square1", new Pattern('c', 28, 2, -1));
+            Patterns["Square1"].Shape.Add(new List<int> { -1, -1, -1, -1 });
+            Patterns["Square1"].Shape.Add(new List<int> { -1, 1, 1, -1 });
+            Patterns["Square1"].Shape.Add(new List<int> { -1, 1, 1, -1 });
+            Patterns.Add("Square2", Patterns["Square1"].Mirror);
+            // T
+            Patterns.Add("T1", new Pattern('c', 30, 2, -1));
+            Patterns["T1"].Shape.Add(new List<int> { -1, -1, 0, -1, -1 });
+            Patterns["T1"].Shape.Add(new List<int> { 0, 1, 1, 1, 0 });
+            Patterns["T1"].Shape.Add(new List<int> { -1, -1, 1, -1, -1 });
+            Patterns["T1"].Shape.Add(new List<int> { -1, -1, 1, -1, -1 });
+            Patterns.Add("T2", Patterns["T1"].Mirror);
+            // Z
+            Patterns.Add("Z1", new Pattern('c', 32, 2, -1));
+            Patterns["Z1"].Shape.Add(new List<int> { 0, -1, -1, -1 });
+            Patterns["Z1"].Shape.Add(new List<int> { 0, 1, 1, 0 });
+            Patterns["Z1"].Shape.Add(new List<int> { -1, -1, 1, -1 });
+            Patterns["Z1"].Shape.Add(new List<int> { -1, -1, 1, 1 });
+            Patterns.Add("Z2", Patterns["Z1"].Mirror);
         }
 
         public bool Btwn(int Value, int Min, int Max, bool StrictCheck = false)
@@ -193,7 +394,7 @@ namespace Connect_4
 
         public void Play(int index)
         {
-            Moves++;
+            Moves += index.ToString();
             Case[GetLow(index, Case)][index] = _Turn + 1;
         }
 
@@ -206,6 +407,7 @@ namespace Connect_4
         {
             // Calculate the State & Severity of each column
             St = AIState; Se = AISeverity; Positiveness = 0;
+            CaseCopy(ref _Case, Case);
             CalculateStates();
             AISeverity[4] = (int)((AISeverity[4] + 1) * 1.5);
             // Run the Humanization function
@@ -230,7 +432,6 @@ namespace Connect_4
             while (Calculating) { Thread.Sleep(1); }
             Calculating = true;
             Random RND = new Random(Guid.NewGuid().GetHashCode());
-            CaseCopy(ref _Case, Case);
             // Loops through all columns to calculate the states and severity
             for (int x = 1; x < 8; x++)
             {
@@ -248,7 +449,7 @@ namespace Connect_4
                     if (CheckWin(_Case) == P[1] + 1 && RND.NextDouble() * 100 <= WinChance)
                     {
                         St[x].Add(5);
-                        Se[x] += 50;
+                        Se[x] += 150;
                         Positiveness += Effectiveness[5];
                     }
                     else
@@ -258,7 +459,7 @@ namespace Connect_4
                         if (CheckWin(_Case) == P[0] + 1 && RND.NextDouble() * 100 <= BlockChance)
                         {
                             St[x].Add(6);
-                            Se[x] += 15;
+                            Se[x] += 30;
                             Positiveness += Effectiveness[6];
                         }
                     }
@@ -273,7 +474,7 @@ namespace Connect_4
                         { St[x].Add(1); Se[x] -= 5; Positiveness += Effectiveness[1]; }
                         // In case playing in the column will result in a loss of a possible win
                         if (RND.NextDouble() * 100 <= ThreatChance && CheckThreat(x, P[1], 1))
-                        { St[x].Add(4); Se[x] -= 4; Positiveness += Effectiveness[4]; }
+                        { St[x].Add(4); Se[x] -= 4 - ThreatUsefulness(P[1], x, 1); Positiveness += Effectiveness[4]; }
                     }
                 }
             }
@@ -299,10 +500,10 @@ namespace Connect_4
                     {
                         // In case playing in the column will result in an open possible loss
                         if (RND.NextDouble() * 100 <= ThreatBlockChance && CheckThreat(x, P[0], 2))
-                        { St[x].Add(7); Se[x] -= 2; Positiveness += Effectiveness[7]; }
+                        { St[x].Add(7); Se[x] -= ThreatUsefulness(P[0], x, 2); Positiveness += Effectiveness[7]; }
                         // In case playing in the column will result in a loss of a possible win
                         if (RND.NextDouble() * 100 <= ThreatChance && CheckThreat(x, P[1], 2))
-                        { St[x].Add(8); Se[x] += 2; Positiveness += Effectiveness[8]; }
+                        { St[x].Add(8); Se[x] += 2 + ThreatUsefulness(P[1], x, 2); Positiveness += Effectiveness[8]; }
                     }
 
                     // Checks if after 2 plays, a ThreatBlock will be created(1)
@@ -328,11 +529,26 @@ namespace Connect_4
                     if (RND.NextDouble() * 100 <= StrategicBlockChance && StrategicCheck(x, 0, 2))
                     { St[x].Add(-9); Se[x] += 1; Positiveness += Effectiveness[-9]; }
                 }
+
+                if(HumanizedAI)
+                {
+                    for (int i = 3; i < 7; i++)
+                    {
+                        if (StrategicCheck(x, 0, i))
+                        { St[x].Add(9); Se[x] += 2; Positiveness += Effectiveness[9]; }
+                        if (StrategicCheck(x, 1, i))
+                        { St[x].Add(10); Se[x] += 2; Positiveness += Effectiveness[9]; }
+                    }
+                }
             }
+
+            if(HumanizedAI)
+                Humanize3();
 
             Calculating = false;
         }
 
+        // Checks if every move possible is beneficial to the AI or not
         public void Humanize()
         {
             ResetPlayerStSe();
@@ -366,38 +582,89 @@ namespace Connect_4
             Humanize2();
         }
 
+        // Checks for win/loss outcomes within the next 6 moves
         public void Humanize2()
         {
             int p0 = P[0], p1 = P[1];
-            CaseCopy(ref _Case, Case);
-            List<int> TotMoves = new List<int> { -99, 0, 0, 0, 0, 0, 0, 0 };
+            int TotMoves;
             for (int i = 1; i < 8; i++)
             {
-                List<List<int>> SaveCase = new List<List<int>>();
-                CaseCopy(ref SaveCase, _Case);
+                if (Case[1][i] != 0) continue;
+                CaseCopy(ref _Case, Case);
+                _Case[GetLow(i, _Case)][i] = P[1] + 1;
                 int Winner = 0;
-                var _Turn = this._Turn;
-                while ((Winner = CheckWin(_Case)) == 0 && !Tied && TotMoves[i] <= 5) 
+                TotMoves = 0;
+                var turn = 0;
+                while ((Winner = CheckWin(_Case)) == 0 && TotMoves <= 5) 
                 {
-                    TotMoves[i]++;
-                    if (_Turn == 0)
-                    { St = HumanState; Se = HumanSeverity; P[0] = p0; P[1] = p1; }
+                    TotMoves++;
+                    St = HumanState; Se = HumanSeverity;
+                    if (turn == 0)
+                    { P[0] = p1; P[1] = p0; }
                     else
-                    { St = PlayerState[0]; Se = PlayerSeverity[0]; P[0] = p1; P[1] = p0; }
+                    { P[0] = p0; P[1] = p1; }
                     CalculateStates();
                     if (St.All(x => x.Value.Contains(3))) break;
                     int temp = ChooseColumn();
-                    _Case[GetLow(temp, _Case)][temp] = P[_Turn] + 1;
-                    _Turn = (_Turn == 0) ? 1 : 0;
+                    _Case[GetLow(temp, _Case)][temp] = P[1] + 1;
+                    turn = (turn == 0) ? 1 : 0;
                 }
-                int M = AISeverity.Values.Max(), m = AISeverity.Values.Min();
-                if (Winner == P[0] + 1 && TotMoves[i] > 2)
-                    AISeverity[i] += -5 / Math.Max(1, Math.Max(M, -m)); 
-                else if (Winner == P[1] + 1 && TotMoves[i] > 2)
-                    AISeverity[i] += 5 / Math.Max(1, Math.Max(M, -m)); 
-                CaseCopy(ref _Case, SaveCase);
+                if (Winner == P[0] + 1 && TotMoves > 1)
+                    AISeverity[i] += -15 / TotMoves; 
+                else if (Winner == P[1] + 1 && TotMoves > 1)
+                    AISeverity[i] += 15 / TotMoves;
+                P[0] = p0; P[1] = p1;
             }
             P[0] = p0; P[1] = p1;
+        }
+
+        // Checks for patterns and situations
+        private void Humanize3()
+        {
+            CaseCopy(ref _Case, Case);
+            for (int x = 1; x < 8; x++)
+            {
+                int y = GetLow(x, _Case);
+                _Case[y][x] = P[0] + 1;
+                foreach (Pattern P in Patterns.Values.Where(p => p.PlayerID == P[0] && p.Type == 'c'))
+                {
+                    if (P.Compare(_Case))
+                    {
+                        _Case[y][x] = 0;
+                        if (!P.Compare(_Case))
+                        {
+                            St[x].Add(P.StateID);
+                            Se[x] += P.Severity;
+                            if(LeftIsRed)
+                                Positiveness += P.Effectiveness;
+                            else
+                                Positiveness -= P.Effectiveness;
+                        }
+                        _Case[y][x] = this.P[0] + 1;
+                    }
+                }
+                _Case[y][x] = P[1] + 1;
+                foreach (Pattern P in Patterns.Values.Where(p => p.PlayerID == P[1] && p.Type == 'c'))
+                {
+                    if (P.Compare(_Case))
+                    {
+                        _Case[y][x] = 0;
+                        if (!P.Compare(_Case))
+                        {
+                            St[x].Add(P.StateID);
+                            Se[x] += P.Severity;
+                            if (LeftIsRed)
+                                Positiveness += P.Effectiveness;
+                            else
+                                Positiveness -= P.Effectiveness;
+                        }
+                         _Case[y][x] = this.P[1] + 1;
+                    }
+                }
+                _Case[y][x] = 0;
+                foreach (Pattern P in Patterns.Values.Where(p => p.Type == 's'))
+                { }
+            }
         }
         
         private void CaseCopy(ref List<List<int>> To, List<List<int>> From)
@@ -491,7 +758,18 @@ namespace Connect_4
                     _Case[y][x] = 0;
                 }
             }
-            return output ;
+            if(output > 0 && _Case[1][n] == 0)
+            {
+                _Case[GetLow(n, _Case)][n] = P[0] + 1;
+                if (CheckWin(_Case) == P[0] + 1)
+                {
+                    output++;
+                    if (StrategicAI && (St[n].Contains(1) || St[n].Contains(4)))
+                    { St[n].Add(-1); Se[n] += 2; }
+                }
+                _Case[GetLow(n, _Case)][n] = 0;
+            }
+            return (int)Math.Pow(output, 2) ;
         }
 
         private int CountPossWin(int n)
@@ -513,18 +791,25 @@ namespace Connect_4
                     _Case[y][x] = 0;
                 }
             }
-            return output;
+            if (output > 0 && _Case[1][n] == 0)
+            {
+                _Case[GetLow(n, _Case)][n] = P[1] + 1;
+                if (CheckWin(_Case) == P[0] + 1)
+                {
+                    output++;
+                    if (StrategicAI && (St[n].Contains(1) || St[n].Contains(4)))
+                    { St[n].Add(-5); Se[n] += 3; }
+                }
+                _Case[GetLow(n, _Case)][n] = 0;
+            }
+            return (int)Math.Pow(output, 2);
         }
 
         private int ChooseColumn()
         {
-            int output = new Random().Next(1, 8), Max = Se[1];
-            for (int i = 2; i < 8; i++)
-                if (Se[i] > Max)
-                    Max = Se[i];
-            while (Se[output] != Max)
-            { output = new Random().Next(1, 8); }
-            return output;
+            int Max = Se.Values.Max();
+            var d = Se.Where(x => x.Value == Max);
+            return d.ElementAt(new Random().Next(d.AsEnumerable().Count())).Key;
         }
 
         private bool StrategicCheck(int x, int ID, int Severity)
@@ -545,6 +830,14 @@ namespace Connect_4
                         if (!St[i].Contains((ID == 0) ? 7 : 8) && CheckThreat(i, P[ID], Severity))
                         { _Case[y][x] = 0; return true; }
                     }
+                    else if (CheckThreat(i, P[ID], Severity) && ThreatUsefulness(P[ID], i, Severity) == 2)
+                    {
+                        _Case[y][x] = 0;
+                        if (CheckThreat(i, P[ID], Severity))
+                            _Case[y][x] = P[ID] + 1;
+                        else
+                            return true;
+                    }
                 }
             }
             _Case[y][x] = 0;
@@ -561,6 +854,15 @@ namespace Connect_4
                 PlayerState.Add(new Dictionary<int, List<int>> { { 1, new List<int> { 0 } }, { 2, new List<int> { 0 } }, { 3, new List<int> { 0 } }, { 4, new List<int> { 0 } }, { 5, new List<int> { 0 } }, { 6, new List<int> { 0 } }, { 7, new List<int> { 0 } } });
                 PlayerSeverity.Add(new Dictionary<int, int> { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 7, 0 } });
             }
+        }
+
+        private int ThreatUsefulness(int Pl, int Column, int Layers)
+        {
+            if (!StrategicAI) return 0;
+            int y = GetLow(Column, _Case) - Layers;
+            if ((y % 2 == 0) == (Starter == Pl))
+                return 2;
+            return -2;
         }
 
         public bool CheckThreat(int Column, int Winner, int Layers)
