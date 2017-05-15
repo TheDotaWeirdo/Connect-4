@@ -1344,10 +1344,10 @@ namespace Connect_4
         {
             if (S.Length < 13) return false;
             for (int i = 0; i < S.Length - 1; i++)
-                if (!char.IsDigit(S[i])) return false;
+                if (!char.IsDigit(S[i]) && S[i] != '_') return false;
             for (int i = 4; i < S.Length - 1; i++)
                 if (S[i] == '0' || S[i] == '8' || S[i] == '9') return false;
-            return (S[3] == '0' || S[4] == '1');
+            return (S[3] == '0' || S[3] == '1');
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -1359,6 +1359,8 @@ namespace Connect_4
                     string clip = Clipboard.GetText();
                     if (CheckClipboard(clip))
                     {
+                        if (MG.P[0] == -1)
+                            Color_Select_Red_Click(null, null);
                         if (GameOptions.Visible)
                             Start_Click(null, null);
                         MG._Turn = int.Parse(clip[3].ToString());
