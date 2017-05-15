@@ -36,7 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -92,7 +92,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -116,60 +116,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Blue_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Gold_Blue_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Gold_Red_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Red_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="T_Blue_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="T_Red_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="White_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Large_Blue_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Large_Red_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Large_Gold_Blue_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Large_Gold_Red_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Arrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="T_Large_Blue_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="T_Large_Red_Circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Loading.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Win_Blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Win_Red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Win_Tie.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.2 %28x86 and x64%29</ProductName>
@@ -182,26 +128,53 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Gold_Help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Share.png" />
-    <None Include="Restart_BG.png" />
-    <None Include="Restart.png" />
-    <None Include="Red_Loading.gif" />
-    <None Include="White_Circle_Error.png" />
-    <None Include="Arrow_Blue.gif" />
-    <None Include="Arrow_Red.gif" />
-    <None Include="Connect-4.png" />
-    <None Include="Blue_Loading.gif" />
     <Content Include="Connect-4.ico" />
-    <None Include="Resources\Arrow.bmp" />
-    <None Include="Large_White_Circle.png" />
-    <None Include="Large_Select_Red_Circle.png" />
-    <None Include="Large_Select_Blue_Circle.png" />
+    <None Include="Sounds\Start.wav" />
+    <None Include="Sounds\HelpTic.wav" />
+    <None Include="Sounds\Ans_Yes.wav" />
+    <None Include="Sounds\Ans_No.wav" />
+    <None Include="Images\Win_Tie.png" />
+    <None Include="Images\Win_Red.png" />
+    <None Include="Images\Win_Blue.png" />
+    <None Include="Images\White_Circle_Error.png" />
+    <None Include="Images\White_Circle.png" />
+    <None Include="Images\T_Red_Circle.png" />
+    <None Include="Images\T_Large_Red_Circle.png" />
+    <None Include="Images\T_Large_Blue_Circle.png" />
+    <None Include="Images\T_Blue_Circle.png" />
+    <None Include="Images\Share.png" />
+    <None Include="Images\Restart_BG.png" />
+    <None Include="Images\Restart.png" />
+    <None Include="Images\Red_Loading.gif" />
+    <None Include="Images\Red_Circle.png" />
+    <None Include="Images\Loading.png" />
+    <None Include="Images\Large_White_Circle.png" />
+    <None Include="Images\Large_Select_Red_Circle.png" />
+    <None Include="Images\Large_Select_Blue_Circle.png" />
+    <None Include="Images\Large_Red_Circle.png" />
+    <None Include="Images\Large_Gold_Red_Circle.png" />
+    <None Include="Images\Large_Gold_Blue_Circle.png" />
+    <None Include="Images\Large_Blue_Circle.png" />
+    <None Include="Images\Help.png" />
+    <None Include="Images\Gold_Red_Circle.png" />
+    <None Include="Images\Gold_Help.png" />
+    <None Include="Images\Gold_Blue_Circle.png" />
+    <None Include="Images\Connect-4.png" />
+    <None Include="Images\Blue_Loading.gif" />
+    <None Include="Images\Blue_Circle.png" />
+    <None Include="Images\Arrow_Red.gif" />
+    <None Include="Images\Arrow_Blue.gif" />
+    <None Include="Sounds\Loss.wav" />
+    <None Include="Sounds\Hit_7.wav" />
+    <None Include="Sounds\Hit_6.wav" />
+    <None Include="Sounds\Hit_5.wav" />
+    <None Include="Sounds\Hit_4.wav" />
+    <None Include="Sounds\Hit_3.wav" />
+    <None Include="Sounds\Hit_2.wav" />
+    <None Include="Sounds\Hit_1.wav" />
+    <None Include="Sounds\Win.wav" />
+    <None Include="Sounds\Tie.wav" />
+    <None Include="Images\Exit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

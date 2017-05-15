@@ -47,6 +47,8 @@
             this.Label_Err_Color = new System.Windows.Forms.Label();
             this.button_Start = new System.Windows.Forms.Button();
             this.AIcheckBox = new System.Windows.Forms.CheckBox();
+            this.Color_Select_Blue = new System.Windows.Forms.PictureBox();
+            this.Color_Select_Red = new System.Windows.Forms.PictureBox();
             this.DiffBar = new System.Windows.Forms.TrackBar();
             this.button_Restart = new System.Windows.Forms.Button();
             this.button_Exit = new System.Windows.Forms.Button();
@@ -67,12 +69,9 @@
             this.Restart_PB = new System.Windows.Forms.PictureBox();
             this.Restart_BG_YN = new System.Windows.Forms.PictureBox();
             this.Restart_PB_BG = new System.Windows.Forms.PictureBox();
-            this.Color_Select_Blue = new System.Windows.Forms.PictureBox();
-            this.Color_Select_Red = new System.Windows.Forms.PictureBox();
             this.LoadingBox = new System.Windows.Forms.PictureBox();
             this.TopPicture = new System.Windows.Forms.PictureBox();
-            this.Turn_Right = new System.Windows.Forms.PictureBox();
-            this.Turn_Left = new System.Windows.Forms.PictureBox();
+            this.Turn_Circle = new System.Windows.Forms.PictureBox();
             this.Help_PictureBox = new System.Windows.Forms.PictureBox();
             this.C_2_6 = new System.Windows.Forms.PictureBox();
             this.C_3_6 = new System.Windows.Forms.PictureBox();
@@ -123,17 +122,21 @@
             this.C_3_0 = new System.Windows.Forms.PictureBox();
             this.C_2_0 = new System.Windows.Forms.PictureBox();
             this.C_1_0 = new System.Windows.Forms.PictureBox();
+            this.Exit_PB = new System.Windows.Forms.PictureBox();
+            this.Exit_btn_N = new System.Windows.Forms.Button();
+            this.Exit_btn_Y = new System.Windows.Forms.Button();
+            this.button_Tick = new System.Windows.Forms.Button();
+            this.button_Fall = new System.Windows.Forms.Button();
             this.GameOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_BG_YN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB_BG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Turn_Left)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Turn_Circle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Help_PictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_3_6)).BeginInit();
@@ -184,6 +187,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Exit_PB)).BeginInit();
             this.SuspendLayout();
             // 
             // GameOptions
@@ -208,7 +212,7 @@
             this.GameOptions.Controls.Add(this.Color_Select_Red);
             this.GameOptions.Controls.Add(this.DiffBar);
             this.GameOptions.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameOptions.Location = new System.Drawing.Point(342, 28);
+            this.GameOptions.Location = new System.Drawing.Point(811, 13);
             this.GameOptions.Margin = new System.Windows.Forms.Padding(4);
             this.GameOptions.Name = "GameOptions";
             this.GameOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -372,6 +376,7 @@
             this.FGameCheckBox.TabIndex = 11;
             this.FGameCheckBox.Text = "Fast Game";
             this.FGameCheckBox.UseVisualStyleBackColor = true;
+            this.FGameCheckBox.CheckedChanged += new System.EventHandler(this.FGameCheckBox_CheckedChanged);
             // 
             // Label_Err_Color
             // 
@@ -416,6 +421,30 @@
             this.AIcheckBox.UseVisualStyleBackColor = true;
             this.AIcheckBox.CheckedChanged += new System.EventHandler(this.VsAI_Check);
             // 
+            // Color_Select_Blue
+            // 
+            this.Color_Select_Blue.Image = ((System.Drawing.Image)(resources.GetObject("Color_Select_Blue.Image")));
+            this.Color_Select_Blue.InitialImage = ((System.Drawing.Image)(resources.GetObject("Color_Select_Blue.InitialImage")));
+            this.Color_Select_Blue.Location = new System.Drawing.Point(206, 240);
+            this.Color_Select_Blue.Name = "Color_Select_Blue";
+            this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
+            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Color_Select_Blue.TabIndex = 6;
+            this.Color_Select_Blue.TabStop = false;
+            this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
+            // 
+            // Color_Select_Red
+            // 
+            this.Color_Select_Red.Image = ((System.Drawing.Image)(resources.GetObject("Color_Select_Red.Image")));
+            this.Color_Select_Red.InitialImage = ((System.Drawing.Image)(resources.GetObject("Color_Select_Red.InitialImage")));
+            this.Color_Select_Red.Location = new System.Drawing.Point(63, 240);
+            this.Color_Select_Red.Name = "Color_Select_Red";
+            this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
+            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Color_Select_Red.TabIndex = 5;
+            this.Color_Select_Red.TabStop = false;
+            this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
+            // 
             // DiffBar
             // 
             this.DiffBar.LargeChange = 25;
@@ -439,7 +468,7 @@
             this.button_Restart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Restart.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Restart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
-            this.button_Restart.Location = new System.Drawing.Point(75, 184);
+            this.button_Restart.Location = new System.Drawing.Point(403, 393);
             this.button_Restart.Name = "button_Restart";
             this.button_Restart.Size = new System.Drawing.Size(102, 43);
             this.button_Restart.TabIndex = 10;
@@ -457,7 +486,7 @@
             this.button_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Exit.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Exit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
-            this.button_Exit.Location = new System.Drawing.Point(233, 183);
+            this.button_Exit.Location = new System.Drawing.Point(548, 393);
             this.button_Exit.Name = "button_Exit";
             this.button_Exit.Size = new System.Drawing.Size(102, 43);
             this.button_Exit.TabIndex = 58;
@@ -470,7 +499,7 @@
             // 
             this.label_Help.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Help.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
-            this.label_Help.Location = new System.Drawing.Point(46, 500);
+            this.label_Help.Location = new System.Drawing.Point(51, 550);
             this.label_Help.Name = "label_Help";
             this.label_Help.Size = new System.Drawing.Size(354, 52);
             this.label_Help.TabIndex = 60;
@@ -621,7 +650,7 @@
             this.Restart_btn_N.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Restart_btn_N.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Restart_btn_N.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
-            this.Restart_btn_N.Location = new System.Drawing.Point(237, 339);
+            this.Restart_btn_N.Location = new System.Drawing.Point(691, 335);
             this.Restart_btn_N.Name = "Restart_btn_N";
             this.Restart_btn_N.Size = new System.Drawing.Size(102, 43);
             this.Restart_btn_N.TabIndex = 74;
@@ -639,7 +668,7 @@
             this.Restart_btn_Y.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Restart_btn_Y.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Restart_btn_Y.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
-            this.Restart_btn_Y.Location = new System.Drawing.Point(72, 339);
+            this.Restart_btn_Y.Location = new System.Drawing.Point(592, 335);
             this.Restart_btn_Y.Name = "Restart_btn_Y";
             this.Restart_btn_Y.Size = new System.Drawing.Size(102, 43);
             this.Restart_btn_Y.TabIndex = 73;
@@ -651,7 +680,7 @@
             // button_Share
             // 
             this.button_Share.BackColor = System.Drawing.Color.White;
-            this.button_Share.BackgroundImage = global::Connect_4.Properties.Resources.Share;
+            this.button_Share.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_Share.BackgroundImage")));
             this.button_Share.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button_Share.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
             this.button_Share.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(135)))), ((int)(((byte)(21)))));
@@ -659,7 +688,7 @@
             this.button_Share.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Share.Font = new System.Drawing.Font("Century Gothic", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Share.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
-            this.button_Share.Location = new System.Drawing.Point(183, 183);
+            this.button_Share.Location = new System.Drawing.Point(511, 396);
             this.button_Share.Name = "button_Share";
             this.button_Share.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.button_Share.Size = new System.Drawing.Size(31, 35);
@@ -667,13 +696,13 @@
             this.button_Share.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_Share.UseVisualStyleBackColor = false;
             this.button_Share.Visible = false;
-            this.button_Share.Click += new System.EventHandler(this.button_Share_Click);
+            this.button_Share.Click += new System.EventHandler(this.Button_Share_Click);
             // 
             // Restart_PB
             // 
             this.Restart_PB.BackColor = System.Drawing.Color.White;
-            this.Restart_PB.Image = global::Connect_4.Properties.Resources.Restart;
-            this.Restart_PB.Location = new System.Drawing.Point(12, 275);
+            this.Restart_PB.Image = ((System.Drawing.Image)(resources.GetObject("Restart_PB.Image")));
+            this.Restart_PB.Location = new System.Drawing.Point(403, 210);
             this.Restart_PB.Name = "Restart_PB";
             this.Restart_PB.Size = new System.Drawing.Size(390, 58);
             this.Restart_PB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -684,9 +713,9 @@
             // Restart_BG_YN
             // 
             this.Restart_BG_YN.BackColor = System.Drawing.Color.White;
-            this.Restart_BG_YN.BackgroundImage = global::Connect_4.Properties.Resources.Restart_BG;
+            this.Restart_BG_YN.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Restart_BG_YN.BackgroundImage")));
             this.Restart_BG_YN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Restart_BG_YN.Location = new System.Drawing.Point(12, 328);
+            this.Restart_BG_YN.Location = new System.Drawing.Point(403, 144);
             this.Restart_BG_YN.Name = "Restart_BG_YN";
             this.Restart_BG_YN.Size = new System.Drawing.Size(388, 60);
             this.Restart_BG_YN.TabIndex = 72;
@@ -696,9 +725,9 @@
             // Restart_PB_BG
             // 
             this.Restart_PB_BG.BackColor = System.Drawing.Color.White;
-            this.Restart_PB_BG.BackgroundImage = global::Connect_4.Properties.Resources.Restart_BG;
+            this.Restart_PB_BG.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Restart_PB_BG.BackgroundImage")));
             this.Restart_PB_BG.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Restart_PB_BG.Location = new System.Drawing.Point(7, 282);
+            this.Restart_PB_BG.Location = new System.Drawing.Point(403, 77);
             this.Restart_PB_BG.Name = "Restart_PB_BG";
             this.Restart_PB_BG.Size = new System.Drawing.Size(390, 58);
             this.Restart_PB_BG.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -706,34 +735,10 @@
             this.Restart_PB_BG.TabStop = false;
             this.Restart_PB_BG.Visible = false;
             // 
-            // Color_Select_Blue
-            // 
-            this.Color_Select_Blue.Image = global::Connect_4.Properties.Resources.Large_Blue_Circle;
-            this.Color_Select_Blue.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Blue.Location = new System.Drawing.Point(206, 240);
-            this.Color_Select_Blue.Name = "Color_Select_Blue";
-            this.Color_Select_Blue.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Color_Select_Blue.TabIndex = 6;
-            this.Color_Select_Blue.TabStop = false;
-            this.Color_Select_Blue.Click += new System.EventHandler(this.Color_Select_Blue_Click);
-            // 
-            // Color_Select_Red
-            // 
-            this.Color_Select_Red.Image = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Red.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Color_Select_Red.Location = new System.Drawing.Point(63, 240);
-            this.Color_Select_Red.Name = "Color_Select_Red";
-            this.Color_Select_Red.Size = new System.Drawing.Size(120, 120);
-            this.Color_Select_Red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Color_Select_Red.TabIndex = 5;
-            this.Color_Select_Red.TabStop = false;
-            this.Color_Select_Red.Click += new System.EventHandler(this.Color_Select_Red_Click);
-            // 
             // LoadingBox
             // 
-            this.LoadingBox.Image = global::Connect_4.Properties.Resources.Loading;
-            this.LoadingBox.Location = new System.Drawing.Point(10, 109);
+            this.LoadingBox.Image = ((System.Drawing.Image)(resources.GetObject("LoadingBox.Image")));
+            this.LoadingBox.Location = new System.Drawing.Point(403, 3);
             this.LoadingBox.Name = "LoadingBox";
             this.LoadingBox.Size = new System.Drawing.Size(390, 68);
             this.LoadingBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -744,7 +749,7 @@
             // TopPicture
             // 
             this.TopPicture.Enabled = false;
-            this.TopPicture.Image = global::Connect_4.Properties.Resources.Connect_4;
+            this.TopPicture.Image = ((System.Drawing.Image)(resources.GetObject("TopPicture.Image")));
             this.TopPicture.Location = new System.Drawing.Point(12, 3);
             this.TopPicture.Name = "TopPicture";
             this.TopPicture.Size = new System.Drawing.Size(385, 100);
@@ -753,34 +758,22 @@
             this.TopPicture.TabStop = false;
             this.TopPicture.Click += new System.EventHandler(this.Button_Restart_Click);
             // 
-            // Turn_Right
+            // Turn_Circle
             // 
-            this.Turn_Right.Image = global::Connect_4.Properties.Resources.T_Large_Blue_Circle;
-            this.Turn_Right.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Turn_Right.Location = new System.Drawing.Point(233, 140);
-            this.Turn_Right.Name = "Turn_Right";
-            this.Turn_Right.Size = new System.Drawing.Size(64, 64);
-            this.Turn_Right.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Turn_Right.TabIndex = 11;
-            this.Turn_Right.TabStop = false;
-            this.Turn_Right.Visible = false;
-            // 
-            // Turn_Left
-            // 
-            this.Turn_Left.Image = global::Connect_4.Properties.Resources.Large_Gold_Red_Circle;
-            this.Turn_Left.InitialImage = global::Connect_4.Properties.Resources.Large_Red_Circle;
-            this.Turn_Left.Location = new System.Drawing.Point(113, 140);
-            this.Turn_Left.Name = "Turn_Left";
-            this.Turn_Left.Size = new System.Drawing.Size(64, 64);
-            this.Turn_Left.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Turn_Left.TabIndex = 10;
-            this.Turn_Left.TabStop = false;
-            this.Turn_Left.Visible = false;
+            this.Turn_Circle.Image = ((System.Drawing.Image)(resources.GetObject("Turn_Circle.Image")));
+            this.Turn_Circle.InitialImage = ((System.Drawing.Image)(resources.GetObject("Turn_Circle.InitialImage")));
+            this.Turn_Circle.Location = new System.Drawing.Point(691, 396);
+            this.Turn_Circle.Name = "Turn_Circle";
+            this.Turn_Circle.Size = new System.Drawing.Size(64, 64);
+            this.Turn_Circle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Turn_Circle.TabIndex = 10;
+            this.Turn_Circle.TabStop = false;
+            this.Turn_Circle.Visible = false;
             // 
             // Help_PictureBox
             // 
-            this.Help_PictureBox.Image = global::Connect_4.Properties.Resources.Gold_Help;
-            this.Help_PictureBox.Location = new System.Drawing.Point(10, 511);
+            this.Help_PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("Help_PictureBox.Image")));
+            this.Help_PictureBox.Location = new System.Drawing.Point(12, 560);
             this.Help_PictureBox.Name = "Help_PictureBox";
             this.Help_PictureBox.Size = new System.Drawing.Size(30, 30);
             this.Help_PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -793,7 +786,7 @@
             // C_2_6
             // 
             this.C_2_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_6.ErrorImage")));
-            this.C_2_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_6.Image = ((System.Drawing.Image)(resources.GetObject("C_2_6.Image")));
             this.C_2_6.Location = new System.Drawing.Point(110, 453);
             this.C_2_6.Name = "C_2_6";
             this.C_2_6.Size = new System.Drawing.Size(39, 39);
@@ -805,7 +798,7 @@
             // C_3_6
             // 
             this.C_3_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_6.ErrorImage")));
-            this.C_3_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_6.Image = ((System.Drawing.Image)(resources.GetObject("C_3_6.Image")));
             this.C_3_6.Location = new System.Drawing.Point(148, 453);
             this.C_3_6.Name = "C_3_6";
             this.C_3_6.Size = new System.Drawing.Size(39, 39);
@@ -817,7 +810,7 @@
             // C_4_6
             // 
             this.C_4_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_6.ErrorImage")));
-            this.C_4_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_6.Image = ((System.Drawing.Image)(resources.GetObject("C_4_6.Image")));
             this.C_4_6.Location = new System.Drawing.Point(186, 453);
             this.C_4_6.Name = "C_4_6";
             this.C_4_6.Size = new System.Drawing.Size(39, 39);
@@ -829,7 +822,7 @@
             // C_5_6
             // 
             this.C_5_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_6.ErrorImage")));
-            this.C_5_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_6.Image = ((System.Drawing.Image)(resources.GetObject("C_5_6.Image")));
             this.C_5_6.Location = new System.Drawing.Point(224, 453);
             this.C_5_6.Name = "C_5_6";
             this.C_5_6.Size = new System.Drawing.Size(39, 39);
@@ -841,7 +834,7 @@
             // C_6_6
             // 
             this.C_6_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_6.ErrorImage")));
-            this.C_6_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_6.Image = ((System.Drawing.Image)(resources.GetObject("C_6_6.Image")));
             this.C_6_6.Location = new System.Drawing.Point(262, 453);
             this.C_6_6.Name = "C_6_6";
             this.C_6_6.Size = new System.Drawing.Size(39, 39);
@@ -853,7 +846,7 @@
             // C_7_6
             // 
             this.C_7_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_6.ErrorImage")));
-            this.C_7_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_6.Image = ((System.Drawing.Image)(resources.GetObject("C_7_6.Image")));
             this.C_7_6.Location = new System.Drawing.Point(300, 453);
             this.C_7_6.Name = "C_7_6";
             this.C_7_6.Size = new System.Drawing.Size(39, 39);
@@ -865,7 +858,7 @@
             // C_1_6
             // 
             this.C_1_6.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_6.ErrorImage")));
-            this.C_1_6.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_6.Image = ((System.Drawing.Image)(resources.GetObject("C_1_6.Image")));
             this.C_1_6.Location = new System.Drawing.Point(72, 453);
             this.C_1_6.Name = "C_1_6";
             this.C_1_6.Size = new System.Drawing.Size(39, 39);
@@ -877,7 +870,7 @@
             // C_2_5
             // 
             this.C_2_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_5.ErrorImage")));
-            this.C_2_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_5.Image = ((System.Drawing.Image)(resources.GetObject("C_2_5.Image")));
             this.C_2_5.Location = new System.Drawing.Point(110, 415);
             this.C_2_5.Name = "C_2_5";
             this.C_2_5.Size = new System.Drawing.Size(39, 39);
@@ -889,7 +882,7 @@
             // C_3_5
             // 
             this.C_3_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_5.ErrorImage")));
-            this.C_3_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_5.Image = ((System.Drawing.Image)(resources.GetObject("C_3_5.Image")));
             this.C_3_5.Location = new System.Drawing.Point(148, 415);
             this.C_3_5.Name = "C_3_5";
             this.C_3_5.Size = new System.Drawing.Size(39, 39);
@@ -901,7 +894,7 @@
             // C_4_5
             // 
             this.C_4_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_5.ErrorImage")));
-            this.C_4_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_5.Image = ((System.Drawing.Image)(resources.GetObject("C_4_5.Image")));
             this.C_4_5.Location = new System.Drawing.Point(186, 415);
             this.C_4_5.Name = "C_4_5";
             this.C_4_5.Size = new System.Drawing.Size(39, 39);
@@ -913,7 +906,7 @@
             // C_5_5
             // 
             this.C_5_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_5.ErrorImage")));
-            this.C_5_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_5.Image = ((System.Drawing.Image)(resources.GetObject("C_5_5.Image")));
             this.C_5_5.Location = new System.Drawing.Point(224, 415);
             this.C_5_5.Name = "C_5_5";
             this.C_5_5.Size = new System.Drawing.Size(39, 39);
@@ -925,7 +918,7 @@
             // C_6_5
             // 
             this.C_6_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_5.ErrorImage")));
-            this.C_6_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_5.Image = ((System.Drawing.Image)(resources.GetObject("C_6_5.Image")));
             this.C_6_5.Location = new System.Drawing.Point(262, 415);
             this.C_6_5.Name = "C_6_5";
             this.C_6_5.Size = new System.Drawing.Size(39, 39);
@@ -937,7 +930,7 @@
             // C_7_5
             // 
             this.C_7_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_5.ErrorImage")));
-            this.C_7_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_5.Image = ((System.Drawing.Image)(resources.GetObject("C_7_5.Image")));
             this.C_7_5.Location = new System.Drawing.Point(300, 415);
             this.C_7_5.Name = "C_7_5";
             this.C_7_5.Size = new System.Drawing.Size(39, 39);
@@ -949,7 +942,7 @@
             // C_1_5
             // 
             this.C_1_5.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_5.ErrorImage")));
-            this.C_1_5.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_5.Image = ((System.Drawing.Image)(resources.GetObject("C_1_5.Image")));
             this.C_1_5.Location = new System.Drawing.Point(72, 415);
             this.C_1_5.Name = "C_1_5";
             this.C_1_5.Size = new System.Drawing.Size(39, 39);
@@ -961,7 +954,7 @@
             // C_2_4
             // 
             this.C_2_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_4.ErrorImage")));
-            this.C_2_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_4.Image = ((System.Drawing.Image)(resources.GetObject("C_2_4.Image")));
             this.C_2_4.Location = new System.Drawing.Point(110, 377);
             this.C_2_4.Name = "C_2_4";
             this.C_2_4.Size = new System.Drawing.Size(39, 39);
@@ -973,7 +966,7 @@
             // C_3_4
             // 
             this.C_3_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_4.ErrorImage")));
-            this.C_3_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_4.Image = ((System.Drawing.Image)(resources.GetObject("C_3_4.Image")));
             this.C_3_4.Location = new System.Drawing.Point(148, 377);
             this.C_3_4.Name = "C_3_4";
             this.C_3_4.Size = new System.Drawing.Size(39, 39);
@@ -985,7 +978,7 @@
             // C_4_4
             // 
             this.C_4_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_4.ErrorImage")));
-            this.C_4_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_4.Image = ((System.Drawing.Image)(resources.GetObject("C_4_4.Image")));
             this.C_4_4.Location = new System.Drawing.Point(186, 377);
             this.C_4_4.Name = "C_4_4";
             this.C_4_4.Size = new System.Drawing.Size(39, 39);
@@ -997,7 +990,7 @@
             // C_5_4
             // 
             this.C_5_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_4.ErrorImage")));
-            this.C_5_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_4.Image = ((System.Drawing.Image)(resources.GetObject("C_5_4.Image")));
             this.C_5_4.Location = new System.Drawing.Point(224, 377);
             this.C_5_4.Name = "C_5_4";
             this.C_5_4.Size = new System.Drawing.Size(39, 39);
@@ -1009,7 +1002,7 @@
             // C_6_4
             // 
             this.C_6_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_4.ErrorImage")));
-            this.C_6_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_4.Image = ((System.Drawing.Image)(resources.GetObject("C_6_4.Image")));
             this.C_6_4.Location = new System.Drawing.Point(262, 377);
             this.C_6_4.Name = "C_6_4";
             this.C_6_4.Size = new System.Drawing.Size(39, 39);
@@ -1021,7 +1014,7 @@
             // C_7_4
             // 
             this.C_7_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_4.ErrorImage")));
-            this.C_7_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_4.Image = ((System.Drawing.Image)(resources.GetObject("C_7_4.Image")));
             this.C_7_4.Location = new System.Drawing.Point(300, 377);
             this.C_7_4.Name = "C_7_4";
             this.C_7_4.Size = new System.Drawing.Size(39, 39);
@@ -1033,7 +1026,7 @@
             // C_1_4
             // 
             this.C_1_4.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_4.ErrorImage")));
-            this.C_1_4.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_4.Image = ((System.Drawing.Image)(resources.GetObject("C_1_4.Image")));
             this.C_1_4.Location = new System.Drawing.Point(72, 377);
             this.C_1_4.Name = "C_1_4";
             this.C_1_4.Size = new System.Drawing.Size(39, 39);
@@ -1045,7 +1038,7 @@
             // C_2_3
             // 
             this.C_2_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_3.ErrorImage")));
-            this.C_2_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_3.Image = ((System.Drawing.Image)(resources.GetObject("C_2_3.Image")));
             this.C_2_3.Location = new System.Drawing.Point(110, 339);
             this.C_2_3.Name = "C_2_3";
             this.C_2_3.Size = new System.Drawing.Size(39, 39);
@@ -1057,7 +1050,7 @@
             // C_3_3
             // 
             this.C_3_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_3.ErrorImage")));
-            this.C_3_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_3.Image = ((System.Drawing.Image)(resources.GetObject("C_3_3.Image")));
             this.C_3_3.Location = new System.Drawing.Point(148, 339);
             this.C_3_3.Name = "C_3_3";
             this.C_3_3.Size = new System.Drawing.Size(39, 39);
@@ -1069,7 +1062,7 @@
             // C_4_3
             // 
             this.C_4_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_3.ErrorImage")));
-            this.C_4_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_3.Image = ((System.Drawing.Image)(resources.GetObject("C_4_3.Image")));
             this.C_4_3.Location = new System.Drawing.Point(186, 339);
             this.C_4_3.Name = "C_4_3";
             this.C_4_3.Size = new System.Drawing.Size(39, 39);
@@ -1081,7 +1074,7 @@
             // C_5_3
             // 
             this.C_5_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_3.ErrorImage")));
-            this.C_5_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_3.Image = ((System.Drawing.Image)(resources.GetObject("C_5_3.Image")));
             this.C_5_3.Location = new System.Drawing.Point(224, 339);
             this.C_5_3.Name = "C_5_3";
             this.C_5_3.Size = new System.Drawing.Size(39, 39);
@@ -1093,7 +1086,7 @@
             // C_6_3
             // 
             this.C_6_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_3.ErrorImage")));
-            this.C_6_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_3.Image = ((System.Drawing.Image)(resources.GetObject("C_6_3.Image")));
             this.C_6_3.Location = new System.Drawing.Point(262, 339);
             this.C_6_3.Name = "C_6_3";
             this.C_6_3.Size = new System.Drawing.Size(39, 39);
@@ -1105,7 +1098,7 @@
             // C_7_3
             // 
             this.C_7_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_3.ErrorImage")));
-            this.C_7_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_3.Image = ((System.Drawing.Image)(resources.GetObject("C_7_3.Image")));
             this.C_7_3.Location = new System.Drawing.Point(300, 339);
             this.C_7_3.Name = "C_7_3";
             this.C_7_3.Size = new System.Drawing.Size(39, 39);
@@ -1117,7 +1110,7 @@
             // C_1_3
             // 
             this.C_1_3.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_3.ErrorImage")));
-            this.C_1_3.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_3.Image = ((System.Drawing.Image)(resources.GetObject("C_1_3.Image")));
             this.C_1_3.Location = new System.Drawing.Point(72, 339);
             this.C_1_3.Name = "C_1_3";
             this.C_1_3.Size = new System.Drawing.Size(39, 39);
@@ -1129,7 +1122,7 @@
             // C_2_2
             // 
             this.C_2_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_2.ErrorImage")));
-            this.C_2_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_2.Image = ((System.Drawing.Image)(resources.GetObject("C_2_2.Image")));
             this.C_2_2.Location = new System.Drawing.Point(110, 301);
             this.C_2_2.Name = "C_2_2";
             this.C_2_2.Size = new System.Drawing.Size(39, 39);
@@ -1141,7 +1134,7 @@
             // C_3_2
             // 
             this.C_3_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_2.ErrorImage")));
-            this.C_3_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_2.Image = ((System.Drawing.Image)(resources.GetObject("C_3_2.Image")));
             this.C_3_2.Location = new System.Drawing.Point(148, 301);
             this.C_3_2.Name = "C_3_2";
             this.C_3_2.Size = new System.Drawing.Size(39, 39);
@@ -1153,7 +1146,7 @@
             // C_4_2
             // 
             this.C_4_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_2.ErrorImage")));
-            this.C_4_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_2.Image = ((System.Drawing.Image)(resources.GetObject("C_4_2.Image")));
             this.C_4_2.Location = new System.Drawing.Point(186, 301);
             this.C_4_2.Name = "C_4_2";
             this.C_4_2.Size = new System.Drawing.Size(39, 39);
@@ -1165,7 +1158,7 @@
             // C_5_2
             // 
             this.C_5_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_2.ErrorImage")));
-            this.C_5_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_2.Image = ((System.Drawing.Image)(resources.GetObject("C_5_2.Image")));
             this.C_5_2.Location = new System.Drawing.Point(224, 301);
             this.C_5_2.Name = "C_5_2";
             this.C_5_2.Size = new System.Drawing.Size(39, 39);
@@ -1177,7 +1170,7 @@
             // C_6_2
             // 
             this.C_6_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_2.ErrorImage")));
-            this.C_6_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_2.Image = ((System.Drawing.Image)(resources.GetObject("C_6_2.Image")));
             this.C_6_2.Location = new System.Drawing.Point(262, 301);
             this.C_6_2.Name = "C_6_2";
             this.C_6_2.Size = new System.Drawing.Size(39, 39);
@@ -1189,7 +1182,7 @@
             // C_7_2
             // 
             this.C_7_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_2.ErrorImage")));
-            this.C_7_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_2.Image = ((System.Drawing.Image)(resources.GetObject("C_7_2.Image")));
             this.C_7_2.Location = new System.Drawing.Point(300, 301);
             this.C_7_2.Name = "C_7_2";
             this.C_7_2.Size = new System.Drawing.Size(39, 39);
@@ -1201,7 +1194,7 @@
             // C_1_2
             // 
             this.C_1_2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_2.ErrorImage")));
-            this.C_1_2.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_2.Image = ((System.Drawing.Image)(resources.GetObject("C_1_2.Image")));
             this.C_1_2.Location = new System.Drawing.Point(72, 301);
             this.C_1_2.Name = "C_1_2";
             this.C_1_2.Size = new System.Drawing.Size(39, 39);
@@ -1213,7 +1206,7 @@
             // C_2_1
             // 
             this.C_2_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_2_1.ErrorImage")));
-            this.C_2_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_2_1.Image = ((System.Drawing.Image)(resources.GetObject("C_2_1.Image")));
             this.C_2_1.Location = new System.Drawing.Point(110, 263);
             this.C_2_1.Name = "C_2_1";
             this.C_2_1.Size = new System.Drawing.Size(39, 39);
@@ -1225,7 +1218,7 @@
             // C_3_1
             // 
             this.C_3_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_3_1.ErrorImage")));
-            this.C_3_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_3_1.Image = ((System.Drawing.Image)(resources.GetObject("C_3_1.Image")));
             this.C_3_1.Location = new System.Drawing.Point(148, 263);
             this.C_3_1.Name = "C_3_1";
             this.C_3_1.Size = new System.Drawing.Size(39, 39);
@@ -1237,7 +1230,7 @@
             // C_4_1
             // 
             this.C_4_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_4_1.ErrorImage")));
-            this.C_4_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_4_1.Image = ((System.Drawing.Image)(resources.GetObject("C_4_1.Image")));
             this.C_4_1.Location = new System.Drawing.Point(186, 263);
             this.C_4_1.Name = "C_4_1";
             this.C_4_1.Size = new System.Drawing.Size(39, 39);
@@ -1249,7 +1242,7 @@
             // C_5_1
             // 
             this.C_5_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_5_1.ErrorImage")));
-            this.C_5_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_5_1.Image = ((System.Drawing.Image)(resources.GetObject("C_5_1.Image")));
             this.C_5_1.Location = new System.Drawing.Point(224, 263);
             this.C_5_1.Name = "C_5_1";
             this.C_5_1.Size = new System.Drawing.Size(39, 39);
@@ -1261,7 +1254,7 @@
             // C_6_1
             // 
             this.C_6_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_6_1.ErrorImage")));
-            this.C_6_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_6_1.Image = ((System.Drawing.Image)(resources.GetObject("C_6_1.Image")));
             this.C_6_1.Location = new System.Drawing.Point(262, 263);
             this.C_6_1.Name = "C_6_1";
             this.C_6_1.Size = new System.Drawing.Size(39, 39);
@@ -1273,7 +1266,7 @@
             // C_7_1
             // 
             this.C_7_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_7_1.ErrorImage")));
-            this.C_7_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_7_1.Image = ((System.Drawing.Image)(resources.GetObject("C_7_1.Image")));
             this.C_7_1.Location = new System.Drawing.Point(300, 263);
             this.C_7_1.Name = "C_7_1";
             this.C_7_1.Size = new System.Drawing.Size(39, 39);
@@ -1285,7 +1278,7 @@
             // C_1_1
             // 
             this.C_1_1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("C_1_1.ErrorImage")));
-            this.C_1_1.Image = global::Connect_4.Properties.Resources.White_Circle;
+            this.C_1_1.Image = ((System.Drawing.Image)(resources.GetObject("C_1_1.Image")));
             this.C_1_1.Location = new System.Drawing.Point(72, 263);
             this.C_1_1.Name = "C_1_1";
             this.C_1_1.Size = new System.Drawing.Size(39, 39);
@@ -1299,7 +1292,7 @@
             // 
             // C_7_0
             // 
-            this.C_7_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_7_0.Image = ((System.Drawing.Image)(resources.GetObject("C_7_0.Image")));
             this.C_7_0.Location = new System.Drawing.Point(300, 225);
             this.C_7_0.Name = "C_7_0";
             this.C_7_0.Size = new System.Drawing.Size(39, 39);
@@ -1310,7 +1303,7 @@
             // 
             // C_6_0
             // 
-            this.C_6_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_6_0.Image = ((System.Drawing.Image)(resources.GetObject("C_6_0.Image")));
             this.C_6_0.Location = new System.Drawing.Point(262, 225);
             this.C_6_0.Name = "C_6_0";
             this.C_6_0.Size = new System.Drawing.Size(39, 39);
@@ -1321,7 +1314,7 @@
             // 
             // C_5_0
             // 
-            this.C_5_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_5_0.Image = ((System.Drawing.Image)(resources.GetObject("C_5_0.Image")));
             this.C_5_0.Location = new System.Drawing.Point(224, 225);
             this.C_5_0.Name = "C_5_0";
             this.C_5_0.Size = new System.Drawing.Size(39, 39);
@@ -1332,7 +1325,7 @@
             // 
             // C_4_0
             // 
-            this.C_4_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_4_0.Image = ((System.Drawing.Image)(resources.GetObject("C_4_0.Image")));
             this.C_4_0.Location = new System.Drawing.Point(186, 225);
             this.C_4_0.Name = "C_4_0";
             this.C_4_0.Size = new System.Drawing.Size(39, 39);
@@ -1343,7 +1336,7 @@
             // 
             // C_3_0
             // 
-            this.C_3_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_3_0.Image = ((System.Drawing.Image)(resources.GetObject("C_3_0.Image")));
             this.C_3_0.Location = new System.Drawing.Point(148, 225);
             this.C_3_0.Name = "C_3_0";
             this.C_3_0.Size = new System.Drawing.Size(39, 39);
@@ -1354,7 +1347,7 @@
             // 
             // C_2_0
             // 
-            this.C_2_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_2_0.Image = ((System.Drawing.Image)(resources.GetObject("C_2_0.Image")));
             this.C_2_0.Location = new System.Drawing.Point(110, 225);
             this.C_2_0.Name = "C_2_0";
             this.C_2_0.Size = new System.Drawing.Size(39, 39);
@@ -1365,7 +1358,7 @@
             // 
             // C_1_0
             // 
-            this.C_1_0.Image = global::Connect_4.Properties.Resources.Arrow_Red;
+            this.C_1_0.Image = ((System.Drawing.Image)(resources.GetObject("C_1_0.Image")));
             this.C_1_0.Location = new System.Drawing.Point(72, 225);
             this.C_1_0.Name = "C_1_0";
             this.C_1_0.Size = new System.Drawing.Size(39, 39);
@@ -1374,12 +1367,99 @@
             this.C_1_0.TabStop = false;
             this.C_1_0.Visible = false;
             // 
+            // Exit_PB
+            // 
+            this.Exit_PB.BackColor = System.Drawing.Color.White;
+            this.Exit_PB.Image = ((System.Drawing.Image)(resources.GetObject("Exit_PB.Image")));
+            this.Exit_PB.Location = new System.Drawing.Point(403, 274);
+            this.Exit_PB.Name = "Exit_PB";
+            this.Exit_PB.Size = new System.Drawing.Size(390, 58);
+            this.Exit_PB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Exit_PB.TabIndex = 79;
+            this.Exit_PB.TabStop = false;
+            this.Exit_PB.Visible = false;
+            // 
+            // Exit_btn_N
+            // 
+            this.Exit_btn_N.BackColor = System.Drawing.Color.White;
+            this.Exit_btn_N.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
+            this.Exit_btn_N.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.Exit_btn_N.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(224)))), ((int)(((byte)(227)))));
+            this.Exit_btn_N.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Exit_btn_N.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit_btn_N.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
+            this.Exit_btn_N.Location = new System.Drawing.Point(484, 335);
+            this.Exit_btn_N.Name = "Exit_btn_N";
+            this.Exit_btn_N.Size = new System.Drawing.Size(102, 43);
+            this.Exit_btn_N.TabIndex = 78;
+            this.Exit_btn_N.Text = "No";
+            this.Exit_btn_N.UseVisualStyleBackColor = false;
+            this.Exit_btn_N.Visible = false;
+            this.Exit_btn_N.Click += new System.EventHandler(this.Exit_btn_N_Click);
+            // 
+            // Exit_btn_Y
+            // 
+            this.Exit_btn_Y.BackColor = System.Drawing.Color.White;
+            this.Exit_btn_Y.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
+            this.Exit_btn_Y.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.Exit_btn_Y.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(234)))), ((int)(((byte)(246)))));
+            this.Exit_btn_Y.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Exit_btn_Y.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit_btn_Y.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
+            this.Exit_btn_Y.Location = new System.Drawing.Point(403, 335);
+            this.Exit_btn_Y.Name = "Exit_btn_Y";
+            this.Exit_btn_Y.Size = new System.Drawing.Size(102, 43);
+            this.Exit_btn_Y.TabIndex = 77;
+            this.Exit_btn_Y.Text = "Yes";
+            this.Exit_btn_Y.UseVisualStyleBackColor = false;
+            this.Exit_btn_Y.Visible = false;
+            this.Exit_btn_Y.Click += new System.EventHandler(this.Exit_btn_Y_Click);
+            // 
+            // button_Tick
+            // 
+            this.button_Tick.BackColor = System.Drawing.Color.White;
+            this.button_Tick.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
+            this.button_Tick.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.button_Tick.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(224)))), ((int)(((byte)(227)))));
+            this.button_Tick.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Tick.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Tick.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(46)))), ((int)(((byte)(68)))));
+            this.button_Tick.Location = new System.Drawing.Point(548, 442);
+            this.button_Tick.Name = "button_Tick";
+            this.button_Tick.Size = new System.Drawing.Size(102, 43);
+            this.button_Tick.TabIndex = 81;
+            this.button_Tick.Text = "Tick";
+            this.button_Tick.UseVisualStyleBackColor = false;
+            this.button_Tick.Visible = false;
+            this.button_Tick.Click += new System.EventHandler(this.Button_Tick_Click);
+            // 
+            // button_Fall
+            // 
+            this.button_Fall.BackColor = System.Drawing.Color.White;
+            this.button_Fall.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
+            this.button_Fall.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(194)))), ((int)(((byte)(65)))));
+            this.button_Fall.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(234)))), ((int)(((byte)(246)))));
+            this.button_Fall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Fall.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Fall.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(172)))), ((int)(((byte)(238)))));
+            this.button_Fall.Location = new System.Drawing.Point(403, 442);
+            this.button_Fall.Name = "button_Fall";
+            this.button_Fall.Size = new System.Drawing.Size(102, 43);
+            this.button_Fall.TabIndex = 80;
+            this.button_Fall.Text = "Fall";
+            this.button_Fall.UseVisualStyleBackColor = false;
+            this.button_Fall.Visible = false;
+            this.button_Fall.Click += new System.EventHandler(this.Button_Fall_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(417, 611);
+            this.Controls.Add(this.Exit_PB);
+            this.Controls.Add(this.Exit_btn_N);
+            this.Controls.Add(this.Exit_btn_Y);
             this.Controls.Add(this.button_Share);
             this.Controls.Add(this.Restart_PB);
             this.Controls.Add(this.Restart_btn_N);
@@ -1392,8 +1472,7 @@
             this.Controls.Add(this.DebugStateButton);
             this.Controls.Add(this.DebugAI_CheckBox);
             this.Controls.Add(this.TopPicture);
-            this.Controls.Add(this.Turn_Right);
-            this.Controls.Add(this.Turn_Left);
+            this.Controls.Add(this.Turn_Circle);
             this.Controls.Add(this.Help_PictureBox);
             this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.C_2_6);
@@ -1453,6 +1532,8 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.button_Tick);
+            this.Controls.Add(this.button_Fall);
             this.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -1460,20 +1541,19 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect 4";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.Resize += new System.EventHandler(this.FormResize);
             this.GameOptions.ResumeLayout(false);
             this.GameOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DiffBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_BG_YN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Restart_PB_BG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Blue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Color_Select_Red)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TopPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Turn_Right)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Turn_Left)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Turn_Circle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Help_PictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_3_6)).EndInit();
@@ -1524,6 +1604,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.C_3_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_2_0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.C_1_0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Exit_PB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1586,8 +1667,7 @@
         private System.Windows.Forms.PictureBox C_7_6;
         private System.Windows.Forms.PictureBox C_1_6;
         private System.Windows.Forms.Label Label_Err_Color;
-        private System.Windows.Forms.PictureBox Turn_Right;
-        private System.Windows.Forms.PictureBox Turn_Left;
+        private System.Windows.Forms.PictureBox Turn_Circle;
         private System.Windows.Forms.PictureBox TopPicture;
         private System.Windows.Forms.Button button_Restart;
         private System.Windows.Forms.Button button_Exit;
@@ -1623,6 +1703,11 @@
         private System.Windows.Forms.Button Restart_btn_Y;
         private System.Windows.Forms.PictureBox Restart_PB;
         private System.Windows.Forms.Button button_Share;
+        private System.Windows.Forms.PictureBox Exit_PB;
+        private System.Windows.Forms.Button Exit_btn_N;
+        private System.Windows.Forms.Button Exit_btn_Y;
+        private System.Windows.Forms.Button button_Tick;
+        private System.Windows.Forms.Button button_Fall;
     }
 }
 
