@@ -11,10 +11,10 @@ D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe.c
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.pdb
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.csprojResolveAssemblyReference.cache
-D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect_4.Form1.resources
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect_4.Properties.Resources.resources
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.csproj.GenerateResource.Cache
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.exe
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect 4.pdb
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe.CodeAnalysisLog.xml
 D:\Desktop\Documents\Programming\Connect-4\Connect 4\bin\Release\Connect 4.exe.lastcodeanalysissucceeded
+D:\Desktop\Documents\Programming\Connect-4\Connect 4\obj\Release\Connect_4.C4Form.resources

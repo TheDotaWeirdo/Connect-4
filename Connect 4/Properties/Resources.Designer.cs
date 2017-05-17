@@ -372,6 +372,16 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Restart_B {
+            get {
+                object obj = ResourceManager.GetObject("Restart_B", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Restart_BG {
             get {
                 object obj = ResourceManager.GetObject("Restart_BG", resourceCulture);
@@ -444,6 +454,26 @@ namespace Connect_4.Properties {
         public static System.IO.UnmanagedMemoryStream Tie {
             get {
                 return ResourceManager.GetStream("Tie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Undo {
+            get {
+                object obj = ResourceManager.GetObject("Undo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Undo_D {
+            get {
+                object obj = ResourceManager.GetObject("Undo_D", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -78,17 +78,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="C4Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="C4Form.Designer.cs">
+      <DependentUpon>C4Form.cs</DependentUpon>
     </Compile>
     <Compile Include="MainGame.cs" />
+    <Compile Include="Pattern.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="C4Form.resx">
+      <DependentUpon>C4Form.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -129,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Connect-4.ico" />
+    <None Include="Images\Undo_D.png" />
+    <None Include="Images\Undo.png" />
+    <None Include="Images\Restart_B.png" />
     <None Include="Sounds\Start.wav" />
     <None Include="Sounds\HelpTic.wav" />
     <None Include="Sounds\Ans_Yes.wav" />
