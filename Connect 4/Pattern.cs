@@ -5,14 +5,14 @@ namespace Connect_4
 {
     public class Pattern
     {
-        public char Type; //Situation (s) OR Combination (c)
-        public List<List<int>> Shape = new List<List<int>>();
-        public int Severity;
-        public int StateID;
-        public int Effectiveness;
-        public int PlayerID = 0;
-        public List<int> SituationPlays;
-        public bool Parallax = false;
+        public char Type; // Situation (s) OR Combination (c)
+        public List<List<int>> Shape = new List<List<int>>(); // Shape of the Pattern; -2: Play Here | -1: Any | 0: Free | 1/2: Circle Color
+        public int Severity; // Effectiveness change if pattern was found
+        public int StateID; // State ID of the pattern
+        public int Effectiveness; // Positiveness added if pattern was found
+        public int PlayerID = 0; // 0: Player 1 | 1: Player 2
+        public List<int> SituationPlays; // Includes columns to play after a Situation (s) is found
+        public bool Parallax = false; // If true, the algorithm will skip creating a Mirror of the Shape
 
         public Pattern(char c, int id, int s, int e) { Type = c; StateID = id; Severity = s; Effectiveness = e; }
 

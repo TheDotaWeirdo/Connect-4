@@ -108,7 +108,7 @@ namespace Connect_4
                         CheckData CD;
                         if (y < 4 && x < 5)
                         {
-                            CD = CheckDiagDown(ref Case, x, y, true);
+                            CD = Case.CheckDiagDown(x, y);
                             if (CD.Check)
                             {
                                 output = CD.Color;
@@ -118,7 +118,7 @@ namespace Connect_4
                         }
                         if (y > 3 && x < 5)
                         {
-                            CD = CheckDiagUp(ref Case, x, y, true);
+                            CD = Case.CheckDiagUp(x, y);
                             if (CD.Check)
                             {
                                 output = CD.Color;
@@ -128,7 +128,7 @@ namespace Connect_4
                         }
                         if (x < 5)
                         {
-                            CD = CheckHorizontal(ref Case, x, y, true);
+                            CD = Case.CheckHorizontal(x, y);
                             if (CD.Check)
                             {
                                 output = CD.Color;
@@ -138,7 +138,7 @@ namespace Connect_4
                         }
                         if (y < 4)
                         {
-                            CD = CheckVertical(ref Case, x, y, true);
+                            CD = Case.CheckVertical(x, y);
                             if (CD.Check)
                             {
                                 output = CD.Color;
@@ -176,19 +176,6 @@ namespace Connect_4
         {
             get { return Lmode && vsAI; }
             set { Lmode = value; }
-        }
-
-        // Used to return multiple data types in the Check functions at the bottom.
-        class CheckData
-        {
-            public bool Check;
-            public int Color;
-            public List<Point> Points = new List<Point>();
-
-            public CheckData(bool b, int col = 0, List<Point> P = null)
-            {
-                Check = b; Color = col; Points = P;
-            }
         }
 
         public MainGame()
@@ -863,194 +850,31 @@ namespace Connect_4
                     CheckData CD;
                     if (y < 4 && x < 5)
                     {
-                        CD = CheckDiagDown(ref checkCase, x, y, true);
+                        CD = checkCase.CheckDiagDown(x, y);
                         if (CD.Check)
                             return CD.Color;
                     }
                     if (y > 3 && x < 5)
                     {
-                        CD = CheckDiagUp(ref checkCase, x, y, true);
+                        CD = checkCase.CheckDiagUp(x, y);
                         if (CD.Check)
                             return CD.Color;
                     }
                     if (x < 5)
                     {
-                        CD = CheckHorizontal(ref checkCase, x, y, true);
+                        CD = checkCase.CheckHorizontal(x, y);
                         if (CD.Check)
                             return CD.Color;
                     }
                     if (y < 4)
                     {
-                        CD = CheckVertical(ref checkCase, x, y, true);
+                        CD = checkCase.CheckVertical(x, y);
                         if (CD.Check)
                             return CD.Color; 
                     }
                 }
             }
             return 0;
-        }
-
-        // Various functions that check for a 4+ token chain if 'win' is true
-        // and checks if a play in a column can create a 4 token chain.
-        CheckData CheckHorizontal(ref List<List<int>> checkCase, int x, int y, bool win = false)
-        {
-            if (win)
-            {
-                if (Btwn(x + 3, 1, 7)) 
-                {
-                    if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y][x + 1] && checkCase[y][x] == checkCase[y][x + 2] && checkCase[y][x] == checkCase[y][x + 3])
-                        return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x + 1, y), new Point(x + 2, y), new Point(x + 3, y) });
-                }
-                else { return new CheckData(false); }
-            }
-            else
-            {
-                if (Btwn(y + 1, 1, 6)) 
-                {
-                    if (checkCase[y + 1][x] == 0 && y < 6)
-                        return new CheckData(false);
-                }
-                if (Btwn(x + 3, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y][x + 2] != 0 && checkCase[y][x + 2] == checkCase[y][x + 1] && checkCase[y][x + 1] == checkCase[y][x + 3])
-                        return new CheckData(true, checkCase[y][x+1]);
-                }
-                if (Btwn(x + 2, 1, 7) && Btwn(x - 1, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y][x - 1] != 0 && checkCase[y][x - 1] == checkCase[y][x + 1] && checkCase[y][x - 1] == checkCase[y][x + 2])
-                        return new CheckData(true, checkCase[y][x + 1]);
-                }
-                if (Btwn(x + 1, 1, 7) && Btwn(x - 2, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y][x - 2] != 0 && checkCase[y][x - 2] == checkCase[y][x - 1] && checkCase[y][x - 1] == checkCase[y][x + 1])
-                        return new CheckData(true, checkCase[y][x + 1]);
-                }
-                if (Btwn(x - 3, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y][x - 3] != 0 && checkCase[y][x - 3] == checkCase[y][x - 2] && checkCase[y][x - 2] == checkCase[y][x - 1])
-                        return new CheckData(true, checkCase[y][x - 1]);
-                }
-            }
-            return new CheckData(false);
-        }
-
-        CheckData CheckVertical(ref List<List<int>> checkCase, int x, int y, bool win = false)
-        {
-            if (win)
-            {
-                if (Btwn(y + 3, 1, 6))
-                {
-                    if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y + 1][x] && checkCase[y][x] == checkCase[y + 2][x] && checkCase[y][x] == checkCase[y + 3][x])
-                        return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x, y + 1), new Point(x, y + 2), new Point(x, y + 3) });
-                }
-                else { return new CheckData(false); }
-            }
-            else
-            {
-                if (Btwn(y + 1, 1, 6))
-                {
-                    if (checkCase[y + 1][x] == 0 && y < 6)
-                        return new CheckData(false);
-                }
-                if (Btwn(y + 3, 1, 6))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y + 1][x] != 0 && checkCase[y + 1][x] == checkCase[y+2][x] && checkCase[y+1][x] == checkCase[y+3][x])
-                        return new CheckData(true, checkCase[y+1][x]);
-                }
-            }
-            return new CheckData(false);
-        }
-
-        CheckData CheckDiagDown(ref List<List<int>> checkCase, int x, int y, bool win = false)
-        {
-            if (win)
-            {
-                if (Btwn(y + 3, 1, 6) && Btwn(x + 3, 1, 7))
-                {
-                    if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y+1][x + 1] && checkCase[y][x] == checkCase[y+2][x + 2] && checkCase[y][x] == checkCase[y+3][x + 3])
-                        return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x + 1, y + 1), new Point(x + 2, y + 2), new Point(x + 3, y + 3) });
-                }
-                else { return new CheckData(false); }
-            }
-            else
-            {
-                if (Btwn(y + 1, 1, 6))
-                {
-                    if (checkCase[y + 1][x] == 0 && y < 6)
-                        return new CheckData(false);
-                }
-                if (Btwn(y + 3, 1, 6) && Btwn(x + 3, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y + 2][x + 2] != 0 && checkCase[y + 2][x + 2] == checkCase[y + 1][x + 1] && checkCase[y + 2][x + 2] == checkCase[y + 3][x + 3])
-                        return new CheckData(true, checkCase[y + 1][x + 1]);
-                }
-                if (Btwn(y + 2, 1, 6) && Btwn(x + 2, 1, 7) && Btwn(y - 1, 1, 6) && Btwn(x - 1, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y - 1][x - 1] != 0 && checkCase[y - 1][x - 1] == checkCase[y + 1][x + 1] && checkCase[y - 1][x - 1] == checkCase[y + 2][x + 2])
-                        return new CheckData(true, checkCase[y + 1][x + 1]);
-                }
-                if (Btwn(y + 1, 1, 6) && Btwn(x + 1, 1, 7) && Btwn(y - 1, 1, 6) && Btwn(x - 1, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y - 2][x - 2] != 0 && checkCase[y - 2][x - 2] == checkCase[y - 1][x - 1] && checkCase[y - 1][x - 1] == checkCase[y + 1][x + 1])
-                        return new CheckData(true, checkCase[y + 1][x + 1]);
-                }
-                if (Btwn(y - 3, 1, 6) && Btwn(x - 3, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y - 3][x - 3] != 0 && checkCase[y - 3][x - 3] == checkCase[y - 2][x - 2] && checkCase[y - 2][x - 2] == checkCase[y - 1][x - 1])
-                        return new CheckData(true, checkCase[y - 1][x - 1]);
-                }
-            }
-            return new CheckData(false);
-        }
-
-        CheckData CheckDiagUp(ref List<List<int>> checkCase, int x, int y, bool win = false)
-        {
-            if (win)
-            {
-                if (Btwn(y - 3, 1, 6) && Btwn(x + 3, 1, 7))
-                {
-                    if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y - 1][x + 1] && checkCase[y][x] == checkCase[y - 2][x + 2] && checkCase[y][x] == checkCase[y - 3][x + 3]) 
-                        return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x + 1, y - 1), new Point(x + 2, y - 2), new Point(x + 3, y - 3) });
-                }
-                else { return new CheckData(false); }
-            }
-            else
-            {
-                if (Btwn(y + 1, 1, 6))
-                {
-                    if (checkCase[y + 1][x] == 0 && y < 6)
-                        return new CheckData(false);
-                }
-                if (Btwn(y - 3, 1, 6) && Btwn(x + 3, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y - 2][x + 2] != 0 && checkCase[y - 2][x + 2] == checkCase[y - 1][x + 1] && checkCase[y - 1][x + 1] == checkCase[y - 3][x + 3])
-                        return new CheckData(true, checkCase[y - 1][x + 1]);
-                }
-                if (Btwn(y - 2, 1, 6) && Btwn(x + 2, 1, 7) && Btwn(y + 1, 1, 6) && Btwn(x - 1, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y + 1][x - 1] != 0 && checkCase[y + 1][x - 1] == checkCase[y - 1][x + 1] && checkCase[y + 1][x - 1] == checkCase[y - 2][x + 2])
-                        return new CheckData(true, checkCase[y - 1][x + 1]);
-                }
-                if (Btwn(y - 1, 1, 6) && Btwn(x + 1, 1, 7) && Btwn(y + 2, 1, 6) && Btwn(x - 2, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y + 2][x - 2] != 0 && checkCase[y + 2][x - 2] == checkCase[y + 1][x - 1] && checkCase[y + 1][x - 1] == checkCase[y - 1][x + 1])
-                        return new CheckData(true, checkCase[y + 1][x - 1]);
-                }
-                if (Btwn(y + 3, 1, 6) && Btwn(x - 3, 1, 7))
-                {
-                    if (checkCase[y][x] == 0 && checkCase[y + 3][x - 3] != 0 && checkCase[y + 3][x - 3] == checkCase[y + 2][x - 2] && checkCase[y + 2][x - 2] == checkCase[y + 1][x - 1])
-                        return new CheckData(true, checkCase[y + 1][x - 1]);
-                }
-            }
-            return new CheckData(false);
-        }
-
-        // Checks if 'Value' is between Min and Max.
-        public bool Btwn(int Value, int Min, int Max, bool StrictCheck = false)
-        {
-            if (StrictCheck)
-                return (Value > Min && Value < Max);
-            return (Value >= Min && Value <= Max);
         }
     }
 
@@ -1084,6 +908,61 @@ namespace Connect_4
                 }
             }
             return To;
+        }
+
+        // Various functions that check for a 4+ token chain if 'win' is true
+        // and checks if a play in a column can create a 4 token chain.
+        public static CheckData CheckHorizontal(this List<List<int>> checkCase, int x, int y)
+        {
+            if (x + 3 >= 1 && x + 3 <= 7)
+            {
+                if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y][x + 1] && checkCase[y][x] == checkCase[y][x + 2] && checkCase[y][x] == checkCase[y][x + 3])
+                    return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x + 1, y), new Point(x + 2, y), new Point(x + 3, y) });
+            }
+            return new CheckData(false);
+        }
+
+        public static CheckData CheckVertical(this List<List<int>> checkCase, int x, int y)
+        {
+            if (y + 3 >= 1 && y + 3 <= 6) 
+            {
+                if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y + 1][x] && checkCase[y][x] == checkCase[y + 2][x] && checkCase[y][x] == checkCase[y + 3][x])
+                    return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x, y + 1), new Point(x, y + 2), new Point(x, y + 3) });
+            }
+            return new CheckData(false);
+        }
+
+        public static CheckData CheckDiagDown(this List<List<int>> checkCase, int x, int y)
+        {
+            if ((y + 3 >= 1 && y + 3 <= 6) && (x + 3 >= 1 && x + 3 <= 7))
+            {
+                if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y + 1][x + 1] && checkCase[y][x] == checkCase[y + 2][x + 2] && checkCase[y][x] == checkCase[y + 3][x + 3])
+                    return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x + 1, y + 1), new Point(x + 2, y + 2), new Point(x + 3, y + 3) });
+            }
+            return new CheckData(false);
+        }
+
+        public static CheckData CheckDiagUp(this List<List<int>> checkCase, int x, int y)
+        {
+            if ((y - 3 >= 1 && y - 3 <= 6) && (x + 3 >= 1 && x + 3 <= 7))
+            {
+                if (checkCase[y][x] != 0 && checkCase[y][x] == checkCase[y - 1][x + 1] && checkCase[y][x] == checkCase[y - 2][x + 2] && checkCase[y][x] == checkCase[y - 3][x + 3])
+                    return new CheckData(true, checkCase[y][x], new List<Point> { new Point(x, y), new Point(x + 1, y - 1), new Point(x + 2, y - 2), new Point(x + 3, y - 3) });
+            }
+            return new CheckData(false);
+        }
+    }
+
+    // Used to return multiple data types in the Check functions at the bottom.
+    public class CheckData
+    {
+        public bool Check;
+        public int Color;
+        public List<Point> Points = new List<Point>();
+
+        public CheckData(bool b, int col = 0, List<Point> P = null)
+        {
+            Check = b; Color = col; Points = P;
         }
     }
 }

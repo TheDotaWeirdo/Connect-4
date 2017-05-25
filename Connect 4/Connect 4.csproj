@@ -130,6 +130,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Connect-4.ico" />
+    <None Include="Images\Restore_Hover_Ctrl.png" />
+    <None Include="Images\Minimize_Hover_Ctrl.png" />
+    <None Include="Images\Maximize_Hover_Ctrl.png" />
+    <None Include="Images\Close_Hover_Ctrl.png" />
+    <None Include="Images\Restore_Ctrl.png" />
+    <None Include="Images\Maximize_Ctrl.png" />
+    <None Include="Images\Minimize_Ctrl.png" />
+    <None Include="Images\Close_Ctrl.png" />
+    <None Include="Images\Replay.png" />
     <None Include="Images\Undo_D.png" />
     <None Include="Images\Undo.png" />
     <None Include="Images\Restart_B.png" />
@@ -178,7 +187,7 @@
     <None Include="Sounds\Hit_1.wav" />
     <None Include="Sounds\Win.wav" />
     <None Include="Sounds\Tie.wav" />
-    <None Include="Images\Exit.png" />
+    <None Include="Images\Exit_Ctrl.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

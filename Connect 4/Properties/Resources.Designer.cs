@@ -63,18 +63,126 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        public static System.IO.UnmanagedMemoryStream Ans_No {
+        public static System.IO.UnmanagedMemoryStream _Ans_No {
             get {
-                return ResourceManager.GetStream("Ans_No", resourceCulture);
+                return ResourceManager.GetStream("_Ans_No", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        public static System.IO.UnmanagedMemoryStream Ans_Yes {
+        public static System.IO.UnmanagedMemoryStream _Ans_Yes {
             get {
-                return ResourceManager.GetStream("Ans_Yes", resourceCulture);
+                return ResourceManager.GetStream("_Ans_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _HelpTic {
+            get {
+                return ResourceManager.GetStream("_HelpTic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_1 {
+            get {
+                return ResourceManager.GetStream("_Hit_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_2 {
+            get {
+                return ResourceManager.GetStream("_Hit_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_3 {
+            get {
+                return ResourceManager.GetStream("_Hit_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_4 {
+            get {
+                return ResourceManager.GetStream("_Hit_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_5 {
+            get {
+                return ResourceManager.GetStream("_Hit_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_6 {
+            get {
+                return ResourceManager.GetStream("_Hit_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Hit_7 {
+            get {
+                return ResourceManager.GetStream("_Hit_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Loss {
+            get {
+                return ResourceManager.GetStream("_Loss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Start {
+            get {
+                return ResourceManager.GetStream("_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Tie {
+            get {
+                return ResourceManager.GetStream("_Tie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _Win {
+            get {
+                return ResourceManager.GetStream("_Win", resourceCulture);
             }
         }
         
@@ -121,9 +229,9 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Connect_4 {
+        public static System.Drawing.Bitmap Close_Ctrl {
             get {
-                object obj = ResourceManager.GetObject("Connect_4", resourceCulture);
+                object obj = ResourceManager.GetObject("Close_Ctrl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -131,9 +239,19 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Exit {
+        public static System.Drawing.Bitmap Close_Hover_Ctrl {
             get {
-                object obj = ResourceManager.GetObject("Exit", resourceCulture);
+                object obj = ResourceManager.GetObject("Close_Hover_Ctrl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Connect_4 {
+            get {
+                object obj = ResourceManager.GetObject("Connect_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -175,78 +293,6 @@ namespace Connect_4.Properties {
             get {
                 object obj = ResourceManager.GetObject("Help", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream HelpTic {
-            get {
-                return ResourceManager.GetStream("HelpTic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_1 {
-            get {
-                return ResourceManager.GetStream("Hit_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_2 {
-            get {
-                return ResourceManager.GetStream("Hit_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_3 {
-            get {
-                return ResourceManager.GetStream("Hit_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_4 {
-            get {
-                return ResourceManager.GetStream("Hit_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_5 {
-            get {
-                return ResourceManager.GetStream("Hit_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_6 {
-            get {
-                return ResourceManager.GetStream("Hit_6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Hit_7 {
-            get {
-                return ResourceManager.GetStream("Hit_7", resourceCulture);
             }
         }
         
@@ -331,11 +377,42 @@ namespace Connect_4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.IO.UnmanagedMemoryStream Loss {
+        public static System.Drawing.Bitmap Maximize_Ctrl {
             get {
-                return ResourceManager.GetStream("Loss", resourceCulture);
+                object obj = ResourceManager.GetObject("Maximize_Ctrl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Maximize_Hover_Ctrl {
+            get {
+                object obj = ResourceManager.GetObject("Maximize_Hover_Ctrl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Minimize_Ctrl {
+            get {
+                object obj = ResourceManager.GetObject("Minimize_Ctrl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Minimize_Hover_Ctrl {
+            get {
+                object obj = ResourceManager.GetObject("Minimize_Hover_Ctrl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -355,6 +432,16 @@ namespace Connect_4.Properties {
         public static System.Drawing.Bitmap Red_Loading {
             get {
                 object obj = ResourceManager.GetObject("Red_Loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Replay {
+            get {
+                object obj = ResourceManager.GetObject("Replay", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -392,19 +479,30 @@ namespace Connect_4.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Share {
+        public static System.Drawing.Bitmap Restore_Ctrl {
             get {
-                object obj = ResourceManager.GetObject("Share", resourceCulture);
+                object obj = ResourceManager.GetObject("Restore_Ctrl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.IO.UnmanagedMemoryStream Start {
+        public static System.Drawing.Bitmap Restore_Hover_Ctrl {
             get {
-                return ResourceManager.GetStream("Start", resourceCulture);
+                object obj = ResourceManager.GetObject("Restore_Hover_Ctrl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Share {
+            get {
+                object obj = ResourceManager.GetObject("Share", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -449,15 +547,6 @@ namespace Connect_4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Tie {
-            get {
-                return ResourceManager.GetStream("Tie", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Undo {
@@ -494,15 +583,6 @@ namespace Connect_4.Properties {
             get {
                 object obj = ResourceManager.GetObject("White_Circle_Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        public static System.IO.UnmanagedMemoryStream Win {
-            get {
-                return ResourceManager.GetStream("Win", resourceCulture);
             }
         }
         

@@ -34,7 +34,8 @@ namespace Connect_4
         private List<List<PictureBox>> C = new List<List<PictureBox>>();
         private Dictionary<string, Bitmap> BitLibrary = new Dictionary<string, Bitmap>();
         private System.Timers.Timer HelpT = new System.Timers.Timer(10000);
-        private UnmanagedMemoryStream[] Hits = { null, Hit_1, Hit_2, Hit_3, Hit_4, Hit_5, Hit_6, Hit_7 };
+        private Stream[] Hits = { null, _Hit_1, _Hit_2, _Hit_3, _Hit_4, _Hit_5, _Hit_6, _Hit_7 };
+		private Stream Win = _Win, Loss = _Loss, Tie = _Tie, HelpTic = _HelpTic, Start = _Start, Ans_No = _Ans_No, Ans_Yes = _Ans_Yes;
         private SoundPlayer Player = new SoundPlayer();
         private Point LastPlay = new Point(0, 0);
         private delegate void ControlUpdate(PictureBox PB, Bitmap B);
@@ -47,6 +48,8 @@ namespace Connect_4
         public C4Form()
         {
             InitializeComponent();
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.ResizeRedraw, true); // this is to avoid visual artifacts
         }
 
         // Inserts a token in the index column.
@@ -77,6 +80,8 @@ namespace Connect_4
                     T.Interval = (16.25 + ((HWDiff(Width, Height) - 433) / 150)) * ((MG.LearnMode) ? 2 : 1);
                 else
                     T.Interval = (32 + ((HWDiff(Width, Height) - 433) / 75)) * ((MG.LearnMode) ? 1.35 : 1);
+				if (MG.Winner > 0 || MG.Tied)
+					T.Interval *= 3.5;
                 // Start of the animation process, MG.Busy is enabled so that nothing else happens when the token is being dropped
                 MG.Busy = true;
                 // Hides the arrow and makes the target location of the token white
@@ -97,7 +102,7 @@ namespace Connect_4
                     if (i > 1 && i < 7)
                         C[i - 1][index].Invoke(CUpdte, new object[] { C[i - 1][index], BitLibrary["W"] });
                     // Makes token location transparent
-                    if (i >= Cap)
+                    if (i > Cap)
                     {
                         // Token arrived to final location, stops the timer and runs the Ending function
                         C[Cap][index].Invoke(CUpdte, new object[] { C[Cap][index], BitLibrary["C" + (MG._Turn + 3)] });
@@ -126,7 +131,7 @@ namespace Connect_4
         }
 
         // Shows an arrow above index column and where the token will land on mouse hover.
-        private void Col_Enter(int index, bool Forced = false)
+		private void Col_Enter(int index, bool Forced = false)
         {
             if (Moves.Length > 0 && (!Forced || index.ToString() != Moves[0].ToString())) return;
 
@@ -146,10 +151,11 @@ namespace Connect_4
 
         // Hides the arrow and token created in Col_Enter.
         private void Col_Leave(int index, bool Forced = false)
-        {
-            if (index == 0 || (!Forced && Moves.Length > 0)) return;
+		{
+			if (index == 0 || (!Forced && Moves.Length > 0)) return;
+			if (!Forced && MG.Finished) return;
 
-            if (CurrentCol != index)
+			if (CurrentCol != index)
                 Col_Leave(CurrentCol);
 
             if (C[0][index].Visible || Forced)
@@ -222,6 +228,8 @@ namespace Connect_4
                 Turn_Circle.Invoke(new Action(Turn_Circle.Hide));
                 Undo_button.Invoke(new Action(Undo_button.Hide));
                 Restart_button.Invoke(new Action(Restart_button.Hide));
+				C[0][index].Invoke(CUpdte, new object[] { C[0][index], BitLibrary["Arrow" + MG._Turn] });
+				C[0][index].Invoke(new Action(C[0][index].Show));
                 if (MG.Winner == 1)
                 {
                     TopPicture.Image = Win_Red;
@@ -247,11 +255,13 @@ namespace Connect_4
                 TopPicture.Invoke(new Action(TopImgScaleBig));
                 button_Exit.Invoke(new Action(button_Exit.Show));
                 button_Restart.Invoke(new Action(button_Restart.Show));
-                button_Share.Invoke(new Action(button_Share.Hide));
+                button_Share.Invoke(new Action(button_Share.Show));
                 Turn_Circle.Invoke(new Action(Turn_Circle.Hide));
                 Undo_button.Invoke(new Action(Undo_button.Hide));
                 Restart_button.Invoke(new Action(Restart_button.Hide));
-                Play(Tie);
+				C[0][index].Invoke(CUpdte, new object[] { C[0][index], BitLibrary["Arrow" + MG._Turn] });
+				C[0][index].Invoke(new Action(C[0][index].Show));
+				Play(Tie);
             }
             else
             {
@@ -404,6 +414,7 @@ namespace Connect_4
         // Prompts the Yes/No question to Restart.
         private void PromptRestart()
         {
+            Play(HelpTic);
             MG.Busy = true;
             Restart_PB.Visible = true;
             Restart_BG_YN.Visible = true;
@@ -411,7 +422,6 @@ namespace Connect_4
             Restart_btn_N.Visible = true;
             Restart_btn_Y.Visible = true;
             Turn_Circle.Enabled = false;
-            TopPicture.Enabled = false;
             Undo_button.Enabled = false;
             Restart_button.Enabled = false;
             button_Fall.Enabled = false;
@@ -434,6 +444,7 @@ namespace Connect_4
         // Prompts the Yes/No question to Exit.
         private void PromptExit()
         {
+            Play(HelpTic);
             MG.Busy = true;
             Exit_PB.Visible = true;
             Restart_BG_YN.Visible = true;
@@ -441,7 +452,6 @@ namespace Connect_4
             Exit_btn_N.Visible = true;
             Exit_btn_Y.Visible = true;
             Turn_Circle.Enabled = false;
-            TopPicture.Enabled = false;
             Undo_button.Enabled = false;
             Restart_button.Enabled = false;
             button_Fall.Enabled = false;
@@ -548,7 +558,7 @@ namespace Connect_4
         }
 
         // Plays the sound passed as 's'.
-        private void Play(UnmanagedMemoryStream s)
+        private void Play(Stream s)
         {
             if (SoundsCheckBox.Checked)
             {
@@ -582,21 +592,38 @@ namespace Connect_4
             C.Add(new List<PictureBox> { null, C_1_5, C_2_5, C_3_5, C_4_5, C_5_5, C_6_5, C_7_5 });
             C.Add(new List<PictureBox> { null, C_1_6, C_2_6, C_3_6, C_4_6, C_5_6, C_6_6, C_7_6 });
             FormResize(null, null);
-            Player.Stream = Hit_1;
-            Player.Stream = Hit_2;
-            Player.Stream = Hit_3;
-            Player.Stream = Hit_4;
-            Player.Stream = Hit_5;
-            Player.Stream = Hit_6;
-            Player.Stream = Hit_7;
-            Player.Stream = Ans_No;
-            Player.Stream = Ans_Yes;
-            Player.Stream = Loss;
-            Player.Stream = Win;
-            Player.Stream = Start;
-            Player.Stream = HelpTic;
-            Player.Stream = Tie;
-            BitLibrary.Add("Arrow0", Arrow_Red);
+            ControlBox = false;
+            Text = String.Empty;
+			Player.Stream = Tie;
+			Player.Play();
+			Player.Stream = Ans_No;
+			Player.Play();
+			Player.Stream = Ans_Yes;
+			Player.Play();
+			Player.Stream = Loss;
+			Player.Play();
+			Player.Stream = Win;
+			Player.Play();
+			Player.Stream = Start;
+			Player.Play();
+			Player.Stream = HelpTic;
+			Player.Play();
+			Player.Stream = _Hit_1;
+			Player.Play();
+            Player.Stream = _Hit_2;
+			Player.Play();
+			Player.Stream = _Hit_3;
+			Player.Play();
+			Player.Stream = _Hit_4;
+			Player.Play();
+			Player.Stream = _Hit_5;
+			Player.Play();
+			Player.Stream = _Hit_6;
+			Player.Play();
+			Player.Stream = _Hit_7;
+			Player.Play();
+			Player.Stop();
+			BitLibrary.Add("Arrow0", Arrow_Red);
             BitLibrary.Add("Arrow1", Arrow_Blue);
             BitLibrary.Add("W", White_Circle);
             BitLibrary.Add("Red", Red_Circle);
@@ -623,8 +650,10 @@ namespace Connect_4
             toolTip.SetToolTip(Exit_btn_N, "Continues the Game");
             toolTip.SetToolTip(button_Tick, "Drops a single token");
             toolTip.SetToolTip(button_Fall, "Drop all remaining tokens");
+            toolTip.SetToolTip(Review_button, "Enters Review Mode for the Game info in your clipboard");
             toolTip.SetToolTip(Undo_button, "Undo the last 2 Moves");
             toolTip.SetToolTip(Restart_button, "Restart the Game");
+            toolTip.SetToolTip(SoundsCheckBox, "Toggle Game Sounds");
             toolTip.SetToolTip(FGameCheckBox, "Faster animations & Lower delay for AI response");
             toolTip.SetToolTip(LearnMCheckBox, "Guides you through the games with tips and insights");
             toolTip.SetToolTip(PredicitveCheckBox, "Enables 1-move predictions for the AI");
@@ -807,13 +836,12 @@ namespace Connect_4
                 LastPlay = new Point(0, 0);
                 MG.Loading = true;
                 MG.Finished = false;
-                TopPicture.Enabled = true;
                 TopPicture.Hide();
                 LoadingBox.Show();
                 SetInGamePrefs();
                 MG.StartMoveCounting();
                 Undo_button.Image = (MG.Diff > 50) ? Undo_D : Undo;
-                Undo_button.Enabled = MG.Diff <= 50;
+                toolTip.SetToolTip(Undo_button, (MG.Diff > 50) ? "Undos are not allowed at this difficulty" : "Undo the last 2 Moves");
                 var T = new System.Timers.Timer(50);
                 T.Start();
                 T.Elapsed += (s, E) =>
@@ -833,18 +861,21 @@ namespace Connect_4
                 { Help_PictureBox.Invoke(new Action(Help_PictureBox.Hide)); }
                 GameOptions.Hide();
                 LossHelps = 0;
-                if (!MG.vsAI)
-                    for (var i = 1; i < 8; i++)
-                        C[0][i].Image = BitLibrary["Arrow" + MG._Turn];
-                else
-                    for (var i = 1; i < 8; i++)
-                        C[0][i].Image = BitLibrary["Arrow" + ((MG.LeftIsRed) ? 0 : 1)];
+				for (var i = 1; i < 8; i++)
+				{
+					if (!MG.vsAI)
+						C[0][i].Image = BitLibrary["Arrow" + MG._Turn];
+					else
+						C[0][i].Image = BitLibrary["Arrow" + ((MG.LeftIsRed) ? 0 : 1)];
+					C[0][i].Hide();
+				}
                 MG.Loading = false;
             }
             else
             {
                 if (!Label_Err_Color.Visible) Label_Err_Color.Show();
                 button_Start.Location = new Point((GameOptions.Width + 10 - button_Start.Width) / 2, GameOptions.Height - GameOptions.Height / ((Label_Err_Color.Visible) ? 9 : 7));
+                Play(HelpTic);
             }
         }
 
@@ -887,7 +918,6 @@ namespace Connect_4
             Restart_button.Hide();
             TopPicture.Image = Properties.Resources.Connect_4;
             TopPicture.Invoke(new Action(TopImgScaleSmall));
-            TopPicture.Enabled = false;
             for (var i = 1; i < 8; i++)
                 for (var j = 1; j < 7; j++)
                     C[j][i].Hide();
@@ -939,7 +969,42 @@ namespace Connect_4
                 Thread.Sleep(50);
                 T2.Start();
                 Undo_button.Image = (MG.Undos < 2) ? Undo_D : Undo;
-                Undo_button.Enabled = MG.Undos > 1;
+                toolTip.SetToolTip(Undo_button, (MG.Undos < 2) ? "You have no Undos left" : "Undo the last 2 Moves");
+            }
+            else
+                Play(HelpTic);
+        }
+
+        // Enters Review Mode of a previous game from the clipboard.
+        private void Review_button_Click(object sender, EventArgs e)
+        {
+            if (MG.MoveCount == 0 || GameOptions.Visible)
+            {
+                var clip = Clipboard.GetText();
+                if (CheckClipboard(clip))
+                {
+                    if (MG.P[0] == -1)
+                        Color_Select_Red_Click(null, null);
+                    if (GameOptions.Visible)
+                        Start_Click(null, null);
+                    else
+                        button_Fall.Visible = button_Tick.Visible = true;
+                    MG._Turn = int.Parse(clip[3].ToString());
+                    MG.vsAI = false;
+                    MG.Diff = int.Parse(clip.Substring(0, 3));
+                    MG.HumanizedAI = (MG.Diff == 100);
+                    MG.PredictiveAI = (MG.Diff >= 25);
+                    MG.StrategicAI = (MG.Diff >= 75);
+                    MG.LearnMode = false;
+                    TurnUpdate();
+                    Moves = clip.Substring(4, clip.Length - 4);
+                    for (var I = 1; I < 8; I++)
+                        lock (C[0][I])
+                            C[0][I].Image = BitLibrary["Arrow" + MG._Turn];
+                    Col_Enter(int.Parse(Moves[0].ToString()), true);
+                }
+                else
+                    Play(HelpTic);
             }
         }
 
@@ -965,11 +1030,10 @@ namespace Connect_4
             Restart_btn_N.Visible = false;
             Restart_btn_Y.Visible = false;
             Turn_Circle.Enabled = true;
-            TopPicture.Enabled = true;
             Restart_button.Enabled = true;
+            Undo_button.Enabled = true;
             button_Fall.Enabled = true;
             button_Tick.Enabled = true;
-            Undo_button.Enabled = (MG.Undos > 1);
             if (!MG.Finished)
                 for (var x = 1; x < 8; x++)
                     for (var y = 1; y < 7; y++)
@@ -997,11 +1061,10 @@ namespace Connect_4
             Exit_btn_N.Visible = false;
             Exit_btn_Y.Visible = false;
             Turn_Circle.Enabled = true;
-            TopPicture.Enabled = true;
             Restart_button.Enabled = true;
             button_Fall.Enabled = true;
             button_Tick.Enabled = true;
-            Undo_button.Enabled = (MG.Undos > 1);
+            Undo_button.Enabled = true;
             if (!MG.Finished)
                 for (var x = 1; x < 8; x++)
                     for (var y = 1; y < 7; y++)
@@ -1323,132 +1386,219 @@ namespace Connect_4
         {
             var b = MG.Busy;
             MG.Busy = true;
-            ResizeForm();
+            try { ResizeForm(); } catch (Exception) { }
             MG.Busy = b;
+            Control_Maximize.Image = (WindowState != FormWindowState.Maximized) ? Maximize_Ctrl : Restore_Ctrl;
         }
 
         // Changes every control's size and location according to the window size.
         private void ResizeForm()
         {
-            //This is a complete shitstorm hanging by a thread
-            int W, H, GOW, GOH, CS; int[] CBL;
+            // for y = 0, x = 7 ~ 6.5
+            var W = 0;
+            var H = 0;
+            var Bar = 28;
+            var CS = 0;
+            var HW = 0;
+            var CBL = new Point();
+            var GO = new Rectangle();
             try
-            { W = ActiveForm.Width; H = ActiveForm.Height; }
+            { W = ActiveForm.Width; H = ActiveForm.Height; if (W < 400) return; }
             catch (Exception) { W = 433; H = 650; }
-            TopImgSize[0] = (int)(H * 0.166);
-            TopImgSize[1] = (int)(H * 0.2383);
-            GOW = Math.Min(1200, W - 40);
-            GOH = H - TopImgSize[0] - 58;
 
-            GameOptions.Location = (GOW < 1200) ? new Point(12, 6 + TopImgSize[0]) : new Point((W - GOW - 12) / 2, 6 + TopImgSize[0]);
-            {   //In-Game
-                CS = (HWDiff(W, H)) / 13 + 10;
-                label_Help.Font = new Font("Century Gothic", HWDiff(W, H) / 47, FontStyle.Italic);
-                Help_PictureBox.Size = new Size((int)(HWDiff(W, H) / 14.16), (int)(HWDiff(W, H) / 14.16));
-                label_Help.Location = new Point(W / 21 + Help_PictureBox.Width, H - CS - label_Help.Height);
-                label_Help.Width = W - (W / 20) - label_Help.Location.X + 10;
-                Help_PictureBox.Location = new Point(W / 42, H - CS - (int)(label_Help.Height / 1.33) - (int)((Help_PictureBox.Height - 30) / 2));
-                CBL = new int[2] { (GameOptions.Location.X + GOW / 2 - (CS * 7 ) / 2), (30 + ((H - TopImgSize[0]) / 2 - (CS * 7 - 7) / 2 - 6) + TopImgSize[0]) };
-                if (MG.LearnMode && CBL[1] + (CS * 7) + 20 > label_Help.Location.Y)
-                {
-                    CBL[1] -= CBL[1] + (CS * 7) + 20 - label_Help.Location.Y;
-                    TopImgSize[0] -= CBL[1] + (CS * 7) + 20 - label_Help.Location.Y;
-                    TopImgSize[1] -= CBL[1] + (CS * 7) + 20 - label_Help.Location.Y;
-                }
-                for (var x = 1; x < 8; x++)
-                {
-                    for (var y = 0; y < 7; y++)
-                    {
-                        C[y][x].Location = new Point(CBL[0] + CS * (x - 1), CBL[1] + CS * y);
-                        C[y][x].Size = new Size(CS, CS);
-                    }
-                }
-                Undo_button.Width = Undo_button.Height = Restart_button.Width = Restart_button.Height = (int)(HWDiff(W, H) / 14.16);
-                Undo_button.Location = new Point(15, 15);
-                Restart_button.Location = new Point(W - 30 - (int)(HWDiff(W, H) / 14.16), 15);
-                button_Tick.Height = button_Fall.Height = button_Share.Width = button_Share.Height = button_Exit.Height = button_Restart.Height = button_Start.Height = (H - 650) / 25 + 45;
-                button_Tick.Width = button_Fall.Width = button_Exit.Width = button_Restart.Width = button_Start.Width = (Math.Min(1000, W) - 433) / 6 + 100;
-                button_Tick.Font = button_Fall.Font = button_Exit.Font = button_Start.Font = button_Restart.Font = new Font("Century Gothic", (float)(4.25 + HWDiff(W, H) / 42.5), FontStyle.Bold);
-                if (MG.P[0] == -1)
-                    button_Start.Font = new Font("Century Gothic", (float)(4.25 + HWDiff(W, H) / 42.5));
-                button_Exit.Location = new Point(GameOptions.Location.X + (GOW * 3 / 4) - button_Exit.Width / 2, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
-                button_Restart.Location = new Point(GameOptions.Location.X + (GOW / 4) - button_Exit.Width / 2, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
-                button_Share.Location = new Point(GameOptions.Location.X + (GOW - button_Share.Width) / 2, (int)((((CBL[1] + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
-                Turn_Circle.Height = Turn_Circle.Width = (int)(1.45 * CS);
-                Turn_Circle.Location = new Point(GameOptions.Location.X + (GOW - Turn_Circle.Height) / 2, (int)((((CBL[1] - TopImgSize[0]) / 2.5) + TopImgSize[0])));
-                button_Fall.Location = new Point(GameOptions.Location.X + (GOW / 4) - button_Exit.Width / 2, (int)((((CBL[1] - TopImgSize[0]) / 2.5) + (Turn_Circle.Height - button_Tick.Height) / 2 + TopImgSize[0])));
-                button_Tick.Location = new Point(GameOptions.Location.X + (GOW * 3 / 4) - button_Exit.Width / 2, (int)((((CBL[1] - TopImgSize[0]) / 2.5) + (Turn_Circle.Height - button_Tick.Height) / 2 + TopImgSize[0])));
-                Restart_PB_BG.Width = W;
-                Restart_PB_BG.Location = new Point(0, H / 3 + 20);
-                Restart_PB.Width = Exit_PB.Width = Math.Min(650, W * 9 / 10);
-                Exit_btn_Y.Height = Exit_btn_N.Height = Restart_btn_Y.Height = Restart_btn_N.Height = ((H - 650) / 25 + 45) * 8 / 10;
-                Exit_btn_Y.Width = Exit_btn_N.Width = Restart_btn_Y.Width = Restart_btn_N.Width = ((Math.Min(1000, W) - 433) / 6 + 100) * 8 / 10;
-                Exit_btn_Y.Font = Exit_btn_N.Font = Restart_btn_Y.Font = Restart_btn_N.Font = new Font("Century Gothic", (float)(2.25 + HWDiff(W, H) / 42.5), FontStyle.Bold);
-                Exit_btn_N.Location = Restart_btn_N.Location = new Point(GameOptions.Location.X + (GOW * 3 / 4) - Restart_btn_N.Width / 2, H * 2 / 3 - 30);
-                Exit_btn_Y.Location = Restart_btn_Y.Location = new Point(GameOptions.Location.X + (GOW / 4) - Restart_btn_Y.Width / 2, H * 2 / 3 - 30);
-                Restart_BG_YN.Height = Restart_PB_BG.Height = Restart_btn_N.Height * 7 / 4;
+            TopImgSize[0] = (int)(H * 0.166) + Bar - 17;
+            TopImgSize[1] = (int)(H * 0.2383) + Bar - 17;
+            HW = HWDiff(W, H);
+            GO.Width = Math.Min(1200, W - 40);
+            GO.Height = H - TopImgSize[0] - 48;
+            GO.X = (W - GO.Width - 16) / 2;
+            GO.Y = 20 + TopImgSize[0];
+            CS = (HW) / 9 - 6;
+            CBL.X = GO.X + GO.Width / 2 - (CS * 7) / 2;
+            CBL.Y = (H / 11 - 25) + ((H - TopImgSize[0]) / 2 - (CS * 7 - 7) / 2 - 6) + TopImgSize[0] + Bar;
+
+            /* Fonts *************************************************************************************************/
+            label_Help.Font = new Font("Century Gothic", HW / 47, FontStyle.Italic);
+
+            button_Exit.Font = 
+                button_Restart.Font = new Font("Century Gothic", (float)(4.25 + HW / 42.5), FontStyle.Bold);
+
+            button_Tick.Font =
+                button_Fall.Font =
+                Exit_btn_Y.Font = 
+                Exit_btn_N.Font = 
+                Restart_btn_Y.Font = 
+                Restart_btn_N.Font = new Font("Century Gothic", (float)(2.25 + HW / 42.5), FontStyle.Bold);
+
+            Label_Easy.Font = 
+                Label_Hard.Font = 
+                Label_Medium.Font = 
+                Label_Merciless.Font = 
+                Label_Intermediate.Font = new Font("Century Gothic", (float)(7.25 + HW / 42.5));
+
+            Color_Label.Font = 
+                GameOptions.Font = 
+                AIcheckBox.Font = new Font("Century Gothic", (float)(6.5 + HW / 63.75));
+
+            Difficulty_Label.Font = 
+                HumanizedCheckBox.Font = 
+                PredicitveCheckBox.Font = 
+                StrategicCheckBox.Font =
+                label_Control.Font = new Font("Century Gothic", (float)(3.75 + HW / 63.75));
+
+            AIDiff_Label.Font = 
+                SoundsCheckBox.Font = 
+                LearnMCheckBox.Font = 
+                FGameCheckBox.Font =new Font("Century Gothic", (float)(4.5 + HW / 63.75));
+
+            button_Start.Font = (MG.P[0] == -1) ? new Font("Century Gothic", (float)(4.25 + HW / 42.5))
+                : new Font("Century Gothic", (float)(4.25 + HW / 42.5), FontStyle.Bold);
+
+            /* Sizes *************************************************************************************************/
+            Help_PictureBox.Width = 
+                Help_PictureBox.Height =
+                Review_button.Width = 
+                Review_button.Height =
+                Undo_button.Width = 
+                Undo_button.Height = 
+                Restart_button.Width = 
+                Restart_button.Height = (int)(HW / 14.16);
+
+            button_Tick.Height = 
+                button_Fall.Height =
+                (button_Share.Width = 
+                button_Share.Height = 
+                button_Exit.Height = 
+                button_Restart.Height = 
+                button_Start.Height = (H - 650) / 25 + 45) * 80 / 100;
+
+            button_Tick.Width = 
+                button_Fall.Width = 
+                (button_Exit.Width =
+                button_Restart.Width =
+                button_Start.Width = (Math.Min(1000, W) - 433) / 6 + 100) * 80 / 100;
+
+            Restart_PB_BG.Width =
                 Restart_BG_YN.Width = W;
-                Restart_BG_YN.Location = new Point(0, H * 2 / 3 - 30 - ((Restart_BG_YN.Height - Restart_btn_N.Height) / 2));
-                Exit_PB.Location = Restart_PB.Location = new Point((W - Restart_PB.Width - 15) / 2, (Restart_PB_BG.Height - 58) / 2 + (H / 3) + 20);
-#if DEBUG
-                label1.Location = new Point(CBL[0] + CS * (1 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-                label3.Location = new Point(CBL[0] + CS * (2 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-                label4.Location = new Point(CBL[0] + CS * (3 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-                label5.Location = new Point(CBL[0] + CS * (4 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-                label6.Location = new Point(CBL[0] + CS * (5 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-                label7.Location = new Point(CBL[0] + CS * (6 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-                label8.Location = new Point(CBL[0] + CS * (7 - 1) + C[1][1].Height / 3, CBL[1] + CS * 7);
-#endif
+
+            Restart_PB.Width = 
+                Exit_PB.Width = Math.Min(650, W * 9 / 10);
+
+            Exit_btn_Y.Height =
+                Exit_btn_N.Height =
+                Restart_btn_Y.Height =
+                Restart_btn_N.Height = ((H - 650) / 25 + 45) * 8 / 10;
+
+            Exit_btn_Y.Width =
+                Exit_btn_N.Width =
+                Restart_btn_Y.Width =
+                Restart_btn_N.Width = ((Math.Min(1000, W) - 433) / 6 + 100) * 8 / 10;
+
+            Restart_BG_YN.Height =
+                Restart_PB_BG.Height = Restart_btn_N.Height * 7 / 4;
+
+            Turn_Circle.Height = 
+                Turn_Circle.Width = (int)(1.45 * CS);
+
+            Color_Select_Blue.Size =
+                Color_Select_Red.Size = new Size((int)(HW / 3.5), (int)(HW / 3.5));
+
+            Control_Minimize.Height =
+                Control_Maximize.Height =
+                Control_Close.Height = (int)((HW * 0.15 - 25) * 0.625);
+
+            Control_Minimize.Width =
+                Control_Maximize.Width =
+                Control_Close.Width = (int)(HW * 0.15 - 25);
+
+            GameOptions.Size = GO.Size;
+            LoadingBox.Size = new Size(W, H);
+            DiffBar.Width = GO.Width - 64;
+            TopPicture.Width = W - 40;
+            TopPicture.Height = TopImgSize[(MG.Finished && !GameOptions.Visible) ? 1 : 0];
+            label_Help.Width = W - (W / 20) - (W / 21 + Help_PictureBox.Width);
+			label_Help.Height = (-HW / 23) + 73;
+
+            /* Locations *********************************************************************************************/
+            TopPicture.Location = new Point(12, 17);
+            GameOptions.Location = GO.Location;
+            Control_Close.Location = new Point(W - Control_Close.Width - 22, 0);
+            Control_Maximize.Location = new Point(Control_Close.Location.X - Control_Maximize.Width, 0);
+            Control_Minimize.Location = new Point(Control_Maximize.Location.X - Control_Minimize.Width, 0);
+            label_Help.Location = new Point(Help_PictureBox.Width * 5 / 3, (H - 20 - (Help_PictureBox.Width * 4 / 3)) - (-Help_PictureBox.Width + label_Help.Height)/2);
+			Help_PictureBox.Location = new Point(Help_PictureBox.Width / 3, H - 15 - (Help_PictureBox.Width * 4 / 3));//(W / 42, 15 + H - CS - (int)(label_Help.Height / 1.33) - ((Help_PictureBox.Height - 30) / 2));
+
+			if (MG.LearnMode && CBL.Y + (CS * 7) + 15 > label_Help.Location.Y)
+            {
+                CBL.Y -= CBL.Y + (CS * 7) + 10 - label_Help.Location.Y;
+                TopImgSize[0] -= CBL.Y + (CS * 7) + 10 - label_Help.Location.Y;
+                TopImgSize[1] -= CBL.Y + (CS * 7) + 10 - label_Help.Location.Y;
             }
-
-            {   //Main Menu
-                TopPicture.Width = W - 40;
-                LoadingBox.Size = new Size(W, H);
-                LoadingBox.Location = new Point(0, 0);
-                GameOptions.Width = GOW; GOW += 40;
-                GameOptions.Height = GOH;
-                TopPicture.Height = TopImgSize[(MG.Finished && !GameOptions.Visible) ? 1 : 0];
-                FGameCheckBox.Location = new Point(FGameCheckBox.Location.X, GOH / 15 + 6);
-                Color_Select_Blue.Size = Color_Select_Red.Size = new Size((int)(HWDiff(W, H) / 3.5), (int)(HWDiff(W, H) / 3.5));
-                Color_Select_Red.Location = new Point((int)(0.9 * ((GOW - 40 - Color_Select_Red.Width) / 4)), GOH / 2 + GOH / 16 - 10);
-                Color_Select_Blue.Location = new Point((int)(1.1 * ((GOW - 40 - Color_Select_Red.Width) * 3 / 4)), GOH / 2 + GOH / 16 - 10);
-                Label_Err_Color.Location = new Point((GOW - 40) / 2 - 86, GOH - (int)(GOH / 5.89));
-                button_Start.Location = new Point((GOW - 30 - button_Start.Width) / 2, GOH - GOH / ((Label_Err_Color.Visible) ? 9 : 7));
-                Color_Label.Location = new Point((int)((W - 370) * .2) + 15, GOH / 2);
-                DiffBar.Width = GOW - 104;
-                Label_Easy.Font = Label_Hard.Font = Label_Medium.Font = Label_Merciless.Font = Label_Intermediate.Font = new Font("Century Gothic", (float)(7.25 + HWDiff(W, H) / 42.5));
-                int d = DiffBar.Width;
-                Label_Merciless.Location = new Point(GOW - 98 - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
-                Label_Easy.Location = new Point(DiffBar.Location.X - (Label_Easy.Width - 31) / 2, GOH / 4 + 10 + 48);
-                Label_Hard.Location = new Point(DiffBar.Location.X + 1 + (int)((Label_Hard.Width - 31) * .3) + (d - Label_Easy.Width + 4) / 4 * 3, GOH / 4 + 10 + 48);
-                Label_Medium.Location = new Point(DiffBar.Location.X - (int)((Label_Medium.Width - 31) * .3) + (d - Label_Easy.Width + 4) / 4, GOH / 4 + 10 + 48);
-                Label_Intermediate.Location = new Point(DiffBar.Location.X + (d - Label_Easy.Width + 4) / 2, GOH / 4 + 10 + 48);
-                Color_Label.Font = GameOptions.Font = AIcheckBox.Font = new Font("Century Gothic", (float)(6.5 + HWDiff(W, H) / 63.75));
-                Difficulty_Label.Font = HumanizedCheckBox.Font = PredicitveCheckBox.Font = StrategicCheckBox.Font = new Font("Century Gothic", (float)(3.75 + HWDiff(W, H) / 63.75));
-                AIDiff_Label.Font = SoundsCheckBox.Font = LearnMCheckBox.Font = FGameCheckBox.Font = new Font("Century Gothic", (float)(4.5 + HWDiff(W, H) / 63.75));
-                Difficulty_Label.Location = new Point((int)(-18 + 1.45 * AIDiff_Label.Width), GOH / 4 + 70 - 3 * Difficulty_Label.Height);
-                AIDiff_Label.Location = new Point(25, GOH / 4 + 60 - (int)(2.5 * AIDiff_Label.Height));
-                DiffBar.Location = new Point(DiffBar.Location.X, GOH / 4 + 10 + 25);
-                int p = GOH / 15 + 6, p1 = (int)(GameOptions.Width * .965) - HumanizedCheckBox.Width - (AIcheckBox.Width / 5);
-                AIcheckBox.Location = new Point(p1, p); p += (int)(AIcheckBox.Height * 1.12);
-                PredicitveCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p); p += (int)(1.5 * PredicitveCheckBox.Height - 11.5);
-                StrategicCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p); p += (int)(1.5 * StrategicCheckBox.Height - 11.5);
-                HumanizedCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p);
-                if (AIcheckBox.Location.X - (FGameCheckBox.Width + FGameCheckBox.Location.X) > (int)((LearnMCheckBox.Width) * 1.2))
+            for (var x = 1; x < 8; x++)
+            {
+                for (var y = 0; y < 7; y++)
                 {
-                    LearnMCheckBox.Location = new Point((int)((FGameCheckBox.Width + FGameCheckBox.Location.X) * 1.2), GOH / 15 + 6);
-
-                    if (AIcheckBox.Location.X - (LearnMCheckBox.Width + LearnMCheckBox.Location.X) > (int)((SoundsCheckBox.Width) * 1.2))
-                        SoundsCheckBox.Location = new Point((int)((LearnMCheckBox.Width + LearnMCheckBox.Location.X) * 1.1), GOH / 15 + 6);
-                    else
-                        SoundsCheckBox.Location = new Point(30, LearnMCheckBox.Height + LearnMCheckBox.Location.Y);
+                    C[y][x].Location = new Point(CBL.X + CS * (x - 1), CBL.Y + CS * y);
+                    C[y][x].Size = new Size(CS, CS);
                 }
+            }
+            Undo_button.Location = new Point(32, Control_Close.Height + 24);
+            Restart_button.Location = new Point(W - 48 - (int)(HW / 14.16), Control_Close.Height + 24);
+            button_Exit.Location = new Point(GO.X + (GO.Width * 3 / 4) - button_Exit.Width / 2, (int)((((CBL.Y + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
+            button_Restart.Location = new Point(GO.X + (GO.Width / 4) - button_Exit.Width / 2, (int)((((CBL.Y + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
+            button_Share.Location = new Point(GO.X + (GO.Width - button_Share.Width) / 2, (int)((((CBL.Y + CS - TopImgSize[1]) / 2.85) + TopImgSize[1])));
+            Turn_Circle.Location = new Point(GO.X + (GO.Width - Turn_Circle.Height) / 2, (int)((((CBL.Y - TopImgSize[0]) / 2.5) + TopImgSize[0])));
+            button_Fall.Location = new Point(GO.X + (GO.Width / 4) - button_Fall.Width / 2, (int)((((CBL.Y - TopImgSize[0]) / 2.5) + (Turn_Circle.Height - button_Fall.Height) / 2 + TopImgSize[0])));
+            button_Tick.Location = new Point(GO.X + (GO.Width * 3 / 4) - button_Tick.Width / 2, (int)((((CBL.Y - TopImgSize[0]) / 2.5) + (Turn_Circle.Height - button_Tick.Height) / 2 + TopImgSize[0])));
+            Restart_PB_BG.Location = new Point(0, H / 3 + 20);
+            Exit_btn_N.Location = Restart_btn_N.Location = new Point(GO.X + (GO.Width * 3 / 4) - Restart_btn_N.Width / 2, H * 2 / 3 - 30);
+            Exit_btn_Y.Location = Restart_btn_Y.Location = new Point(GO.X + (GO.Width / 4) - Restart_btn_Y.Width / 2, H * 2 / 3 - 30);
+            Restart_BG_YN.Location = new Point(0, H * 2 / 3 - 30 - ((Restart_BG_YN.Height - Restart_btn_N.Height) / 2));
+            Exit_PB.Location = Restart_PB.Location = new Point((W - Restart_PB.Width - 15) / 2, (Restart_PB_BG.Height - 58) / 2 + (H / 3) + 20);
+            LoadingBox.Location = new Point(0, 0);
+            Review_button.Location = new Point(GO.Width - Review_button.Width - 10, GO.Height - Review_button.Height - 10);
+            FGameCheckBox.Location = new Point(FGameCheckBox.Location.X, GO.Height / 15 + 6);
+            Color_Select_Red.Location = new Point((int)(0.9 * ((GO.Width - Color_Select_Red.Width) / 4)), GO.Height / 2 + GO.Height / 16 - 10);
+            Color_Select_Blue.Location = new Point((int)(1.1 * ((GO.Width - Color_Select_Red.Width) * 3 / 4)), GO.Height / 2 + GO.Height / 16 - 10);
+            Label_Err_Color.Location = new Point(GO.Width / 2 - 86, GO.Height - (int)(GO.Height / 5.89));
+            button_Start.Location = new Point((GO.Width - button_Start.Width + 12) / 2, GO.Height - GO.Height / ((Label_Err_Color.Visible) ? 9 : 7));
+            Color_Label.Location = new Point((int)((W - 370) * .2) + 15, GO.Height / 2);
+            Label_Merciless.Location = new Point(GO.Width - 58 - (Label_Easy.Width - 31) / 2, GO.Height / 4 + 15 + 48);
+            Label_Easy.Location = new Point(DiffBar.Location.X - (Label_Easy.Width - 31) / 2, GO.Height / 4 + 15 + 48);
+            Label_Hard.Location = new Point(DiffBar.Location.X + 1 + (int)((Label_Hard.Width - 31) * .3) + (DiffBar.Width - Label_Easy.Width + 4) / 4 * 3, GO.Height / 4 + 15 + 48);
+            Label_Medium.Location = new Point(DiffBar.Location.X - (int)((Label_Medium.Width - 31) * .3) + (DiffBar.Width - Label_Easy.Width + 4) / 4, GO.Height / 4 + 15 + 48);
+            Label_Intermediate.Location = new Point(DiffBar.Location.X + (DiffBar.Width - Label_Easy.Width + 4) / 2, GO.Height / 4 + 15 + 48);
+            Difficulty_Label.Location = new Point((int)(-18 + 1.45 * AIDiff_Label.Width), GO.Height / 4 + 75 - 3 * Difficulty_Label.Height);
+            AIDiff_Label.Location = new Point(25, GO.Height / 4 + 65 - (int)(2.5 * AIDiff_Label.Height));
+            DiffBar.Location = new Point(DiffBar.Location.X, GO.Height / 4 + 10 + 25);
+            int p = GO.Height / 15 + 6, p1 = (int)(GameOptions.Width * .965) - HumanizedCheckBox.Width - (AIcheckBox.Width / 5);
+            AIcheckBox.Location = new Point(p1, p); p += (int)(AIcheckBox.Height * 1.12);
+            PredicitveCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p); p += (int)(1.5 * PredicitveCheckBox.Height - 11.5);
+            StrategicCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p); p += (int)(1.5 * StrategicCheckBox.Height - 11.5);
+            HumanizedCheckBox.Location = new Point(p1 + AIcheckBox.Width / 5, p);
+            if (AIcheckBox.Location.X - (FGameCheckBox.Width + FGameCheckBox.Location.X) > (int)((LearnMCheckBox.Width) * 1.2))
+            {
+                LearnMCheckBox.Location = new Point((int)((FGameCheckBox.Width + FGameCheckBox.Location.X) * 1.2), GO.Height / 15 + 6);
+
+                if (AIcheckBox.Location.X - (LearnMCheckBox.Width + LearnMCheckBox.Location.X) > (int)((SoundsCheckBox.Width) * 1.55))
+                    SoundsCheckBox.Location = new Point((int)((LearnMCheckBox.Width + LearnMCheckBox.Location.X) * 1.1), GO.Height / 15 + 6);
                 else
-                {
-                    LearnMCheckBox.Location = new Point(30, FGameCheckBox.Height + FGameCheckBox.Location.Y);
                     SoundsCheckBox.Location = new Point(30, LearnMCheckBox.Height + LearnMCheckBox.Location.Y);
-                }
             }
+            else
+            {
+                LearnMCheckBox.Location = new Point(30, FGameCheckBox.Height + FGameCheckBox.Location.Y);
+                SoundsCheckBox.Location = new Point(30, LearnMCheckBox.Height + LearnMCheckBox.Location.Y);
+            }
+#if DEBUG
+            label1.Location = new Point(CBL.X + CS * (1 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+            label3.Location = new Point(CBL.X + CS * (2 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+            label4.Location = new Point(CBL.X + CS * (3 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+            label5.Location = new Point(CBL.X + CS * (4 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+            label6.Location = new Point(CBL.X + CS * (5 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+            label7.Location = new Point(CBL.X + CS * (6 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+            label8.Location = new Point(CBL.X + CS * (7 - 1) + C[1][1].Height / 3, CBL.Y + CS * 7);
+#endif
         }
 
         // Checks if S is an acceptable value for the Game Review.
@@ -1469,32 +1619,7 @@ namespace Connect_4
 
             if(keyData == (Keys.Control | Keys.V))
             {
-                if (MG.MoveCount == 0 || GameOptions.Visible)
-                {
-                    var clip = Clipboard.GetText();
-                    if (CheckClipboard(clip))
-                    {
-                        if (MG.P[0] == -1)
-                            Color_Select_Red_Click(null, null);
-                        if (GameOptions.Visible)
-                            Start_Click(null, null);
-                        else
-                            button_Fall.Visible = button_Tick.Visible = true;
-                        MG._Turn = int.Parse(clip[3].ToString());
-                        MG.vsAI = false;
-                        MG.Diff = int.Parse(clip.Substring(0, 3));
-                        MG.HumanizedAI = (MG.Diff == 100);
-                        MG.PredictiveAI = (MG.Diff >= 25);
-                        MG.StrategicAI = (MG.Diff >= 75);
-                        MG.LearnMode = false;
-                        TurnUpdate();
-                        Moves = clip.Substring(4, clip.Length - 4);
-                        for (var I = 1; I < 8; I++)
-                            lock (C[0][I])
-                                C[0][I].Image = BitLibrary["Arrow" + MG._Turn];
-                        Col_Enter(int.Parse(Moves[0].ToString()), true);
-                    }
-                }
+                Review_button_Click(null, null);
             }
             
             if (keyData == (Keys.Control | Keys.Z))
@@ -1544,7 +1669,7 @@ namespace Connect_4
 
             if (keyData == Keys.Back)
             {
-                if (TopPicture.Enabled && !Exit_PB.Visible)
+                if (Restart_button.Enabled && !Exit_PB.Visible)
                 {
                     Button_Restart_Click(null, null);
                     return true;
@@ -1679,7 +1804,7 @@ namespace Connect_4
             }
         }
 
-        //Click, Hover, Leave Events.
+		//Click, Hover, Leave Events.
         private void Col1_Click(object sender, EventArgs e)
         { Col_Click(1); }
         private void Col2_Click(object sender, EventArgs e)
@@ -1724,6 +1849,87 @@ namespace Connect_4
         { Col_Leave(6); }
         private void Col7_Leave(object sender, EventArgs e)
         { Col_Leave(7); }
+
+        // The following handles Form moving and buttons
+        
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void Form_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        // Control button events
+        private void Control_Close_Click(object sender, EventArgs e)
+        {
+            PromptExit();
+        }
+        private void Control_Close_MouseDown(object sender, MouseEventArgs e)
+        {
+            Control_Close.BackColor = Color.FromArgb(224, 74, 94);
+            Control_Close.Image = Close_Hover_Ctrl;
+        }
+        private void Control_Close_MouseEnter(object sender, EventArgs e)
+        {
+            Control_Close.BackColor = Color.FromArgb(215, 42, 64);
+            Control_Close.Image = Close_Hover_Ctrl;
+        }
+        private void Control_Close_MouseLeave(object sender, EventArgs e)
+        {
+            Control_Close.BackColor = Color.Transparent;
+            Control_Close.Image = Close_Ctrl;
+        }
+
+        private void Control_Maximize_Click(object sender, EventArgs e)
+        {
+            Play(Ans_Yes);
+            Control_Maximize.Image = (WindowState != FormWindowState.Maximized) ? Restore_Ctrl : Maximize_Ctrl;
+            WindowState = (WindowState == FormWindowState.Maximized) ? FormWindowState.Normal : FormWindowState.Maximized;
+        }
+        private void Control_Maximize_MouseDown(object sender, MouseEventArgs e)
+        {
+            Control_Maximize.BackColor = Color.FromArgb(248, 194, 65);
+            Control_Maximize.Image = (WindowState != FormWindowState.Maximized) ? Maximize_Hover_Ctrl : Restore_Hover_Ctrl;
+        }
+        private void Control_Maximize_MouseEnter(object sender, EventArgs e)
+        {
+            Control_Maximize.BackColor = Color.FromArgb(251, 242, 220);
+        }
+        private void Control_Maximize_MouseLeave(object sender, EventArgs e)
+        {
+            Control_Maximize.BackColor = Color.White;
+            Control_Maximize.Image = (WindowState != FormWindowState.Maximized) ? Maximize_Ctrl : Restore_Ctrl;
+        }
+
+        private void Control_Minimize_Click(object sender, EventArgs e)
+        {
+            Play(Ans_No);
+            WindowState = FormWindowState.Minimized;
+        }
+        private void Control_Minimize_MouseDown(object sender, MouseEventArgs e)
+        {
+            Control_Minimize.BackColor = Color.FromArgb(75, 162, 227);
+            Control_Minimize.Image = Minimize_Hover_Ctrl;
+        }
+        private void Control_Minimize_MouseEnter(object sender, EventArgs e)
+        {
+            Control_Minimize.BackColor = Color.FromArgb(234, 240, 245);
+        }
+        private void Control_Minimize_MouseLeave(object sender, EventArgs e)
+        {
+            Control_Minimize.BackColor = Color.White;
+            Control_Minimize.Image = Minimize_Ctrl;
+        }
 
         // Debugging Methods.
         private void DebugAI_CheckBox_CheckedChanged(object sender, EventArgs e)
